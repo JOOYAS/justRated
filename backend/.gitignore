@@ -1,0 +1,26 @@
+# node modules
+node_modules/
+
+# dotenv
+.env
+
+# log files
+logs
+*.log
+
+# runtime
+dist/
+build/
+tmp/
+temp/
+
+# system
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+
+# my sample files
+route_map.txt
