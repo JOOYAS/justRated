@@ -40,7 +40,7 @@ app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/movies', movieRoutes);
 app.use('/reviews', reviewRoutes);
-app.use('/favourites', favouritesRoutes);
+//app.use('/favourites', favouritesRoutes);  // no need
 app.use('/watchlist', watchlistRoutes);
 app.use('/person', personRoutes);
 app.get('/', (req, res) => {

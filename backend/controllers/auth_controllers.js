@@ -10,12 +10,18 @@ const signupController = async (req, res) => {
 
         const { name, email, password } = req.body ?? {};
         if (!name || !email || !password)
-            throw new Error("fill all required inputs");
+            return res.status(400).json({
+                success: false,
+                message: "fill all required inputs"
+            });
         console.log(1, name, email);
 
         const isExist = await User.findOne({ email: email })
         if (isExist)
-            throw new Error("This email is already in use");
+            return res.status(400).json({
+                sucess: false,
+                message: "This email is already in use"
+            });
 
         const hash = bcrypt.hashSync(password, saltRounds);
         const UserData = {
@@ -32,11 +38,17 @@ const signupController = async (req, res) => {
         console.log(user);
 
         res.cookie('token', token, cookieOptions);
-        res.status(200).json(`welcome ${name}`);
+        res.status(200).json({
+            sucess: true,
+            message: `welcome ${name}`
+        });
     }
     catch (error) {
         console.log(error);
-        res.status(400).json("Signup failed")
+        res.status(400).json({
+            success: false,
+            message: "Signup failed"
+        });
     }
 }
 
@@ -44,15 +56,24 @@ const loginController = async (req, res) => {
     try {
         const { email, password } = req.body ?? {};
         if (!email || !password)
-            throw new Error("incomplete credentials");
+            return res.status(400).json({
+                success: false,
+                message: "incomplete credentials"
+            });
 
         const account = await User.findOne({ email: email });
         if (!account)
-            throw new Error("Invalid Credentials");
+            return res.status(400).json({
+                success: true,
+                message: "Invalid Credentials"
+            });
 
         const passMatch = bcrypt.compareSync(password, account?.password);
         if (!passMatch)
-            throw new Error("Invalid credentials")
+            return res.status(400).json({
+                success: false,
+                message: "Invalid credentials"
+            });
 
         const token = generateJWT({
             _id: account._id,
@@ -60,20 +81,32 @@ const loginController = async (req, res) => {
             role: account.role
         });
         res.cookie('token', token, cookieOptions);
-        res.status(200).json("successfully logged in");
+        res.status(200).json({
+            success: true,
+            message: "successfully logged in"
+        });
     } catch (error) {
         console.log(error);
-        res.status(400).json("Unauthorized")
+        res.status(400).json({
+            success: false,
+            message: "Unauthorized"
+        });
     }
 }
 
 const logoutController = async (req, res) => {
     try {
         res.clearCookie('token', cookieOptions);
-        res.status(200).json("Logged out successfully");
+        res.status(200).json({
+            success: true,
+            message: "Logged out successfully"
+        });
     } catch (error) {
         console.log(error);
-        res.status(400).json("Unauthoized")
+        res.status(400).json({
+            success: false,
+            message: "Unauthoized"
+        });
     }
 }
 
@@ -81,17 +114,24 @@ const fetchMyData = async (req, res) => {
     try {
         const userId = req.user._id;
         if (!userId)
-            throw new Error("Server Error");
+            return res.status(400).json({
+                success: false,
+                message: "couldn't find userId"
+            });
 
         const userData = await User.findById(userId);
-        if (!userData)
-            throw new Error("try again later");
 
         const { password, __v, _id, role, createdAt, updatedAt, ...rest } = userData.toObject();
-        res.status(200).json(rest);
+        res.status(200).json({
+            success: true,
+            userdata: rest
+        });
     } catch (error) {
         console.log(error);
-        res.status(400).json("Unauthoized")
+        res.status(400).json({
+            success: false,
+            message: "couldn't fetch your Data"
+        });
     }
 }
 
@@ -99,11 +139,17 @@ const updateMyData = async (req, res) => {
     try {
         const userId = req.user._id;
         if (!userId)
-            throw new Error("Server Error");
+            return res.status(400).json({
+                success: false,
+                message: "Server Error"
+            });
 
         let updatedData = req.body;
         if (!Object.keys(updatedData).length)
-            throw new Error("Nothing to update");
+            return res.status(400).json({
+                success: false,
+                message: "Nothing to update"
+            });
 
         if (updatedData.password) {
             const hash = bcrypt.hashSync(updatedData.password, saltRounds);
@@ -116,13 +162,22 @@ const updateMyData = async (req, res) => {
         const userData = await User.findByIdAndUpdate(userId, updatedData, { new: true });
 
         if (Object.keys(updatedData).length == 1 && updatedData.password)
-            return res.status(200).json("password updated")
+            return res.status(200).json({
+                success: false,
+                message: "password updated"
+            })
 
         const { _id, __v, password, role, createdAt, updatedAt, ...rest } = userData.toObject();
-        res.status(200).json(rest)
+        res.status(200).json({
+            success: true,
+            userData: rest
+        })
     } catch (error) {
         console.log(error);
-        res.status(500).json("couldn't update details")
+        res.status(500).json({
+            success: false,
+            message: "couldn't update details"
+        })
     }
 }
 
@@ -130,17 +185,24 @@ const deleteMyAccount = async (req, res) => {
     try {
         const userId = req.user._id;
         if (!userId)
-            throw new Error("Server Error");
+            return res.status(400).json({
+                success: false,
+                message: "couldn't find userId"
+            });
 
         const deleted = await User.findByIdAndDelete(userId);
-        if (!deleted)
-            throw new Error("couldn't delete this account");
 
         res.clearCookie('token', cookieOptions); // If you're using a JWT cookie
-        res.status(200).json({ msg: "Account deleted successfully" });
+        res.status(200).json({
+            success: true,
+            message: "Account deleted successfully"
+        });
     } catch (error) {
         console.log(error);
-        res.status(500).json("server error")
+        res.status(500).json({
+            success: false,
+            message: "couldn't delete your account"
+        });
     }
 }
 

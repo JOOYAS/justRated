@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const reviewSchema = new mongoose.Schema({
+const reviewSchema = new Schema({
     movie: {
         type: Schema.Types.ObjectId,
+        ref: "Movie",
         required: true,
     },
     user: {
         type: Schema.Types.ObjectId,
+        ref: "User",
         required: true,
     },
     rating: {
@@ -14,10 +17,7 @@ const reviewSchema = new mongoose.Schema({
         min: 1,
         max: 10,
     },
-    opinion: {
-        type: String,
-        required: true,
-    },
+    comment: String,
     likes: Number,
 },
     { timestamps: true });

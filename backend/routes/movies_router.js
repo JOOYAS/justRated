@@ -7,16 +7,18 @@ const isAdmin = require('../middlewares/is_admin');
 const validateObjectId = require('../middlewares/validate_params_id');
 
 router.route('/')
-    .get(authVerify, allMovies)
-    .post(upload.single('posterImg'), newMovie)
+    .all(authVerify)
+    .get(allMovies)
+    .post(isAdmin, upload.single('posterImg'), newMovie)
 // authVerify, isAdmin,
 router.route('/:id')
-    .get(validateObjectId, fetchmovieById)
-    .patch(validateObjectId, upload.fields([{ name: 'posterImg', maxCount: 1 }, { name: 'images', maxCount: 5 }]), updateMovie)
+    .all(authVerify, validateObjectId)
+    .get(fetchmovieById)
+    .patch(upload.fields([{ name: 'posterImg', maxCount: 1 }, { name: 'images', maxCount: 5 }]), updateMovie)
     .delete(deleteMovie)
 
 router.route('/:id/reviews')
-    .get(allReviewsofMovie)
+    .get(authVerify, validateObjectId, allReviewsofMovie)
 
 
 module.exports = router;

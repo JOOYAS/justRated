@@ -5,26 +5,24 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    year: {
-        type: Number,
+    releaseDate: {
+        type: Date,
         required: true,
     },
-    genres: {
-        type: Array,
-    },
-    posterUrl: {
-        type: String,
-    },
+    genres: Array,
+    posterUrl: String,
     rating: {
         type: Number,
         min: 1,
-        max: 2,
+        max: 10,
     },
     featuredNow: {
         type: Boolean,
+        default: false
     },
     currentlyOnTheatres: {
         type: Boolean,
+        default: false
     },
 },
     { timestamps: true });

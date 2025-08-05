@@ -10,13 +10,13 @@ router.route('/')               //admin only
 // .post()
 
 router.route('/reviews')
-    .get(allMyReviews)
+    .get(authVerify, allMyReviews)
 
-router.route('/favourites')
-    .get(allMyFavourites)
+// router.route('/favourites')
+//     .get(authVerify, allMyFavourites)
 
 router.route('/watchlist')
-    .get(allMyWatchlist)
+    .get(authVerify, allMyWatchlist)
 
 router.route('/:id')            //admin only
     .get(validateObjectId, authVerify, isAdmin, fetchUserById)

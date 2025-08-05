@@ -1,14 +1,18 @@
+const CriticReview = require("../models/critic_review_model");
 const MovieDetail = require("../models/movie_detail_model");
 const Movie = require("../models/movie_model");
+const Review = require("../models/review_model");
 const cleanObject = require("../utils/cleanObject");
 const cloudinaryUpload = require("../utils/imgUpload");
-const withRetry = require("../utils/retry_upload");
 
 const newMovie = async (req, res) => {
     try {
-        const { title, year, genres, rating, featuredNow, currentlyOnTheatres } = req.body;
-        if (!title || !year)
-            throw new Error("incomplete details to add movie");
+        const { title, releaseDate, genres, rating, featuredNow, currentlyOnTheatres, description } = req.body;
+        if (!title || !releaseDate || !description)
+            return res.status(400).json({
+                success: false,
+                message: "incomplete details to add movie"
+            });
 
         let posterUrl;
         if (req.file) {
@@ -16,19 +20,28 @@ const newMovie = async (req, res) => {
             console.log("url -> ", posterUrl);
         }
 
-        const movieData = { title, year, genres, rating, featuredNow, currentlyOnTheatres, posterUrl };
-        Object.keys(movieData).forEach(key => {
-            if (movieData[key] === undefined) delete movieData[key]; // cleaning undefined data entries
-        })
+        let movieData = { title, releaseDate, genres, rating, featuredNow, currentlyOnTheatres, posterUrl };
+        movieData = cleanObject(movieData);
 
         const movie = await new Movie(movieData).save();
         if (!movie)
-            throw new Error("retry to add movie");
-
-        res.status(200).json(movie)
+            return res.status(400).json({
+                success: false,
+                message: "retry to add movie"
+            });
+        const movieDetail = await MovieDetail.create({ movie: movie._id, description });
+        await movieDetail.populate('movie');
+        res.status(200).json({
+            success: true,
+            message: `movie ${movieDetail.title.toUpperCase()} added`,
+            movie: movieDetail
+        });
     } catch (error) {
         console.log("adding new movie error", error);
-        res.status(400).json("couldn't add this movie")
+        res.status(400).json({
+            success: false,
+            message: "couldn't add this movie"
+        });
     }
 }
 
@@ -36,12 +49,21 @@ const allMovies = async (req, res) => {
     try {
         const movies = await Movie.find();
         if (!movies)
-            throw new Error("No movies Added");
+            return res.status(400).json({
+                success: false,
+                message: "No movies Added"
+            });
 
-        res.status(200).json(movies);
+        res.status(200).json({
+            success: true,
+            movies
+        });
     } catch (error) {
         console.log(error);
-        res.status(400).json("couldn't fetch movies")
+        res.status(400).json({
+            success: false,
+            message: "couldn't fetch movies"
+        });
     }
 }
 
@@ -49,70 +71,141 @@ const fetchmovieById = async (req, res) => {
     try {
         const { id } = req.params;
         if (!id)
-            throw new Error("No id found");
+            return res.status(400).json({
+                success: false,
+                message: "No Movie id found"
+            });
 
-        const movie = await Movie.findById(id);
-        if (!movie)
-            throw new Error("no movie matched id");
-
-        res.status(200).json(movie);
+        const movieDetailed = await MovieDetail.findOne({ movie: id }).populate("movie");
+        if (!movieDetailed)
+            return res.status(400).json({
+                success: false,
+                message: "no movie matched id"
+            });
+        if (!movieDetailed.movie?.title)
+            return res.status(400).json({
+                success: false,
+                message: "movie details are partial"
+            });
+        res.status(200).json({
+            success: true,
+            message: movieDetailed
+        });
     } catch (error) {
         console.log(error);
-        res.status(400).json("couldn't find this movie")
+        res.status(400).json({
+            success: false,
+            message: "couldn't find this movie"
+        })
     }
 }
 
 const allReviewsofMovie = async (req, res) => {
-    //const users = await User.find({})
-    //res.json(users)
+    try {
+        const { id } = req.params;
+        if (!id)
+            return res.status(400).json({
+                success: false,
+                message: "No id found"
+            });
+
+        const uReviews = await Review.find({ movie: id })
+            .populate('user', 'name')
+            .sort('-createdAt'); // newest first
+        const cReviews = await CriticReview.find({ movie: id })
+            .sort('-createdAt');
+
+        res.json({
+            success: true,
+            count: uReviews.length,
+            reviews: uReviews,
+            critics: cReviews
+        });
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success: false,
+            message: "couldn't fetch reviews for this movie"
+        });
+    }
 }
 
 const updateMovie = async (req, res) => {
     try {
         const { id } = req.params;
         if (!id)
-            throw new Error("No id found");
+            return res.status(400).json({
+                success: false,
+                message: "No id found"
+            });
         let posterUrl;
-        let images;
+        let images = [];
         if (req.files) {
             const posterImg = req.files['posterImg'] ? req.files['posterImg'][0].buffer : null;
-            // images = req.files['images'] ? req.files['images'].map(file => file.buffer) : [];
-            posterUrl = posterImg ? await withRetry(() => cloudinaryUpload(posterImg)) : null;
+            images = req.files['images'] ? req.files['images'].map(file => file.buffer) : [];
+            posterUrl = posterImg ? await cloudinaryUpload(posterImg) : null;
             console.log("posterUrl -> ", posterUrl, "images ->", images)
-
         }
         const movieData = await Movie.findById(id);
         if (!movieData)
-            throw new Error("This movie not available to edit");
+            return res.status(400).json({
+                success: false,
+                message: "This movie not available to edit"
+            });
 
-        const { title, year, genres, rating, featuredNow, currentlyOnTheatres, description, trailerUrl, releaseDate, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language } = req.body ?? {};
+        const { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language } = req.body ?? {};
 
-        const newMovieData = { title, year, genres, rating, featuredNow, currentlyOnTheatres, posterUrl }
-        const newMovieDetails = { description, trailerUrl, releaseDate, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language, images };
+        //have two models as seperate, thats why these stored as 2
+        const newMovieData = { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, posterUrl }
+        const newMovieDetails = { description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language, images };
         const cleanedMovie = cleanObject(newMovieData);
         const cleanedMovieDetails = cleanObject(newMovieDetails)
 
         Object.assign(movieData, cleanedMovie); ///data updated into currentMovieData
+        await movieData.save();
 
-        let movieDetail = await MovieDetail.findOne({ movie: id });
-        if (!movieDetail) {
-            movieDetail = await MovieDetail.create({ movie: id, ...cleanedMovieDetails });
-        } else {
-            Object.assign(movieDetail, cleanedMovieDetails);
-            await movieDetail.save();
-        }
+        const movieDetail = await MovieDetail.findOneAndUpdate({ movie: id }, cleanedMovieDetails, { new: true }).populate("movie");
 
-        const populatedDetail = await MovieDetail.findById(movieDetail._id).populate("movie");
-        res.status(200).json(populatedDetail);
+        res.status(200).json({
+            success: true,
+            message: `movie ${movieDetail.movie.title.toUpperCase()} got`,
+            movie: movieDetail
+        });
 
     } catch (error) {
         console.log(error);
-        res.status(500).json("sorry, movie update failed");
+        res.status(500).json({
+            success: false,
+            message: "sorry, movie update failed"
+        });
     }
 }
+
 const deleteMovie = async (req, res) => {
-    //const users = await User.find({})
-    //res.json(users)
+    try {
+        const { id } = req.params;
+        if (!id)
+            return res.status(400).json({
+                success: false,
+                message: "No id found"
+            });
+
+        const movie = await Movie.findByIdAndDelete(id)
+        await Movie.findOneAndDelete({ _id: id })
+
+        res.status(200).json({
+            success: true,
+            message: `movie ${movie.title.toUpperCase()} got Deleted`
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "sorry, couldn't delete movie"
+        });
+    }
 }
 
 module.exports = {

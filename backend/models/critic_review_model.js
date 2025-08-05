@@ -1,16 +1,12 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const criticReviewSchema = new mongoose.Schema({
+const criticReviewSchema = new Schema({
     movie: {
         type: Schema.Types.ObjectId,
         required: true,
     },
-    criticName: {
-        type: String,
-        required: true,
-    },
-    //imdb or tmdb id , use here
-    profilePicture: {
+    critic: {
         type: String,
         required: true,
     },
@@ -18,7 +14,7 @@ const criticReviewSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    opinion: {
+    comment: {
         type: String,
         required: true,
     },

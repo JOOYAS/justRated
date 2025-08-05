@@ -3,7 +3,7 @@ const { allfavourites, newFavourite, removeFavourite } = require('../controllers
 const router = express.Router();
 
 router.route('/')
-    .get(allfavourites)  //🔒
+    .get(allfavourites)
 
 router.route('/:movieId')
     .post(newFavourite)

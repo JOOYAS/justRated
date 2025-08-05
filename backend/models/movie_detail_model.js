@@ -3,20 +3,18 @@ const Schema = mongoose.Schema;
 
 const movieDetailSchema = new Schema({
     movie: {
-        type: [Schema.Types.ObjectId],
+        type: Schema.Types.ObjectId,
         ref: 'Movie'
     },
     description: {
         type: String,
+
     },
     images: {
         type: [String],
     },
     trailerUrl: {
         type: String,
-    },
-    releaseDate: {
-        type: Date,
     },
     tags: [String],
     globalCollection: String,
