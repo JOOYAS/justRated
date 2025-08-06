@@ -14,13 +14,13 @@ const newMovie = async (req, res) => {
                 message: "incomplete details to add movie"
             });
 
-        let posterUrl;
+        let poster;
         if (req.file) {
-            posterUrl = await cloudinaryUpload(req.file.buffer);
-            console.log("url -> ", posterUrl);
+            poster = await cloudinaryUpload(req.file.buffer);
+            console.log("url -> ", poster);
         }
 
-        let movieData = { title, releaseDate, genres, rating, featuredNow, currentlyOnTheatres, posterUrl };
+        let movieData = { title, releaseDate, genres, rating, featuredNow, currentlyOnTheatres, poster };
         movieData = cleanObject(movieData);
 
         const movie = await new Movie(movieData).save();
@@ -33,7 +33,7 @@ const newMovie = async (req, res) => {
         await movieDetail.populate('movie');
         res.status(200).json({
             success: true,
-            message: `movie ${movieDetail.title.toUpperCase()} added`,
+            message: `movie ${movie?.title?.toUpperCase()} added`,
             movie: movieDetail
         });
     } catch (error) {
@@ -139,14 +139,19 @@ const updateMovie = async (req, res) => {
                 success: false,
                 message: "No id found"
             });
-        let posterUrl;
+        let poster;
         let images = [];
         if (req.files) {
-            const posterImg = req.files['posterImg'] ? req.files['posterImg'][0].buffer : null;
-            images = req.files['images'] ? req.files['images'].map(file => file.buffer) : [];
-            posterUrl = posterImg ? await cloudinaryUpload(posterImg) : null;
-            console.log("posterUrl -> ", posterUrl, "images ->", images)
+            const posterImg = req.files['posterImg']?.[0]?.buffer;
+            const imageBuffers = req.files['images']?.map(file => file.buffer) || [];
+
+            poster = posterImg ? await cloudinaryUpload(posterImg) : null;
+
+            images = await Promise.all(
+                imageBuffers.map(buf => cloudinaryUpload(buf))
+            );
         }
+
         const movieData = await Movie.findById(id);
         if (!movieData)
             return res.status(400).json({
@@ -157,7 +162,7 @@ const updateMovie = async (req, res) => {
         const { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language } = req.body ?? {};
 
         //have two models as seperate, thats why these stored as 2
-        const newMovieData = { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, posterUrl }
+        const newMovieData = { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, poster }
         const newMovieDetails = { description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language, images };
         const cleanedMovie = cleanObject(newMovieData);
         const cleanedMovieDetails = cleanObject(newMovieDetails)

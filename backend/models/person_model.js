@@ -10,8 +10,8 @@ const personSchema = new mongoose.Schema({
         required: true,
     },
     photo: {
-        type: String,
-        required: true,
+        url: { type: String, required: true },
+        public_id: { type: String, required: true }
     },
     roles: {
         type: [String],

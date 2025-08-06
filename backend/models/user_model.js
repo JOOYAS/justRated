@@ -13,7 +13,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    profileSrc: String,
+    profile: {
+        url: String,
+        public_id: String
+    },
     role: {
         type: String,
         default: "user",

@@ -10,9 +10,10 @@ const movieDetailSchema = new Schema({
         type: String,
 
     },
-    images: {
-        type: [String],
-    },
+    images: [{
+        url: String,
+        public_id: String
+    }],
     trailerUrl: {
         type: String,
     },

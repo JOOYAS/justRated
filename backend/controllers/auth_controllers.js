@@ -2,6 +2,8 @@ const User = require("../models/user_model");
 const bcrypt = require("bcrypt")
 const generateJWT = require("../utils/gen_token");
 const cookieOptions = require("../utils/cookie_options");
+const cloudinaryUpload = require("../utils/imgUpload");
+const cleanObject = require("../utils/cleanObject");
 const saltRounds = 10;
 
 const signupController = async (req, res) => {
@@ -62,11 +64,6 @@ const loginController = async (req, res) => {
             });
 
         const account = await User.findOne({ email: email });
-        if (!account)
-            return res.status(400).json({
-                success: true,
-                message: "Invalid Credentials"
-            });
 
         const passMatch = bcrypt.compareSync(password, account?.password);
         if (!passMatch)
@@ -138,13 +135,16 @@ const fetchMyData = async (req, res) => {
 const updateMyData = async (req, res) => {
     try {
         const userId = req.user._id;
-        if (!userId)
-            return res.status(400).json({
-                success: false,
-                message: "Server Error"
-            });
 
-        let updatedData = req.body;
+        const { email, name, password } = req.body;
+        let profile;
+        if (req.file) {
+            profile = await cloudinaryUpload(req.file.buffer);
+            console.log("url -> ", profile);
+        }
+        let updatedData = { name, email, password, profile };
+
+        updatedData = cleanObject(updatedData);
         if (!Object.keys(updatedData).length)
             return res.status(400).json({
                 success: false,
@@ -159,18 +159,23 @@ const updateMyData = async (req, res) => {
             }
         }
 
-        const userData = await User.findByIdAndUpdate(userId, updatedData, { new: true });
+        const userData = await User.findByIdAndUpdate(userId, updatedData, { new: true }).select('-password -_id -role');
 
         if (Object.keys(updatedData).length == 1 && updatedData.password)
             return res.status(200).json({
-                success: false,
+                success: true,
                 message: "password updated"
             })
 
-        const { _id, __v, password, role, createdAt, updatedAt, ...rest } = userData.toObject();
+        if (Object.keys(updatedData).length == 1 && updatedData.profile)
+            return res.status(200).json({
+                success: true,
+                message: "profile picture changed"
+            })
+
         res.status(200).json({
             success: true,
-            userData: rest
+            userData: userData
         })
     } catch (error) {
         console.log(error);

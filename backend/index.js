@@ -31,9 +31,6 @@ app.all('{*splat}', (req, res, next) => {
     next();
 });
 
-
-
-
 //routes
 
 app.use('/auth', authRoutes);

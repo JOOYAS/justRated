@@ -11,7 +11,10 @@ const cloudinaryUpload = (buffer) => {
             },
             (err, result) => {
                 if (err) return reject(err);
-                resolve(result.secure_url);
+                resolve({
+                    url: result.secure_url,
+                    public_id: result.public_id
+                });            
             }
         );
         streamifier.createReadStream(buffer).pipe(stream);

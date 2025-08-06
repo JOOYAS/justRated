@@ -9,8 +9,11 @@ const movieSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    genres: Array,
-    posterUrl: String,
+    genres: [String],
+    poster: {
+        url: String,
+        public_id: String
+    },
     rating: {
         type: Number,
         min: 1,
