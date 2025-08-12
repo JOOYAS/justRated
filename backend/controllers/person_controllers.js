@@ -5,7 +5,7 @@ const cloudinaryUpload = require("../utils/imgUpload");
 const allPersons = async (req, res) => {
     try {
         const persons = await Person.find().sort({ createdAt: -1 });
-        res.json({
+        res.status(200).json({
             success: true,
             count: persons.length,
             persons
@@ -26,13 +26,14 @@ const addPerson = async (req, res) => {
 
         if (req.file) {
             photo = await cloudinaryUpload(req.file.buffer);
+
         }
 
         const person = await Person.create(cleanObject({
             name,
             bio,
             roles,
-            photo,
+            photo
         }));
 
         res.status(201).json({
@@ -92,8 +93,8 @@ const updatePerson = async (req, res) => {
         }
         res.status(200).json({
             success: true,
-            message: "Person updated",
-            data: person
+            message: `${person?.name?.toUpperCase()}'s details changed`,
+            person
         });
     } catch (err) {
         console.error(err);
@@ -116,13 +117,13 @@ const deletePerson = async (req, res) => {
         }
         res.status(200).json({
             success: true,
-            message: "Person deleted"
+            message: `${deleted?.name?.toUpperCase()} got deleted`
         });
     } catch (err) {
         console.error(err);
         res.status(500).json({
             success: false,
-            message: "Error deleting person"
+            message: `Error deleting this person`
         });
     }
 };

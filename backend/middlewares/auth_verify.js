@@ -12,7 +12,7 @@ const authVerify = (req, res, next) => {
         next()
     } catch (error) {
         console.error("authVerify Error", error);
-        res.status(401).json("Unauthorized");
+        res.status(401).json({ success: false, message: "Unauthorized Action" });
     }
 }
 

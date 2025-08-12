@@ -80,7 +80,7 @@ const loginController = async (req, res) => {
         res.cookie('token', token, cookieOptions);
         res.status(200).json({
             success: true,
-            message: "successfully logged in"
+            message: `hi ${account?.name?.toUpperCase()}`
         });
     } catch (error) {
         console.log(error);
@@ -181,7 +181,7 @@ const updateMyData = async (req, res) => {
         console.log(error);
         res.status(500).json({
             success: false,
-            message: "couldn't update details"
+            message: "couldn't update your details"
         })
     }
 }
@@ -200,7 +200,7 @@ const deleteMyAccount = async (req, res) => {
         res.clearCookie('token', cookieOptions); // If you're using a JWT cookie
         res.status(200).json({
             success: true,
-            message: "Account deleted successfully"
+            message: `${deleted?.name?.toUpperCase()}'s account deleted successfully`
         });
     } catch (error) {
         console.log(error);

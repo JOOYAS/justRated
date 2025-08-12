@@ -17,7 +17,8 @@ const newMovie = async (req, res) => {
         let poster;
         if (req.file) {
             poster = await cloudinaryUpload(req.file.buffer);
-            console.log("url -> ", poster);
+            if (poster && poster.buffer) delete poster.buffer; // remove raw file data
+            if (poster && !poster.url) poster = null; // ensure valid structure
         }
 
         let movieData = { title, releaseDate, genres, rating, featuredNow, currentlyOnTheatres, poster };
@@ -30,11 +31,20 @@ const newMovie = async (req, res) => {
                 message: "retry to add movie"
             });
         const movieDetail = await MovieDetail.create({ movie: movie._id, description });
-        await movieDetail.populate('movie');
+
+        const movieDetailed = await MovieDetail.findById(movieDetail._id).populate('movie').select("-_id -__v -createdAt -updatedAt");
+        const movieDetailObj = movieDetailed.toObject();
+
+        const merged = cleanObject({
+            ...movieDetailObj,
+            ...movieDetailObj.movie
+        });
+        delete merged.movie;
+
         res.status(200).json({
             success: true,
             message: `movie ${movie?.title?.toUpperCase()} added`,
-            movie: movieDetail
+            movie: merged
         });
     } catch (error) {
         console.log("adding new movie error", error);
@@ -51,7 +61,7 @@ const allMovies = async (req, res) => {
         if (!movies)
             return res.status(400).json({
                 success: false,
-                message: "No movies Added"
+                message: "No movies Found"
             });
 
         res.status(200).json({
@@ -76,7 +86,7 @@ const fetchmovieById = async (req, res) => {
                 message: "No Movie id found"
             });
 
-        const movieDetailed = await MovieDetail.findOne({ movie: id }).populate("movie");
+        const movieDetailed = await MovieDetail.findOne({ movie: id }).populate('movie').select("-_id -__v -createdAt -updatedAt");
         if (!movieDetailed)
             return res.status(400).json({
                 success: false,
@@ -87,9 +97,17 @@ const fetchmovieById = async (req, res) => {
                 success: false,
                 message: "movie details are partial"
             });
+
+        const movieDetailObj = movieDetailed.toObject();
+        const merged = cleanObject({
+            ...movieDetailObj,
+            ...movieDetailObj.movie
+        });
+        delete merged.movie;
+
         res.status(200).json({
             success: true,
-            message: movieDetailed
+            movie: merged
         });
     } catch (error) {
         console.log(error);
@@ -170,12 +188,19 @@ const updateMovie = async (req, res) => {
         Object.assign(movieData, cleanedMovie); ///data updated into currentMovieData
         await movieData.save();
 
-        const movieDetail = await MovieDetail.findOneAndUpdate({ movie: id }, cleanedMovieDetails, { new: true }).populate("movie");
+        const movieDetail = await MovieDetail.findOneAndUpdate({ movie: id }, cleanedMovieDetails, { new: true }).populate('movie').select("-_id -__v -createdAt -updatedAt");
+
+        const movieDetailObj = movieDetail.toObject();
+        const merged = cleanObject({
+            ...movieDetailObj,
+            ...movieDetailObj.movie
+        });
+        delete merged.movie;
 
         res.status(200).json({
             success: true,
-            message: `movie ${movieDetail.movie.title.toUpperCase()} got`,
-            movie: movieDetail
+            message: `movie ${movieDetail.movie.title.toUpperCase()} got updated`,
+            movie: merged
         });
 
     } catch (error) {

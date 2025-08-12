@@ -9,8 +9,11 @@ const cloudinaryUpload = (buffer) => {
                 quality: "auto",
                 fetch_format: "auto",
             },
-            (err, result) => {
-                if (err) return reject(err);
+            (error, result) => {
+                if (error) {
+                    console.log(error);
+                    return reject(error);
+                }
                 resolve({
                     url: result.secure_url,
                     public_id: result.public_id
@@ -22,22 +25,3 @@ const cloudinaryUpload = (buffer) => {
 };
 
 module.exports = cloudinaryUpload;
-
-// const cloudinaryConnection = require("../config/cloudinary_connection");
-
-// const mgUpload = async (path) => {
-//     try {
-//         const uploadResult = await cloudinaryConnection.uploader.upload(path, {
-//             resource_type: "image",
-//         });
-//         if (!uploadResult.secure_url) {
-//             throw new Error("Image upload failed: No secure URL returned.");
-//         }
-//         return uploadResult.secure_url;
-//     } catch (error) {
-//         console.error("Image upload failed:", error.message || error);
-//         throw new Error("Failed to upload image");
-//     }
-// };
-
-//module.exports = imgUpload;
