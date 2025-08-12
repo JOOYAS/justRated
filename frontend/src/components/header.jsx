@@ -6,14 +6,14 @@ const Header = () => {
         <header className="movie-header">
             <div className="logo">
                 {/* <img src="/film.svg" alt="logo" /> */}
-                <span>MovieReview</span>
+                <span>JustRated</span>
             </div>
 
             <nav>
                 <Link to="/">Home</Link>
                 <Link to="/movies">Movies</Link>
                 <Link to="/about">About</Link>
-                <Link to="/account">Account</Link>
+                <Link to="/profile">Account</Link>
             </nav>
         </header>
     )
