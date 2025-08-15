@@ -30,7 +30,7 @@ app.all('{*splat}', (req, res, next) => {
     next();
 });
 
-//routes
+//----------------------routes-------------------
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
@@ -42,12 +42,14 @@ app.use('/person', personRoutes);
 app.get('/', (req, res) => {
     res.send(`API is working, choose /user -or- /movies`)
 });
-//for invalid routes
+
+//------------for invalid routes--------------
 app.use((req, res) => {
     res.status(404).json({ error: "Route/Path didn't exist" })
 })
 
 dbConnect();
+
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
 })

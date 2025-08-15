@@ -179,13 +179,13 @@ const updateMovie = async (req, res) => {
 
         const { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language } = req.body ?? {};
 
-        //have two models as seperate, thats why these stored as 2
+        //---------------have two models as seperate, thats why these stored as "Movie" & "MovieDetail"-----------
         const newMovieData = { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, poster }
         const newMovieDetails = { description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language, images };
         const cleanedMovie = cleanObject(newMovieData);
         const cleanedMovieDetails = cleanObject(newMovieDetails)
 
-        Object.assign(movieData, cleanedMovie); ///data updated into currentMovieData
+        Object.assign(movieData, cleanedMovie); //-------------data updated into currentMovieData----------------
         await movieData.save();
 
         const movieDetail = await MovieDetail.findOneAndUpdate({ movie: id }, cleanedMovieDetails, { new: true }).populate('movie').select("-_id -__v -createdAt -updatedAt");

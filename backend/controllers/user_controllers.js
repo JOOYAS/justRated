@@ -1,4 +1,4 @@
-//signup and login controllers created in 'authControllers'
+//-----------------signup and login controllers created in 'authControllers', so thats not here---------------
 
 const Review = require("../models/review_model");
 const User = require("../models/user_model");
@@ -39,7 +39,7 @@ const fetchUserById = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            user: userObj
+            user: user
         });
     } catch (error) {
         console.log("fetchUser error -> ", error);
@@ -56,7 +56,7 @@ const allMyReviews = async (req, res) => {
         const list = await Review.find({ user }).populate('movie');
         res.status(200).json({
             success: true,
-            watchlist: list
+            reviews: list
         });
     } catch (error) {
         console.log(error);

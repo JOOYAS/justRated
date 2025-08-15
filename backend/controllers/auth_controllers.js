@@ -32,16 +32,18 @@ const signupController = async (req, res) => {
             password: hash
         };
         const user = await new User(UserData).save();
-        const token = generateJWT({
+
+        const tokenData = {
             _id: user._id,
             name: user.name,
             role: user.role
-        });
-        console.log(user);
+        }
+        const token = generateJWT(tokenData);
+        // console.log(user);
 
         res.cookie('token', token, cookieOptions);
         res.status(200).json({
-            sucess: true,
+            success: true,
             message: `welcome ${name}`
         });
     }
@@ -64,7 +66,7 @@ const loginController = async (req, res) => {
             });
 
         const account = await User.findOne({ email: email });
-        console.log(account);
+        // console.log(account);
 
 
         const passMatch = bcrypt.compareSync(password, account?.password);
@@ -74,7 +76,7 @@ const loginController = async (req, res) => {
                 message: "Invalid credentials"
             });
         const user = {
-            email: account.email,
+            _id: account._id,
             name: account.name,
             role: account.role
         }
@@ -120,12 +122,11 @@ const fetchMyData = async (req, res) => {
                 message: "couldn't find userId"
             });
 
-        const userData = await User.findById(userId);
+        const userData = await User.findById(userId).select('name email profile');
 
-        const { password, __v, _id, role, createdAt, updatedAt, ...rest } = userData.toObject();
         res.status(200).json({
             success: true,
-            userdata: rest
+            user: userData
         });
     } catch (error) {
         console.log(error);
@@ -139,12 +140,12 @@ const fetchMyData = async (req, res) => {
 const updateMyData = async (req, res) => {
     try {
         const userId = req.user._id;
-
         const { email, name, password } = req.body;
+
         let profile;
-        if (req.file) {
+        if (req.file?.buffer) {
             profile = await cloudinaryUpload(req.file.buffer);
-            console.log("url -> ", profile);
+            // console.log("url -> ", profile);
         }
         let updatedData = { name, email, password, profile };
 
@@ -163,22 +164,25 @@ const updateMyData = async (req, res) => {
             }
         }
 
-        const userData = await User.findByIdAndUpdate(userId, updatedData, { new: true }).select('-password -_id -role');
+        const userData = await User.findByIdAndUpdate(userId, updatedData, { new: true }).select('profile name email');
 
         if (Object.keys(updatedData).length == 1 && updatedData.password)
             return res.status(200).json({
                 success: true,
-                message: "password updated"
+                message: "password updated",
+                user: userData
             })
 
         if (Object.keys(updatedData).length == 1 && updatedData.profile)
             return res.status(200).json({
                 success: true,
-                message: "profile picture changed"
+                message: "profile picture changed",
+                user: userData
             })
 
         res.status(200).json({
             success: true,
+            message: "profile details updated",
             userData: userData
         })
     } catch (error) {
@@ -201,7 +205,7 @@ const deleteMyAccount = async (req, res) => {
 
         const deleted = await User.findByIdAndDelete(userId);
 
-        res.clearCookie('token', cookieOptions); // If you're using a JWT cookie
+        res.clearCookie('token', cookieOptions); //----------- removing JWT cookie------------
         res.status(200).json({
             success: true,
             message: `${deleted?.name?.toUpperCase()}'s account deleted successfully`
