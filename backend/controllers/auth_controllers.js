@@ -64,6 +64,8 @@ const loginController = async (req, res) => {
             });
 
         const account = await User.findOne({ email: email });
+        console.log(account);
+
 
         const passMatch = bcrypt.compareSync(password, account?.password);
         if (!passMatch)
@@ -71,16 +73,18 @@ const loginController = async (req, res) => {
                 success: false,
                 message: "Invalid credentials"
             });
-
-        const token = generateJWT({
-            _id: account._id,
+        const user = {
+            email: account.email,
             name: account.name,
             role: account.role
-        });
+        }
+        const token = generateJWT(user);
+
         res.cookie('token', token, cookieOptions);
         res.status(200).json({
             success: true,
-            message: `hi ${account?.name?.toUpperCase()}`
+            message: `hi ${account?.name?.toUpperCase()}`,
+            user
         });
     } catch (error) {
         console.log(error);
