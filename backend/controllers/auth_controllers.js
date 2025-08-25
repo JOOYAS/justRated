@@ -44,7 +44,8 @@ const signupController = async (req, res) => {
         res.cookie('token', token, cookieOptions);
         res.status(200).json({
             success: true,
-            message: `welcome ${name}`
+            message: `welcome ${name}`,
+            user: tokenData
         });
     }
     catch (error) {
@@ -122,11 +123,12 @@ const fetchMyData = async (req, res) => {
                 message: "couldn't find userId"
             });
 
-        const userData = await User.findById(userId).select('name email profile');
+        const userData = await User.findById(userId).select('-password');
 
         res.status(200).json({
             success: true,
-            user: userData
+            userData,
+            tokenData: req.user
         });
     } catch (error) {
         console.log(error);
@@ -170,20 +172,20 @@ const updateMyData = async (req, res) => {
             return res.status(200).json({
                 success: true,
                 message: "password updated",
-                user: userData
+                userData
             })
 
         if (Object.keys(updatedData).length == 1 && updatedData.profile)
             return res.status(200).json({
                 success: true,
                 message: "profile picture changed",
-                user: userData
+                userData
             })
 
         res.status(200).json({
             success: true,
             message: "profile details updated",
-            userData: userData
+            userData
         })
     } catch (error) {
         console.log(error);

@@ -86,7 +86,12 @@ const fetchmovieById = async (req, res) => {
                 message: "No Movie id found"
             });
 
-        const movieDetailed = await MovieDetail.findOne({ movie: id }).populate('movie').select("-_id -__v -createdAt -updatedAt");
+        const movieDetailed = await MovieDetail.findOne({ movie: id })
+            .populate('movie')
+            .populate('director', 'name photo')
+            .populate('cast', 'name photo')
+            .populate('writers', 'name photo')
+            .select("-_id -__v -createdAt -updatedAt");
         if (!movieDetailed)
             return res.status(400).json({
                 success: false,

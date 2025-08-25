@@ -12,7 +12,7 @@ function validateObjectId(req, res, next) {
 
         next(); 
     } catch (error) {
-        console.log("validateObject ", error);
+        console.log("validateObject ", error.message);
         res.status(400).json({
             success: false,
             message: "Invalid ID Used"
