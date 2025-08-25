@@ -1,28 +1,39 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ReactDOM from 'react-dom/client'; // Import ReactDOM
+import ReactDOM from 'react-dom/client';
 import ErrorPage from "./pages/public/errorPage";
-import Layout from "./components/layout";
-import Home from "./pages/home";
-import Person from "./pages/person";
-const Profile = lazy(() => import("./pages/profile"));
-const MovieDetail = lazy(() => import("./pages/movie_detail"));
-const Login = lazy(() => import("./pages/public/login"));
+import LoaderOverlay from "./components/loader_overlay";
+import UserLayout from "./layouts/user_layout";
+import Login from "./pages/public/login";
+import { Provider } from "react-redux";
+
+import store from './store';
+import AuthInitializer from "./components/authcheck";
+import PrivateRoute from "./components/private_route";
+import AdminLayout from "./layouts/admin_layout";
+
+const Home = lazy(() => import('./pages/user/home'));
+const PersonDetail = lazy(() => import("./pages/user/person"));
+const Profile = lazy(() => import("./pages/user/profile"));
+const MovieDetail = lazy(() => import("./pages/user/movie_detail"));
 const Signup = lazy(() => import("./pages/public/signup"));
-const About = lazy(() => import("./pages/about"));
-const Movies = lazy(() => import("./pages/movies_list"));
-// import LayoutUI from "./components/layout_ui";
-// import PrivateRoute from "./components/private_routes";
+const About = lazy(() => import("./pages/public/about"));
+const Movies = lazy(() => import("./pages/user/movies_list"));
 
 let router = createBrowserRouter([
     {
         path: "",
-        // element: null,//todo : change it into just empty div ,a loggedIn verify
+        element: <AuthInitializer />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: "/",
-                element: <Layout />,//should be protected
+                element: //protected
+                    <PrivateRoute allowedRoles={["user", "admin"]} >
+                        <UserLayout />
+                    </PrivateRoute>,
                 // loader: loadRootData,
+
                 children: [
                     {
                         path: "/",
@@ -31,38 +42,35 @@ let router = createBrowserRouter([
                     {
                         path: "/movies",
                         element:
-                            <Suspense fallback={null}>
+                            <Suspense fallback={<LoaderOverlay />}>
                                 <Movies />
                             </Suspense>,
-                        children: [
-
-                        ]
                     },
                     {
                         path: "/movies/:id",
                         element:
-                            <Suspense fallback={null}>
+                            <Suspense fallback={<LoaderOverlay />}>
                                 <MovieDetail />
                             </Suspense>
                     },
                     {
                         path: "/person/:id",
                         element:
-                            <Suspense fallback={null}>
-                                <Person />
+                            <Suspense fallback={<LoaderOverlay />}>
+                                <PersonDetail />
                             </Suspense>
                     },
                     {
                         path: "/watchlist",
                         element:
-                            <Suspense fallback={null}>
+                            <Suspense fallback={<LoaderOverlay />}>
                                 {/* <Watchlist /> */}
                             </Suspense>
                     },
                     {
                         path: "/about",
                         element:
-                            <Suspense fallback={null}>
+                            <Suspense fallback={<LoaderOverlay />}>
                                 <About />
                             </Suspense>
                     },
@@ -82,10 +90,10 @@ let router = createBrowserRouter([
             },
             {
                 path: "/su", // for Admin, Protected
-                // element: 
-                // // (<ProtectedRoute >
-                // // <AdminLayout />
-                // // </ProtectedRoute>)
+                element:
+                    <PrivateRoute allowedRoles={["admin"]}>
+                        <AdminLayout />
+                    </PrivateRoute>,
                 // ,
                 children: [
                     {
@@ -94,7 +102,7 @@ let router = createBrowserRouter([
                     },
                     {
                         path: "search", // find movies,persons,users, review  and links to see
-                        // element: <SearchforAdmin />
+                        // element: <SuSearch />
                     },
                     {
                         path: "movies/new",
@@ -115,27 +123,32 @@ let router = createBrowserRouter([
                     {
                         path: "users",
                         // element: <UserListforAdmin />
+                    },
+                    {
+                        path: "users/:id",
+                    // element: <UserDataforAdmin />
                     }
                 ]
             },
-            // {
-            //     path: "",
-            //     // element: (
-            //     //     <ProtectedRoute >
-            //     //         <ProfilePage />
-            //     //     </ProtectedRoute>),
-            // },
         ],
-        errorElement: <ErrorPage />
     }
-
-])
+]);
 
 ReactDOM.createRoot(root).render(
-    <RouterProvider router={router} />
+    <Provider store={store}>
+        <RouterProvider
+            router={router}
+            fallbackElement={<LoaderOverlay />}
+        />
+    </Provider>
 );
-function wait(time) {
-    return new Promise(resolve => {
-        setTimeout(resolve, time)
-    });
-}
+
+
+
+
+
+// function wait(time) {
+//     return new Promise(resolve => {
+//         setTimeout(resolve, time)
+//     });
+// }

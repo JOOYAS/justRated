@@ -1,41 +1,66 @@
-*
-{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import "tailwindcss";
 
 :root
 {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Sansation, sans-serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    color-scheme: light dark;
+        color: rgba(255, 255, 255, 0.87);
+        background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
 }
 
 @media (prefers-color-scheme: light)
 {
-  :root
-  {
-    color: #213547;
-    background-color: #ffffff;
-  }
+    :root
+        {
+            color: #213547;
+        background-color: #fffbeb;
+        }
+        }
+        
+        @layer utilities
+        {
+            .sansation-bold
+            {
+                font-family: "Sansation", sans-serif;
+                font-weight: 700;
+                font-style: normal;
+            }
+        
+            .custom-top-fade
+            {
+                @apply shadow-[0_-15px_60px_60px_#fffbeb] dark:shadow-[0_-15px_60px_60px_#242424];
+            }
+        }
+        
+        @keyframes scaleAndRotate
+        {
+            0%
+            {
+                transform: scale(0.6) rotateX(360deg);
+            }
 
-  a:hover
-  {
-    color: #747bff;
-  }
+                                                                                                50%
+                                                                                                {
+                transform: scale(1) rotateX(0deg);
+                }
 
-  button
-  {
-    background-color: #f9f9f9;
-  }
+                                                                                                100%
+                                                                                                {
+                transform: scale(0.6) rotateX(0deg);
+                }
+                                                                }
+                                
+                                                                .custom-animate
+                                                                {
+                                                                    display: inline-block;
+                                                                    /* Ensure the element can be transformed */
+                                                                    animation: scaleAndRotate 2s infinite;
 }

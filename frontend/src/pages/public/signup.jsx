@@ -1,8 +1,98 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import axiosInstance from '../../../utils/axios_instance';
 
 const Signup = () => {
+    const { isLoggedIn } = useSelector((s) => s.user);
+
+    const navigate = useNavigate()
+    const [error, setError] = useState("")
+    const [signupData, setSignupData] = useState({
+        email: "",
+        password: ""
+    })
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            if (window.history.state && window.history.state.idx > 0) {
+                navigate(-1);
+            } else {
+                navigate("/", { replace: true });
+            }
+        }
+    }, [isLoggedIn])
+
+
+    const submitHandler = (event) => {
+        event.preventDefault()
+        console.log(signupData);
+        axiosInstance.post(`/auth/signup`, signupData)
+            .then(res => res.data)
+            .then(data => {
+                console.log(data?.user)
+
+                if (data?.user)
+                    dispatch(setUser(data.user));
+                navigate("/", { replace: true })
+            })
+            .catch(err => {
+                console.log(err);
+
+            })
+    }
+
+    const changeHandler = (event) => {
+        console.log("works");
+
+        const tempData = { ...signupData }
+        tempData[event.target.name] = event.target.value.trim()
+        setSignupData(tempData)
+    }
+
+
     return (
-        <div>Signup</div>
+        <div className="min-h-screen flex flex-row-reverse justify-center-safe w-screen px-[1rem] md:px-12 md:py-12 md:pe-0 bg-gradient-to-tr from-indigo-800 to-pink-600 overflow-hidden">
+            <div className="relative flex md:w-[65%] items-center justify-center p-8 bg-amber-50 dark:bg-neutral-700 md:rounded-s-3xl shadow-2xl z-10">
+                <form className="w-full max-w-sm space-y-6" onSubmit={submitHandler}>
+                    <fieldset className="space-y-2">
+                        <legend className="w-full text-center text-4xl font-bold mb-6">Si<span className='text-indigo-500'>g</span>nUp</legend>
+
+                        <label htmlFor="name" className="text-lg font-medium">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Type your Name"
+                            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onChange={changeHandler} />
+
+                        <label htmlFor="email" className="text-lg font-medium">Email</label>
+                        <input type="text" name="email" id='email' placeholder="Type your Email ID"
+                            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onChange={changeHandler} />
+
+                        <label htmlFor="password" className="text-lg font-medium">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Type your password"
+                            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onChange={changeHandler} />
+
+                        <p className="text-red-500 text-sm mb-12">{error}</p>
+
+                        <button type="submit"
+                            className="w-full bg-indigo-700 text-white py-2 rounded-lg hover:bg-indigo-800">Signup</button>
+                    </fieldset>
+
+                    <p className='text-center'>have an account? <Link to={'/login'} className='text-blue-500 hover:text-blue-600 underline underline-offset-4'>login</Link></p>
+                </form>
+                <img className="absolute h-16 bottom-0 mb-4" src="/just_rated_logo_new3.svg" alt="logo" />
+            </div>
+
+
+            <div className="relative hidden md:flex flex-1 flex-col justify-center items-center">
+                <img className='absolute h-screen right-[-50%] opacity-50 z-0' src='/star_logo_2_blur.svg' alt='logo' />
+                <img className='absolute h-screen bottom-[-50%] opacity-50' src='/star_logo_2_blur.svg' alt='logo' />
+                <img className='absolute h-screen top-[-50%] opacity-50' src='/star_logo_2_blur.svg' alt='logo' />
+
+                <p className='px-10 text-3xl font-bold text-white text-center z-10'>"Signin to rate, review, and explore every movie in our collection"</p>
+            </div>
+        </div>
     )
 }
 
