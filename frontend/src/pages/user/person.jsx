@@ -50,16 +50,16 @@ export default function PersonDetail() {
 
     console.log(person);
 
-    // if (loading) return <LoaderOverlay />;
+    if (loading) return <LoaderOverlay />;
 
     return (
-        <div className="max-w-5xl mx-auto p-6">
+        <div className="max-w-5xl mx-auto">
             {/* Person Header */}
-            <div className="flex flex-col md:flex-row gap-6 md:items-end">
+            <div className="flex flex-col md:flex-row gap-6 md:items-end p-6">
                 <img
                     src={person?.photo.url}
                     alt={person.name}
-                    className="w-40 h-52 object-cover rounded-xl shadow"
+                    className="w-52 h-64 object-cover rounded-xl shadow"
                 />
                 <div>
                     <h1 className="text-3xl font-bold">{person.name}</h1>
@@ -73,10 +73,9 @@ export default function PersonDetail() {
                             </span>
                         ))}
                     </div>
-                    <p className="text-xl mt-2">{person.bio}</p>
-
                 </div>
             </div>
+            <p className="text-xl p-6">{person.bio}</p>
 
             <h2 className='text-center font-bold text-2xl text-amber-950 dark:text-amber-50 py-6'>{`Movies of ${person.name}`}</h2>
             <ScrollableCarousel>

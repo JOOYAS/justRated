@@ -11,7 +11,7 @@ router.route('/')
 
 router.route('/critic')
     .post(authVerify, isAdmin, newCriticReview)
-0
+
 router.route('/critic/:id')
     .delete(authVerify, isAdmin, deleteCriticReview)
 

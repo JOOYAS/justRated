@@ -1,5 +1,5 @@
 // ReviewCard.jsx
-const ReviewCard = ({ review, isMine }) => {
+const ReviewCard = ({ review, isMine = false }) => {
     return (
         <div
             className={`p-4 rounded-2xl shadow-md border ${isMine
@@ -7,19 +7,18 @@ const ReviewCard = ({ review, isMine }) => {
                     : "border-gray-200 dark:border-gray-700"
                 }`}
         >
-            <div className="flex justify-between items-start mb-2">
+            <div className="flex justify-between items-start">
                 <div>
                     <h4 className="font-medium text-gray-900 dark:text-gray-100">
                         {review.user}
                     </h4>
-                    <p className="text-xs text-gray-500">{review.date}</p>
                 </div>
-                <div className="flex text-yellow-400 text-lg">
-                    {"⭐".repeat(review.rating)}
-                    {"⭐".repeat(5 - review.rating).replace(/⭐/g, "☆")}
+                <div className="flex text-yellow-400 text-4xl items-center">
+                    <span>{"★".repeat(review.rating)}</span>
+                    <span className="text-gray-400">{"★".repeat(5 - review.rating)}</span>
                 </div>
             </div>
-            <p className="text-gray-700 dark:text-gray-300 text-sm">{review.text}</p>
+            <p className="mt-2 text-gray-700 dark:text-gray-300 text-sm">{review?.text}</p>
         </div>
     );
 }

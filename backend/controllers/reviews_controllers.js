@@ -1,4 +1,5 @@
 const CriticReview = require("../models/critic_review_model");
+const Movie = require("../models/movie_model");
 const Review = require("../models/review_model");
 const cleanObject = require("../utils/cleanObject");
 
@@ -28,6 +29,8 @@ const newReview = async (req, res) => {
         const userId = req.user._id;
         const { movie, rating, comment } = req.body ?? {};
 
+
+
         if (!movie || !userId || !rating)
             return res.status(400).json({
                 success: false,
@@ -41,7 +44,7 @@ const newReview = async (req, res) => {
         if (existing) {
             const updatedReview = await Review.findByIdAndUpdate(existing._id, reviewData, { new: true });
             return res.status(200).json({
-                success: false,
+                success: true,
                 message: "Review updated",
                 review: updatedReview
             });

@@ -6,7 +6,6 @@ import axiosInstance from "../../utils/axios_instance";
 
 const AuthInitializer = () => {
     const dispatch = useDispatch();
-    const { } = useSelector(s => s.user);
 
     useEffect(() => {
         dispatch(setLoading(true));

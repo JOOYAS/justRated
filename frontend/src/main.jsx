@@ -19,6 +19,7 @@ const MovieDetail = lazy(() => import("./pages/user/movie_detail"));
 const Signup = lazy(() => import("./pages/public/signup"));
 const About = lazy(() => import("./pages/public/about"));
 const Movies = lazy(() => import("./pages/user/movies_list"));
+const Watchlist = lazy(() => import("./pages/user/watchlist"));
 
 let router = createBrowserRouter([
     {
@@ -64,7 +65,7 @@ let router = createBrowserRouter([
                         path: "/watchlist",
                         element:
                             <Suspense fallback={<LoaderOverlay />}>
-                                {/* <Watchlist /> */}
+                                <Watchlist />
                             </Suspense>
                     },
                     {
