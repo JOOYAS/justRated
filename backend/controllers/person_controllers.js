@@ -26,7 +26,6 @@ const addPerson = async (req, res) => {
 
         if (req.file) {
             photo = await cloudinaryUpload(req.file.buffer);
-
         }
 
         const person = await Person.create(cleanObject({

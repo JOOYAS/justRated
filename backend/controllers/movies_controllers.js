@@ -11,7 +11,7 @@ const newMovie = async (req, res) => {
         if (!title || !releaseDate || !description)
             return res.status(400).json({
                 success: false,
-                message: "incomplete details to add movie"
+                message: "incomplete details to create movie"
             });
 
         let poster;
@@ -21,10 +21,9 @@ const newMovie = async (req, res) => {
             if (poster && !poster.url) poster = null; // ensure valid structure
         }
 
-        let movieData = { title, releaseDate, genres, rating, featuredNow, currentlyOnTheatres, poster };
-        movieData = cleanObject(movieData);
+        const movieData = { title, releaseDate, genres, rating, featuredNow, currentlyOnTheatres, poster };
 
-        const movie = await new Movie(movieData).save();
+        const movie = await new Movie(cleanObject(movieData)).save();
         if (!movie)
             return res.status(400).json({
                 success: false,
@@ -32,9 +31,11 @@ const newMovie = async (req, res) => {
             });
         const movieDetail = await MovieDetail.create({ movie: movie._id, description });
 
-        const movieDetailed = await MovieDetail.findById(movieDetail._id).populate('movie').select("-_id -__v -createdAt -updatedAt");
-        const movieDetailObj = movieDetailed.toObject();
+        const movieDetailed = await MovieDetail.findById(movieDetail._id)
+            .populate('movie')
+            .select("-_id -__v -createdAt -updatedAt");
 
+        const movieDetailObj = movieDetailed.toObject();
         const merged = cleanObject({
             ...movieDetailObj,
             ...movieDetailObj.movie
@@ -43,7 +44,7 @@ const newMovie = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: `movie ${movie?.title?.toUpperCase()} added`,
+            message: `new movie "${merged?.title}" added`,
             movie: merged
         });
     } catch (error) {
@@ -129,7 +130,7 @@ const allReviewsofMovie = async (req, res) => {
         if (!id)
             return res.status(400).json({
                 success: false,
-                message: "No id found"
+                message: "No movie id found"
             });
 
         const uReviews = await Review.find({ movie: id })
@@ -160,7 +161,7 @@ const updateMovie = async (req, res) => {
         if (!id)
             return res.status(400).json({
                 success: false,
-                message: "No id found"
+                message: "No movie id found"
             });
         let poster;
         let images = [];
@@ -204,7 +205,7 @@ const updateMovie = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: `movie ${movieDetail.movie.title.toUpperCase()} got updated`,
+            message: `movie "${movieDetail?.movie?.title}" got updated`,
             movie: merged
         });
 
@@ -212,7 +213,7 @@ const updateMovie = async (req, res) => {
         console.log(error);
         res.status(500).json({
             success: false,
-            message: "sorry, movie update failed"
+            message: "sorry, couldn't update movie"
         });
     }
 }
@@ -223,7 +224,7 @@ const deleteMovie = async (req, res) => {
         if (!id)
             return res.status(400).json({
                 success: false,
-                message: "No id found"
+                message: "No movie id found"
             });
 
         const movie = await Movie.findByIdAndDelete(id)
@@ -231,7 +232,7 @@ const deleteMovie = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: `movie ${movie.title.toUpperCase()} got Deleted`
+            message: `movie "${movie?.title}" got Deleted`
         })
 
     } catch (error) {

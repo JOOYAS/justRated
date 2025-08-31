@@ -108,7 +108,7 @@ const deletefromWatchlist = async (req, res) => {
         console.log(error)
         res.status(500).json({
             success: false,
-            message: "Delete from watchlist failed"
+            message: "couldn't Delete from watchlist"
         });
     }
 }

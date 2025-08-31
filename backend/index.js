@@ -13,11 +13,16 @@ const watchlistRoutes = require('./routes/watchlist_router');
 const authRoutes = require('./routes/auth_router');
 const dbConnect = require('./config/db_connection');
 
+app.set("trust proxy", 1);
+
 const PORT = process.env.PORT;
 const allowedOrigins = {
     development: process.env.FRONTEND_DEV_URL,
     production: process.env.FRONTEND_URL
 };
+
+
+
 app.use(cors({
     origin: allowedOrigins[process.env.NODE_ENV],
     credentials: true

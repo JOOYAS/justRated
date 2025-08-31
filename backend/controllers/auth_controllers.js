@@ -86,7 +86,7 @@ const loginController = async (req, res) => {
         res.cookie('token', token, cookieOptions);
         res.status(200).json({
             success: true,
-            message: `hi ${account?.name?.toUpperCase()}`,
+            message: `${account?.name?.toUpperCase()} logged in`,
             user
         });
     } catch (error) {
@@ -199,18 +199,17 @@ const updateMyData = async (req, res) => {
 const deleteMyAccount = async (req, res) => {
     try {
         const userId = req.user._id;
-        if (!userId)
+        const deleted = await User.findByIdAndDelete(userId);
+        if (!deleted)
             return res.status(400).json({
                 success: false,
-                message: "couldn't find userId"
+                message: "account does not exist"
             });
-
-        const deleted = await User.findByIdAndDelete(userId);
 
         res.clearCookie('token', cookieOptions); //----------- removing JWT cookie------------
         res.status(200).json({
             success: true,
-            message: `${deleted?.name?.toUpperCase()}'s account deleted successfully`
+            message: `${deleted?.name?.toUpperCase()}'s account deletion successful`
         });
     } catch (error) {
         console.log(error);
