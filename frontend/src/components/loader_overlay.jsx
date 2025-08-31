@@ -1,6 +1,6 @@
 const LoaderOverlay = ({ children, overlay = false }) => {
     return (
-        <div className={`relative ${overlay ? 'w-full h-full' : ''}`}>
+        <div className={`relative ${overlay ? 'w-full h-full' : 'h-screen'}`}>
             {overlay && children}
 
             <div className={`
@@ -9,7 +9,7 @@ const LoaderOverlay = ({ children, overlay = false }) => {
 				${overlay ? '' : 'relative'}
 			`}>
                 <img src="/star_logo_2_blur.svg"
-                    className="size-12 animate-spin text-yellow-400"
+                    className="size-24 animate-spin text-yellow-400"
                     viewBox="0 0 24 24"
                 />
             </div>

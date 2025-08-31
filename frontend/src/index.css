@@ -8,23 +8,24 @@
 
     color-scheme: light dark;
         color: rgba(255, 255, 255, 0.87);
-        background-color: #242424;
 
     font-synthesis: none;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
 }
+/* enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
 
-@media (prefers-color-scheme: light)
+html.dark
 {
-    :root
-        {
-            color: #213547;
-        background-color: #fffbeb;
-        }
-        }
-        
+    @apply bg-neutral-900;
+    }
+    
+    html
+    {
+    @apply bg-amber-50;
+    }
         @layer utilities
         {
             .sansation-bold

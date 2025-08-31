@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import axiosInstance from '../../../utils/axios_instance';
+import CurrentUser from '../../components/current_user';
 
 const Signup = () => {
     const { isLoggedIn } = useSelector((s) => s.user);
@@ -12,17 +13,6 @@ const Signup = () => {
         email: "",
         password: ""
     })
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            if (window.history.state && window.history.state.idx > 0) {
-                navigate(-1);
-            } else {
-                navigate("/", { replace: true });
-            }
-        }
-    }, [isLoggedIn])
-
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -52,7 +42,12 @@ const Signup = () => {
 
 
     return (
-        <div className="min-h-screen flex flex-row-reverse justify-center-safe w-screen px-[1rem] md:px-12 md:py-12 md:pe-0 bg-gradient-to-tr from-indigo-800 to-pink-600 overflow-hidden">
+        <div className="relative min-h-screen flex flex-row-reverse justify-center-safe w-screen px-[1rem] md:px-12 md:py-12 md:pe-0 bg-gradient-to-tr from-indigo-800 to-pink-600 overflow-hidden">
+            {isLoggedIn && (
+                <div className="absolute w-full inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <CurrentUser />
+                </div>
+            )}
             <div className="relative flex md:w-[65%] items-center justify-center p-8 bg-amber-50 dark:bg-neutral-700 md:rounded-s-3xl shadow-2xl z-10">
                 <form className="w-full max-w-sm space-y-6" onSubmit={submitHandler}>
                     <fieldset className="space-y-2">

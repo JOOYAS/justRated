@@ -40,9 +40,9 @@ const MovieCard = ({ movie }) => {
                 {movie?.rating && <p className="text-base font-medium text-gray-500">{movie.rating}/10</p>}
                 <Link
                     to={`/movies/${movie._id}`}
-                    className="block w-full text-center truncate text-lg font-semibold group-hover:text-blue-500 hover:underline group-hover:whitespace-normal group-hover:overflow-visible"
+                    className="block w-full truncate text-lg font-semibold group-hover:text-blue-500 hover:underline group-hover:whitespace-normal group-hover:overflow-visible"
                 >
-                    {movie.name}
+                    {movie.title}
                 </Link>
 
 

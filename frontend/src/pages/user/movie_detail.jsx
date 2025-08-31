@@ -157,11 +157,11 @@ const MovieDetail = () => {
     if (!movie) return <LoaderOverlay />;
     return (
         <>
-            <section className="bg-[image:var(--bg-url)] bg-no-repeat  bg-bottom bg-cover"
+            <section className="bg-[image:var(--bg-url)] bg-no-repeat  bg-bottom bg-cover bg-indigo-950"
                 style={{ '--bg-url': `url(${movie?.images?.[index]?.url || '/328-300x300.jpg'})` }}
             >
                 <div className='h-[40vh] md:h-[70vh] flex flex-row items-end gap-4 max-w-4xl mx-auto px-4'>
-                    <img src={movie?.poster?.url} alt={`${movie?.title} poster`} className="w-32 md:w-64 object-cover rounded-lg shadow h-2/4 md:h-3/4 " />
+                    <img src={movie?.poster?.url} alt={`${movie?.title} poster`} className="w-32 md:w-64 object-cover rounded-lg shadow h-2/4 md:h-3/4 bg-indigo-700/15" />
                     <div className="align-bottom -bottom-24">
                         <h1 className="text-3xl md:text-5xl font-bold text-amber-950 dark:text-amber-200">{movie.title} {movie.releaseDate && (<span className="text-lg">
                             {new Date(movie.releaseDate).getFullYear()}
@@ -204,9 +204,6 @@ const MovieDetail = () => {
                     ))}
 
                 </div>
-
-
-                {/* add review form */}
                 <form onSubmit={handleReviewSubmit} className="space-y-2">
                     <div className="w-full justify-center flex gap-2 items-center text-6xl">
                         {[1, 2, 3, 4, 5].map(num => (
@@ -223,16 +220,10 @@ const MovieDetail = () => {
                     <textarea
                         value={text}
                         onChange={(e) => setText(e.target.value)}
-                        className="w-full rounded p-2 border"
+                        className="w-full p-2 border bg-white dark:bg-amber-50/15 border-gray-300 dark:border-gray-600 rounded-xl"
                         placeholder="Write your review..."
                     />
-                    <div className="flex gap-2 items-center">
-                        {/* rating stars */}
-                        {/* map 1..5 buttons, setRating on click */}
-                    </div>
-
-
-                    <button type="submit" className="px-3 py-1 bg-blue-600 text-white rounded">
+                    <button type="submit" className="px-3 py-1 mb-2 bg-amber-500 text-white rounded-4xl">
                         Submit
                     </button>
                 </form>

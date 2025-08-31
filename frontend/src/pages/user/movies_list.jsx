@@ -7,61 +7,61 @@ const Movies = () => {
     const mockMovies = [
         {
             _id: "1",
-            name: "Echoes of Tomorrow",
+            title: "Echoes of Tomorrow",
             rating: 8.3,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "2",
-            name: "Neon Horizon",
+            title: "Neon Horizon",
             rating: 7.9,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "3",
-            name: "Shadows in Silence",
+            title: "Shadows in Silence",
             rating: 8.6,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "4",
-            name: "Crimson Legacy",
+            title: "Crimson Legacy",
             rating: 7.2,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "5",
-            name: "Fragments of Lightssssssssssssss",
+            title: "Fragments of Lightssssssssssssss",
             rating: 8.8,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "6",
-            name: "Silent Storm",
+            title: "Silent Storm",
             rating: 6.9,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "7",
-            name: "Beyond the Abyss",
+            title: "Beyond the Abyss",
             rating: 8.1,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "8",
-            name: "Glass Empire",
+            title: "Glass Empire",
             rating: 7.5,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "9",
-            name: "Midnight Veil",
+            title: "Midnight Veil",
             rating: 8.0,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "10",
-            name: "Rise of Dawn",
+            title: "Rise of Dawn",
             rating: 8.4,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
@@ -69,40 +69,10 @@ const Movies = () => {
 
     const navigate = useNavigate();
 
-    const movies = [
-        {
-            _id: "1",
-            title: "Inception",
-            genre: "Sci-Fi",
-            poster: {
-                url: "https://picsum.photos/400/600?random=1",
-                public_id: "mock/inception"
-            }
-        },
-        {
-            _id: "2",
-            title: "Interstellar",
-            genre: "Sci-Fi",
-            poster: {
-                url: "https://picsum.photos/400/600?random=2",
-                public_id: "mock/interstellar"
-            }
-        },
-        {
-            _id: "3",
-            title: "The Dark Knight",
-            genre: "Action",
-            poster: {
-                url: "https://picsum.photos/400/600?random=3",
-                public_id: "mock/darkknight"
-            }
-        }
-    ];
-
 
     return (
         <div className="">
-            <section className='bg-amber-50 dark:bg-neutral-800 md:px-20  min-h-96 pt-10 flex-col gap-4 overflow-hidden'>
+            <section className='md:px-20  min-h-96 pt-10 flex-col gap-4 overflow-hidden'>
                 <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6 z-20'>Featured today</h2>
                 <ScrollableCarousel>
                     {mockMovies.map((movie) => (

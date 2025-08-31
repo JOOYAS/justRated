@@ -59,7 +59,7 @@ export default function PersonDetail() {
                 <img
                     src={person?.photo.url}
                     alt={person.name}
-                    className="w-52 h-64 object-cover rounded-xl shadow"
+                    className="w-52 h-64 object-cover rounded-xl shadow bg-amber-600/15 hover:border-2 border-amber-200"
                 />
                 <div>
                     <h1 className="text-3xl font-bold">{person.name}</h1>

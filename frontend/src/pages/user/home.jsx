@@ -7,61 +7,61 @@ const Home = () => {
     const mockMovies = [
         {
             _id: "1",
-            name: "Echoes of Tomorrow",
+            title: "Echoes of Tomorrow",
             rating: 8.3,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "2",
-            name: "Neon Horizon",
+            title: "Neon Horizon",
             rating: 7.9,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "3",
-            name: "Shadows in Silence",
+            title: "Shadows in Silence",
             rating: 8.6,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "4",
-            name: "Crimson Legacy",
+            title: "Crimson Legacy",
             rating: 7.2,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "5",
-            name: "Fragments of Lightssssssssssssss",
+            title: "Fragments of Lightssssssssssssss",
             rating: 8.8,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "6",
-            name: "Silent Storm",
+            title: "Silent Storm",
             rating: 6.9,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "7",
-            name: "Beyond the Abyss",
+            title: "Beyond the Abyss",
             rating: 8.1,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "8",
-            name: "Glass Empire",
+            title: "Glass Empire",
             rating: 7.5,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "9",
-            name: "Midnight Veil",
+            title: "Midnight Veil",
             rating: 8.0,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
         {
             _id: "10",
-            name: "Rise of Dawn",
+            title: "Rise of Dawn",
             rating: 8.4,
             poster: { url: "https://picsum.photos/300/400?random=1" },
         },
@@ -83,9 +83,9 @@ const Home = () => {
                     </div>
 
                     <div className="group hidden relative w-screen flex-1 h-52 md:flex justify-center transition-all duration-300 mb-48">
-                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-40 group-hover:rotate-0 group-hover:scale-105 hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100" />
-                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-20 group-hover:rotate-0 group-hover:scale-105 rotate-[24deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100" />
-                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-0 group-hover:rotate-0 group-hover:scale-105 transform rotate-[12deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100"
+                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-2xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-40 group-hover:rotate-0 group-hover:scale-105 hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100" />
+                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-2xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-20 group-hover:rotate-0 group-hover:scale-105 rotate-[24deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100" />
+                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-2xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-0 group-hover:rotate-0 group-hover:scale-105 transform rotate-[12deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100"
                         />
                     </div>
 

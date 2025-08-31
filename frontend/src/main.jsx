@@ -137,10 +137,12 @@ let router = createBrowserRouter([
 
 ReactDOM.createRoot(root).render(
     <Provider store={store}>
-        <RouterProvider
+        <div className="text-gray-950 dark:text-neutral-100">
+            <RouterProvider
             router={router}
             fallbackElement={<LoaderOverlay />}
-        />
+            />   
+        </div>   
     </Provider>
 );
 

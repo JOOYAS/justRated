@@ -2,18 +2,29 @@ import React from 'react'
 
 const About = () => {
     return (
-        <div className="about-page">
-            <h1>About Us</h1>
-            <h2>Helping everyone discover, rate, and relive great movies.</h2>
-            <p>
-                MovieReview is a simple platform built by movie lovers, for movie lovers.
-                From hidden gems to blockbuster hits, we make it easy to explore, rate, and share your movie opinions. Whether you're a casual viewer or a hardcore film buff, this is your place to dive into cinema and let your voice be heard.
-            </p>
-            <p>
-                So go ahead — find, rate, and review what you've watched.
-                And discover the best movies that are truly worth your time.
-            </p>
-        </div>
+        <section className="h-[90vh] flex justify-center items-center">
+            <div className="mx-auto md:px-96 text-center fixed inset-0 -z-10 bg-emerald-200 dark:bg-indigo-950 bg-[url('/bbblurry2.svg')]  bg-top bg-cover bg-no-repeat ">
+            </div>
+            <div className='max-w-2xl px-6 z-10'>
+                <header className="mb-8">
+                    <h1 className="text-5xl font-extrabold tracking-tight mb-1">About Us</h1>
+                    <p className="text-xl text-gray-500 dark:text-gray-50 font-medium">
+                        Helping everyone discover, rate, and relive great movies.
+                    </p>
+                </header>
+
+                <article className="pt-4 space-y-8 font-sans leading-relaxed text-lg">
+                    <p>
+                        JustRated.com is built by movie lovers, for movie lovers. From hidden gems to blockbuster hits,
+                        we make it simple to explore, rate, and share your opinions.
+                    </p>
+                    <p>
+                        Whether you're a casual viewer or a hardcore film buff, this is your place to dive into cinema,
+                        find new favorites, and let your voice be heard.
+                    </p>
+                </article>
+            </div>
+        </section>
     )
 }
 

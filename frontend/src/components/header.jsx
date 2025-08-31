@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import { clearUser, setUser } from "../store/user_slice";
 import axiosInstance from "../../utils/axios_instance";
+import DropDownMenu from "./dropdown_menu";
+import logoutHandler from "../../utils/logout_handler";
+import Hamburger from "./hamburger_button";
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -10,6 +13,7 @@ const Header = () => {
     const lastScroll = useRef(0);
 
     const [userData, setUserData] = useState(null)
+    const [open, setOpen] = useState(false)
     const userStoreData = useSelector(s => s.user);
 
     useEffect(() => {
@@ -18,6 +22,8 @@ const Header = () => {
                 .then(res => res.data)
                 .then(data => {
                     if (data?.userData)
+                        console.log("userData :", data?.userData);
+
                         setUserData(data?.userData)
                 })
                 .catch(error => {
@@ -38,33 +44,43 @@ const Header = () => {
 
         return () => window.removeEventListener("scroll", handleScroll);
     }, [])
-    // bg - gradient - to - r from - rose - 600 to - stone - 600
-    return (
-        <header className={`bg-amber-50 dark:bg-neutral-500 border-t-8 border-t-amber-700 shadow-lg top-0 fixed w-screen z-50 transition-transform duration-300 ${showHeader ? "translate-y-0" : " -translate-y-full"}`}>
-            <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
-                <div>
-                    <img className="h-12" src="/just_rated_logo_new3.svg" alt="logo" />
-                </div>
 
-                <nav className="flex items-center gap-6 text-lg font-normal text-amber-900 dark:text-amber-50">
+    return (
+        <header className={`backdrop-blur-xl bg-amber-50/15 dark:bg-neutral-500/35 border-t-8 border-t-amber-700 top-0 fixed w-screen z-50 transition-transform duration-300 ${showHeader ? "translate-y-0" : " -translate-y-full"}`}>
+            <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
+                <Link to={"/about"}>
+                    <img className="h-12 bg-amber-950 dark:bg-transparent rounded-md" src="/just_rated_logo_new3.svg" alt="logo" />
+                </Link>
+
+                <nav className="hidden md:flex items-center gap-6 text-lg font-normal text-amber-900 dark:text-amber-300">
                     <Link to="/" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Home</Link>
                     <Link to="/movies" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Movies</Link>
+                    <Link to="/watchlist" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Watchlist</Link>
                     <Link to="/about" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">About</Link>
-                    <Link to="/profile" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Account</Link>
+
                     {
                         !userData
                             ? <Link to="/login" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Login</Link>
-                            : <div className="ms-12 h-12 w-12 border-2 bg-amber-900 text-amber-50 font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden">
+                            : <button
+                                data-dropdown-toggle //a custom attribute to ign9ore click when needed
+                                onClick={(e) => {
+                                    setOpen(!open)
+                                }}
+                                className="ms-12 size-12 border-2 bg-amber-900 text-amber-50 font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden ">
                                 {
                                     userData?.profile
-                                        ? <img className="hover:rotate-12 duration-300" src='https://i.pravatar.cc/150?img=4' alt='user avatar' />
-                                        : <span>S</span>
+                                        ? <img className="hover:rotate-12 duration-300 object-cover h-full" src={userData?.profile?.url} alt='user profile picture' />
+                                        : <span className="hover:rotate-12 duration-300">S</span>
                                 }
-                            </div>
+                            </button>
                     }
-
                 </nav>
+                <Hamburger open={open} setOpen={setOpen} />
             </div>
+            <div className="absolute right-2 mt-3">
+                <DropDownMenu user={userData} setOpen={setOpen} open={open} />
+            </div>
+
         </header>
     )
 }
