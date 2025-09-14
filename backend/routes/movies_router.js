@@ -14,7 +14,7 @@ router.route('/')
 router.route('/:id')
     .all(authVerify, validateObjectId)
     .get(fetchmovieById)
-    .patch(upload.fields([{ name: 'posterImg', maxCount: 1 }, { name: 'images', maxCount: 5 }]), updateMovie)
+    .patch(upload.fields([{ name: 'posterImg', maxCount: 1 }, { name: 'images', maxCount: 10 }]), updateMovie)
     .delete(deleteMovie)
 
 router.route('/:id/reviews')

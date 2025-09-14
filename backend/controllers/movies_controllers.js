@@ -41,6 +41,7 @@ const newMovie = async (req, res) => {
             ...movieDetailObj.movie
         });
         delete merged.movie;
+        console.log(merged);
 
         res.status(200).json({
             success: true,
@@ -134,7 +135,7 @@ const allReviewsofMovie = async (req, res) => {
             });
 
         const uReviews = await Review.find({ movie: id })
-            .populate('user', 'name')
+            .populate('user')
             .sort('-createdAt'); // newest first
         const cReviews = await CriticReview.find({ movie: id })
             .sort('-createdAt');
@@ -183,11 +184,11 @@ const updateMovie = async (req, res) => {
                 message: "This movie not available to edit"
             });
 
-        const { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language } = req.body ?? {};
+        const { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availableOn, country, language } = req.body ?? {};
 
         //---------------have two models as seperate, thats why these stored as "Movie" & "MovieDetail"-----------
         const newMovieData = { title, genres, releaseDate, rating, featuredNow, currentlyOnTheatres, poster }
-        const newMovieDetails = { description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availbleOn, country, language, images };
+        const newMovieDetails = { description, trailerUrl, tags, globalCollection, director, cast, writers, duration, availableOn, country, language, images };
         const cleanedMovie = cleanObject(newMovieData);
         const cleanedMovieDetails = cleanObject(newMovieDetails)
 

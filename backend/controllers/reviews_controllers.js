@@ -5,7 +5,10 @@ const cleanObject = require("../utils/cleanObject");
 
 const allReviews = async (req, res) => {
     try {
-        const userReviews = await Review.find().sort({ createdAt: -1 });
+        const userReviews = await Review.find()
+            .populate('user')
+            .populate('movie')
+            .sort({ createdAt: -1 });
         const criticReviews = await CriticReview.find().sort({ createdAt: -1 });
 
         res.status(200).json({
@@ -29,8 +32,6 @@ const newReview = async (req, res) => {
         const userId = req.user._id;
         const { movie, rating, comment } = req.body ?? {};
 
-
-
         if (!movie || !userId || !rating)
             return res.status(400).json({
                 success: false,
@@ -42,7 +43,9 @@ const newReview = async (req, res) => {
         const existing = await Review.findOne({ movie, user: userId });
 
         if (existing) {
-            const updatedReview = await Review.findByIdAndUpdate(existing._id, reviewData, { new: true });
+            const updatedReview = await Review.findByIdAndUpdate(existing._id, reviewData, { new: true })
+                .populate('user')
+                .populate('movie');
             return res.status(200).json({
                 success: true,
                 message: "Review updated",
@@ -50,7 +53,9 @@ const newReview = async (req, res) => {
             });
         }
 
-        const review = await new Review(reviewData).save();
+        const review = await Review.create(reviewData);
+        await review.populate('user');
+        await review.populate('movie');
         res.status(201).json({
             success: true,
             message: "Review added",
@@ -68,7 +73,7 @@ const newReview = async (req, res) => {
 const newCriticReview = async (req, res) => {
     try {
         const { movie, critic, rating, comment } = req.body ?? {};
-        console.log("movie ->", movie);
+        // console.log("movie ->", movie);
 
         if (!movie || !critic || !rating)
             return res.status(400).json({
@@ -82,7 +87,8 @@ const newCriticReview = async (req, res) => {
         const existing = await CriticReview.findOne({ movie, critic });
 
         if (existing) {
-            const updatedCriticReview = await CriticReview.findByIdAndUpdate(existing._id, reviewData, { new: true });
+            const updatedCriticReview = await CriticReview.findByIdAndUpdate(existing._id, reviewData, { new: true })
+                .populate('movie');
             return res.status(200).json({
                 success: true,
                 message: "Critic review updated",
@@ -90,7 +96,9 @@ const newCriticReview = async (req, res) => {
             });
         }
 
-        const review = await new CriticReview(reviewData).save();
+        const review = await new CriticReview(reviewData).populate('movie')
+            .populate('movie')
+            .save();
         res.status(201).json({
             success: true,
             message: "Critic review added",
@@ -113,7 +121,7 @@ const editReview = async (req, res) => {
 const deleteReview = async (req, res) => {
     try {
         const { id } = req.params;
-        const review = await Review.findByIdAndDelete(id);
+        const review = await Review.findByIdAndDelete(id).populate('movie');
         if (!review)
             return res.status(404).json({
                 success: false,
@@ -122,7 +130,7 @@ const deleteReview = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: "Review deleted"
+            message: `your Review for ${review?.movie?.title} got deleted`
         });
     } catch (error) {
         console.error("Delete review error:", error);
@@ -136,7 +144,7 @@ const deleteReview = async (req, res) => {
 const deleteCriticReview = async (req, res) => {
     try {
         const { id } = req.params;
-        const criticReview = await CriticReview.findByIdAndDelete(id);
+        const criticReview = await CriticReview.findByIdAndDelete(id).populate('movie');
         if (!criticReview)
             return res.status(404).json({
                 success: false,

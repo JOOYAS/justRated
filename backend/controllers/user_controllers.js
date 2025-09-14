@@ -76,6 +76,8 @@ const allMyWatchlist = async (req, res) => {
     try {
         const user = req.user._id;
         const list = await Watchlist.find({ user }).populate('movie');
+        console.log(list);
+
         res.json({
             success: true,
             watchlist: list
@@ -85,6 +87,27 @@ const allMyWatchlist = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Couldn't fetch your Watchlist"
+        });
+    }
+
+    //
+    try {
+        const list = await Watchlist.find({ user: req.user._id })
+            .populate({
+                path: 'movie',
+                select: '_id title poster genres' // Specify fields you want
+            });
+
+        console.log('Populated Watchlist:', JSON.stringify(list, null, 2));
+
+        res.json({
+            success: true,
+            watchlist: list
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
         });
     }
 }

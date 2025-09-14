@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const criticReviewSchema = new Schema({
     movie: {
         type: Schema.Types.ObjectId,
+        ref: 'Movie',
         required: true,
     },
     critic: {
