@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import MovieCard from "../../components/moviecard";
+import MovieCard from "../../components/movie_card";
 import ScrollableCarousel from "../../components/scroll_carousel";
 import axiosInstance from "../../../utils/axios_instance";
 import LoaderOverlay from "../../components/loader_overlay";
@@ -14,9 +14,9 @@ const mockPerson = {
 };
 
 const mockMovies = [
-    { _id: "m1", name: "Inception", poster: "https://picsum.photos/200/300?1" },
-    { _id: "m2", name: "Interstellar", poster: "https://picsum.photos/200/300?2" },
-    { _id: "m3", name: "Oppenheimer", poster: "https://picsum.photos/200/300?3" },
+    { _id: "m1", title: "Inception", poster: "https://picsum.photos/200/300?1" },
+    { _id: "m2", title: "Interstellar", poster: "https://picsum.photos/200/300?2" },
+    { _id: "m3", title: "Oppenheimer", poster: "https://picsum.photos/200/300?3" },
 ];
 
 export default function PersonDetail() {
@@ -48,8 +48,6 @@ export default function PersonDetail() {
         setLoading(false)
     }, [])
 
-    console.log(person);
-
     if (loading) return <LoaderOverlay />;
 
     return (
@@ -67,7 +65,7 @@ export default function PersonDetail() {
                         {person?.roles.map((role) => (
                             <span
                                 key={role}
-                                className="px-3 py-1 text-sm bg-blue-500/10 text-blue-700 rounded-full border-2 border-amber-100"
+                                className="px-3 py-1 text-sm bg-blue-500/25 rounded-full border-2 border-amber-100"
                             >
                                 {role}
                             </span>
@@ -77,7 +75,7 @@ export default function PersonDetail() {
             </div>
             <p className="text-xl p-6">{person.bio}</p>
 
-            <h2 className='text-center font-bold text-2xl text-amber-950 dark:text-amber-50 py-6'>{`Movies of ${person.name}`}</h2>
+            <h2 className='font-bold text-2xl text-amber-950 dark:text-amber-50 py-6'>{`Movies of ${person.name}`}</h2>
             <ScrollableCarousel>
                 {movies.map((movie) => (
                     <MovieCard key={movie._id} movie={movie} />

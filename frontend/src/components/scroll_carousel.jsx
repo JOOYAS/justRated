@@ -15,7 +15,14 @@ const ScrollableCarousel = ({ children }) => {
         <div className="relative w-full scroll">
             <button
                 onClick={() => scroll("left")}
-                className="absolute h-full left-0 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white p-2 hover:border-2 border-amber-100"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 
+               flex items-center justify-center 
+               h-12 w-12 rounded-full 
+               bg-black/40 backdrop-blur-sm 
+               text-white shadow-lg
+               hover:bg-black/60 hover:scale-110  active:text-amber-500
+               hover:ring-2 hover:ring-amber-400 
+               transition-all duration-300"
             >
                 ◀
             </button>
@@ -29,7 +36,14 @@ const ScrollableCarousel = ({ children }) => {
 
             <button
                 onClick={() => scroll("right")}
-                className="absolute h-full right-0 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white p-2 hover:border-2 border-amber-100"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 
+               flex items-center justify-center 
+               h-12 w-12 rounded-full 
+               bg-black/40 backdrop-blur-sm 
+               text-white shadow-lg
+               hover:bg-black/60 hover:scale-110 
+               hover:ring-2 hover:ring-amber-400 active:text-amber-500
+               transition-all duration-300" 
             >
                 ▶
             </button>

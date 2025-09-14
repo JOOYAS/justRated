@@ -19,17 +19,16 @@ const Login = () => {
 
     const submitHandler = (event) => {
         event.preventDefault()
-        console.log(loginData);
+        // console.log(loginData);
         axiosInstance.post(`/auth/login`, loginData)
             .then(res => res.data)
             .then(data => {
-                console.log(data?.user)
-
                 if (data.user) {
-                    dispatch(setUser(data.user));
-
                     if (data.user.role === "admin") navigate("/");
                     else navigate("/", { replace: true });
+                    dispatch(setUser(data.user));
+
+
                 }
             })
             .catch(err => {
@@ -39,8 +38,6 @@ const Login = () => {
     }
 
     const changeHandler = (event) => {
-        console.log("works");
-
         const tempData = { ...loginData }
         tempData[event.target.name] = event.target.value.trim()
         setLoginData(tempData)

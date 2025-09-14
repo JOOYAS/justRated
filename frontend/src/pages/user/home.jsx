@@ -1,69 +1,69 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ScrollableCarousel from '../../components/scroll_carousel'
-import MovieCard from '../../components/moviecard';
+import MovieCard from '../../components/movie_card';
 
 const Home = () => {
     const mockMovies = [
         {
-            _id: "1",
+            _id: "68bfbecaf26ddf203f1682d8",
             title: "Echoes of Tomorrow",
             rating: 8.3,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "2",
             title: "Neon Horizon",
             rating: 7.9,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "3",
             title: "Shadows in Silence",
             rating: 8.6,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "4",
             title: "Crimson Legacy",
             rating: 7.2,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "5",
             title: "Fragments of Lightssssssssssssss",
             rating: 8.8,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "6",
             title: "Silent Storm",
             rating: 6.9,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "7",
             title: "Beyond the Abyss",
             rating: 8.1,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "8",
             title: "Glass Empire",
             rating: 7.5,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "9",
             title: "Midnight Veil",
             rating: 8.0,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
         {
             _id: "10",
             title: "Rise of Dawn",
             rating: 8.4,
-            poster: { url: "https://picsum.photos/300/400?random=1" },
+            poster: { url: "https://picsum.photos/300/400?random=1", public_id: "just_rated/wbvr7yyyx0k53ghbtit2" },
         },
     ];
 
@@ -71,13 +71,13 @@ const Home = () => {
         <>
             <div className="fixed inset-0 -z-10 bg-emerald-200 dark:bg-indigo-950 bg-[url('/bbblurry2.svg')]  bg-top bg-cover bg-no-repeat"></div>
             <div>
-                <section className='w-screen md:flex md:pb-10 md:h-[86vh] items-center justify-between overflow-hidden'>
+                <section className='w-screen md:flex md:pb-10 md:h-[84vh] items-center justify-between overflow-hidden'>
                     <div className='px-4 py-40 pb-56 md:py-60 md:w-2/3 text-center wrap-anywhere'>
                         <h1 className='font-extrabold sansation-bold italic text-3xl md:text-4xl mb-6 text-white dark:text-amber-300'>
                             One place for precise movie details<br />
                         </h1>
                         <p className='font-light text-xl md:text-2xl mb-8 md:mb-16'>Accurate, updated, and trusted by movie lovers everywhere.</p>
-                        <Link to={'/movies'} className="inline-block px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg hover:border-4 border-amber-100 hover:shadow-xl transition-transform hover:scale-105 duration-200">
+                        <Link to={'/movies'} className="inline-block px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl transition-transform hover:scale-105 duration-200">
                             Explore Movies 🍿
                         </Link>
                     </div>
@@ -93,18 +93,18 @@ const Home = () => {
 
                 <section className="relative h-[1rem] custom-top-fade bg-amber-50 dark:bg-neutral-800">
                     <div className='px-4 md:px-20 absolute w-full grid grid-cols-3 gap-2  -top-[800%]'>
-                        <div className="p-2 md:p-6 rounded-4xl bg-indigo-900/15 backdrop-blur-3xl text-center shadow-lg border-4 border-amber-100">
-                            <span className="text-3xl">🎬</span>
+                        <div className="group p-2 md:p-6 rounded-4xl bg-indigo-900/15 backdrop-blur-3xl text-center shadow-lg border-4 border-amber-100 hover:bg-amber-500/15">
+                            <span className="text-5xl group-hover:animate-pulse">🎬</span>
                             <h3 className="font-bold mt-3">Vast Library</h3>
                             <p className="text-sm">1M+ movie details</p>
                         </div>
-                        <div className="p-2 md:p-6 rounded-4xl bg-indigo-900/15 backdrop-blur-md text-center shadow-lg border-4 border-amber-100">
-                            <span className="text-3xl">🙊</span>
+                        <div className="group p-2 md:p-6 rounded-4xl bg-indigo-900/15 backdrop-blur-md text-center shadow-lg border-4 border-amber-100 hover:bg-red-500/15">
+                            <span className="text-5xl group-hover:animate-pulse">🙊</span>
                             <h3 className="font-bold mt-3">Spoiler-Free</h3>
                             <p className="text-sm">Reviews that don't ruin it</p>
                         </div>
-                        <div className="p-2 md:p-6 rounded-4xl bg-indigo-900/15 backdrop-blur-md text-center shadow-lg border-4 border-amber-100">
-                            <span className="text-3xl">🔥</span>
+                        <div className="group p-2 md:p-6 rounded-4xl bg-indigo-900/15 backdrop-blur-md text-center shadow-lg border-4 border-amber-100 hover:bg-blue-500/15">
+                            <span className="text-5xl group-hover:animate-pulse">🔥</span>
                             <h3 className="font-bold mt-3">Trending</h3>
                             <p className="text-sm">What the world's watching</p>
                         </div>

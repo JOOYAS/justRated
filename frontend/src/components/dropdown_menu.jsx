@@ -1,8 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, lazy } from "react";
 import { Link } from "react-router-dom";
 import logoutHandler from "../../utils/logout_handler";
 import { useDispatch } from "react-redux";
-import ThemeToggle from "./theme_toggle";
+const ThemeToggle = lazy(() => import("./theme_toggle"));
 
 const DropDownMenu = ({ user, setOpen, open }) => {
     const dispatch = useDispatch();
@@ -27,17 +27,17 @@ const DropDownMenu = ({ user, setOpen, open }) => {
         backdrop-blur-3xl bg-white/25 dark:bg-gray-800/25 
         text-black dark:text-amber-50 
         rounded-xl shadow-2xl overflow-hidden 
-        transition-[max-height,opacity] duration-300 ease-out
-        ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-            <Link to="/profile" className="p-4 flex items-center gap-3 border-b dark:border-gray-700">
+        transition-[max-height] duration-300 ease-out
+        ${open ? 'max-h-96' : 'max-h-0'}`}>
+            <Link to="/profile" className="group p-4 flex items-center gap-3 border-b dark:border-gray-700">
                 <div className="size-20 border-2 bg-amber-90 font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden">
                     {
                         user
-                            ? <img className="hover:rotate-12 duration-300 object-cover h-full" src={user?.profile?.url} alt='user avatar' />
-                            : <span className="hover:rotate-12 duration-300">{user?.name}</span>
+                            ? <img className="group-hover:rotate-12 duration-300 object-cover h-full" src={user?.profile?.url} alt='user avatar' />
+                            : <span className="group-hover:rotate-12 duration-300">{user?.name.charAt(0).toUpperCase()}</span>
                     }
                 </div>
-                <h3 className="text-xl font-bold mb-1">{user?.name}</h3>
+                <h3 className="text-xl font-bold mb-1 group-hover:text-blue-500 group-hover:underline">{user?.name}</h3>
             </Link>
             <ThemeToggle />
 

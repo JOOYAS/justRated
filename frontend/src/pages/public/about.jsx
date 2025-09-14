@@ -23,7 +23,10 @@ const About = () => {
                         find new favorites, and let your voice be heard.
                     </p>
                 </article>
-            </div>
+
+            </div>                
+            <img className="hidden md:block left-0 h-32 bg-black dark:bg-transparent rounded-2xl" src="/just_rated_logo_new3.svg" alt="logo" />
+
         </section>
     )
 }

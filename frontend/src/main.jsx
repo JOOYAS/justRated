@@ -1,16 +1,24 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from 'react-dom/client';
+import { Provider } from "react-redux";
+import store from './store';
+
+
 import ErrorPage from "./pages/public/errorPage";
 import LoaderOverlay from "./components/loader_overlay";
 import UserLayout from "./layouts/user_layout";
 import Login from "./pages/public/login";
-import { Provider } from "react-redux";
-
-import store from './store';
 import AuthInitializer from "./components/authcheck";
 import PrivateRoute from "./components/private_route";
-import AdminLayout from "./layouts/admin_layout";
+
+const AdminLayout = lazy(() => import("./layouts/admin_layout"));
+const AdminDashboard = lazy(() => import("./pages/admin/dashboard"));
+const AdminMovies = lazy(() => import("./pages/admin/movies"));
+const AdminUsers = lazy(() => import("./pages/admin/users"));
+const AdminReviews = lazy(() => import("./pages/admin/reviews"));
+const NewMovie = lazy(() => import("./pages/admin/new_movie"));
+const ViewOrEditMovie = lazy(() => import("./pages/admin/view_or_edit_movie"));
 
 const Home = lazy(() => import('./pages/user/home'));
 const PersonDetail = lazy(() => import("./pages/user/person"));
@@ -69,17 +77,17 @@ let router = createBrowserRouter([
                             </Suspense>
                     },
                     {
-                        path: "/about",
-                        element:
-                            <Suspense fallback={<LoaderOverlay />}>
-                                <About />
-                            </Suspense>
-                    },
-                    {
                         path: "/profile",
                         element: <Profile />
                     },
                 ]
+            },
+            {
+                path: "/about",
+                element:
+                    <Suspense fallback={<LoaderOverlay />}>
+                        <About />
+                    </Suspense>
             },
             {
                 path: "login",
@@ -95,35 +103,42 @@ let router = createBrowserRouter([
                     <PrivateRoute allowedRoles={["admin"]}>
                         <AdminLayout />
                     </PrivateRoute>,
-                // ,
                 children: [
                     {
-                        path: "dashboard",
-                        // element: <Dashboard />
+                        path: "/su",
+                        element: <AdminDashboard />
                     },
+                    // {
+                    //     path: "search", // find movies,persons,users, review  and links to see
+                    //     element: <SuSearch />
+                    // },
                     {
-                        path: "search", // find movies,persons,users, review  and links to see
-                        // element: <SuSearch />
+                        path: "movies",
+                        element: <AdminMovies />
                     },
                     {
                         path: "movies/new",
-                        // element: <NewMovie />
+                        element: <NewMovie />
                     },
                     {
                         path: "movies/:id",// view movie , update movie
-                        // element: <MovieforAdmin />
+                        element: <ViewOrEditMovie />
                     },
                     {
-                        path: "person/new", //person is not user. its like cast oor director
-                        // element: <NewPerson />
+                        path: "reviews",
+                        element: <AdminReviews />
                     },
-                    {
-                        path: "person/:id",// view and edit person details
-                        // element: </AdminViewPerson />
-                    },
+                    // {
+                    //     path: "person/new", //person is not user. its like cast oor director
+                    //     // element: <NewPerson />
+                    // },
+                    // {
+                    //     path: "person/:id",// view and edit person details
+                    //     // element: </AdminViewPerson />
+                    // },
                     {
                         path: "users",
-                        // element: <UserListforAdmin />
+                        element: <AdminUsers />
                     },
                     {
                         path: "users/:id",

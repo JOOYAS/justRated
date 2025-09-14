@@ -12,20 +12,20 @@ const Profile = () => {
 
 
     useEffect(() => {
-        axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/auth/me`)
-            .then(res => setUserDetails(res.data?.userData))
-            .catch(() => setUserDetails({
-                name: "John Doe",
-                email: "john@example.com",
-                profile: null
-            })) // fallback mock
+        axiosInstance.get('/auth/me')
+            .then(res => setUserDetails(
+                res.data?.userData
+            ))
+            .catch(() => { })
+
     }, [userId])
 
     const [formData, setFormData] = useState({ name: "", email: "" })
     const [file, setFile] = useState(null)
 
     useEffect(() => {
-        if (user) setFormData({ name: user.name, email: user.email })
+        if (user)
+            setFormData({ name: user.name, email: user.email })
     }, [user])
 
     const handleFileChange = (e) => {
@@ -67,7 +67,7 @@ const Profile = () => {
 
 
     return (
-        <div className="max-w-xl mx-auto p-6">
+        <div className="max-w-xl mx-auto p-2">
             <h2 className="text-3xl font-bold text-amber-500 dark:text-amber-300 mt-8 text-center">
                 Profile
             </h2>
@@ -75,11 +75,11 @@ const Profile = () => {
             <div className="flex flex-col">
                 {isEditing ? (
                     <div className=''>
-                        <label className="cursor-pointer">
+                        <label className="">
                             <img
                                 src={preview || user?.profile?.url || "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.b2eHgoNfj9xct2Py0r5F0gHaHa%3Fpid%3DApi&f=1&ipt=086b3189562c28166f84ed1a7bd9f59ddff228ae0ccfe4fc0a86c54a1191efec&ipo=images"}
                                 alt="profile"
-                                className="rounded-full size-48 mx-auto object-cover ring-4 ring-amber-500/20 shadow-md"
+                                className="cursor-pointer rounded-full size-48 mx-auto object-cover ring-4 ring-amber-500/20 shadow-md"
                             />
                             <input
                                 type="file"
@@ -104,14 +104,14 @@ const Profile = () => {
 
                             <div className="flex gap-3 w-full">
                                 <button
-                                    className="flex-1 px-2 py-1 rounded-xl bg-gray-500 text-white font-medium hover:bg-gray-600 transition-colors duration-200"
+                                    className="flex-1 px-2 py-1 rounded-xl bg-gray-500 text-white font-medium hover:bg-gray-600 border-4 border-transparent hover:border-amber-100 hover:shadow-xl transition-colors duration-200"
                                     onClick={() => setIsEditing(false)}
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleSave}
-                                    className="flex-1 px-5 py-2.5 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
+                                    className="flex-1 px-5 py-2.5 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 border-4 border-transparent  hover:border-amber-100 hover:shadow-xl transition-colors duration-200"
                                 >
                                     Save
                                 </button>
@@ -120,15 +120,21 @@ const Profile = () => {
 
                     </div>
                 ) : (
-                    <div className='relative flex justify-around md:justify-center items-center gap:4 md:gap-12 m-6'>
-                        <img
-                            src={user?.profile?.url || "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.b2eHgoNfj9xct2Py0r5F0gHaHa%3Fpid%3DApi&f=1&ipt=086b3189562c28166f84ed1a7bd9f59ddff228ae0ccfe4fc0a86c54a1191efec&ipo=images"}
-                            alt="profile"
-                            className="size-32 rounded-full object-cover ring-8 ring-amber-500 shadow-md"
-                        />
+                        <div className='relative flex justify-center items-center gap-4 md:gap-12 my-6 md:m-6'>
+                            <div className='size-32 rounded-full overflow-hidden  ring-8 ring-amber-500 shadow-md hover:rotate-12 duration-300'>
+                                {
+                                    user?.profile
+                                        ? <img
+                                            src={user?.profile?.url || "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.b2eHgoNfj9xct2Py0r5F0gHaHa%3Fpid%3DApi&f=1&ipt=086b3189562c28166f84ed1a7bd9f59ddff228ae0ccfe4fc0a86c54a1191efec&ipo=images"}
+                                            alt="profile"
+                                            className="object-cover h-full"
+                                        />
+                                        : <span className="">{user?.name.charAt(0).toUpperCase()}</span>
+                                }
+                            </div>
                         <div>
                             <h3 className="text-xl font-bold mb-1">{user?.name}</h3>
-                            <p className="text-gray-500 font-semibold dark:text-gray-400">{user?.email}</p>
+                                <p className="text-gray-500 font-semibold dark:text-gray-300">{user?.email}</p>
                             <button
                                 className="absolute top-0 right-0 px-2 py-1 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
                                 onClick={() => setIsEditing(true)}

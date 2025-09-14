@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import { clearUser, setUser } from "../store/user_slice";
 import axiosInstance from "../../utils/axios_instance";
-import DropDownMenu from "./dropdown_menu";
-import logoutHandler from "../../utils/logout_handler";
-import Hamburger from "./hamburger_button";
+import UserNavItem from "./user_nav_link";
+const DropDownMenu = lazy(() => import("./dropdown_menu"));
+const Hamburger = lazy(() => import("./hamburger_button"));
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -22,8 +22,7 @@ const Header = () => {
                 .then(res => res.data)
                 .then(data => {
                     if (data?.userData)
-                        console.log("userData :", data?.userData);
-
+                        // console.log("userData :", data?.userData);
                         setUserData(data?.userData)
                 })
                 .catch(error => {
@@ -53,15 +52,13 @@ const Header = () => {
                 </Link>
 
                 <nav className="hidden md:flex items-center gap-6 text-lg font-normal text-amber-900 dark:text-amber-300">
-                    <Link to="/" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Home</Link>
-                    <Link to="/movies" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Movies</Link>
-                    <Link to="/watchlist" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Watchlist</Link>
-                    <Link to="/about" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">About</Link>
-
+                    <UserNavItem to="/" label="Home" exact />
+                    <UserNavItem to="/movies" label="Movies" />
+                    <UserNavItem to="/watchlist" label="Watchlist" />
+                    <UserNavItem to="/about" label="About" />                    
                     {
-                        !userData
-                            ? <Link to="/login" className="hover:text-yellow-500 hover:underline underline-offset-4 transition">Login</Link>
-                            : <button
+                        userData
+                            ? <button
                                 data-dropdown-toggle //a custom attribute to ign9ore click when needed
                                 onClick={(e) => {
                                     setOpen(!open)
@@ -70,9 +67,10 @@ const Header = () => {
                                 {
                                     userData?.profile
                                         ? <img className="hover:rotate-12 duration-300 object-cover h-full" src={userData?.profile?.url} alt='user profile picture' />
-                                        : <span className="hover:rotate-12 duration-300">S</span>
+                                        : <span className="hover:rotate-12 duration-300">{userData?.name.charAt(0).toUpperCase()}</span>
                                 }
                             </button>
+                            : null
                     }
                 </nav>
                 <Hamburger open={open} setOpen={setOpen} />

@@ -24,9 +24,6 @@ const AuthInitializer = () => {
     }, [dispatch]);
 
     const userData = useSelector(s => s.user);
-    console.log(userData);
-
-
 
     return <Outlet />;
 }

@@ -1,11 +1,11 @@
 const LoaderOverlay = ({ children, overlay = false }) => {
     return (
-        <div className={`relative ${overlay ? 'w-full h-full' : 'h-screen'}`}>
+        <div className={`relative ${overlay ? 'w-full h-full' : 'h-screen'} z-40`}>
             {overlay && children}
 
             <div className={`
 				absolute w-full h-full inset-0 flex items-center justify-center 
-				bg-black/40 backdrop-blur-sm 
+				bg-black/10 backdrop-blur-sm 
 				${overlay ? '' : 'relative'}
 			`}>
                 <img src="/star_logo_2_blur.svg"

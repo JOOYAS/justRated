@@ -1,4 +1,3 @@
-
 const Hamburger = ({ open, setOpen }) => {
 
     return (
@@ -7,7 +6,7 @@ const Hamburger = ({ open, setOpen }) => {
             onClick={(e) => {
                 setOpen(!open)
             }}
-            className="md:hidden size-12 text-2xl rounded-lg hover:border-2 border-amber-800 text-amber-700
+            className="md:hidden size-12 text-4xl rounded-lg hover:border-2 border-amber-800 text-amber-700
                        dark:text-white"
         >
             ☰

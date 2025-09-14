@@ -1,6 +1,7 @@
+import { lazy } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
-import LoaderOverlay from "./loader_overlay";
+import { Navigate } from "react-router-dom";
+const LoaderOverlay = lazy(() => import("./loader_overlay"));
 
 const PrivateRoute = ({ allowedRoles, children }) => {
     const { info, isLoggedIn, loading } = useSelector(s => s.user);
