@@ -1,3 +1,4 @@
+const Movie = require("../models/movie_model");
 const Watchlist = require("../models/watchlist_model");
 const cleanObject = require("../utils/cleanObject");
 
@@ -29,9 +30,15 @@ const addtoWatchlist = async (req, res) => {
                 message: "No details"
             });
 
+        const MovieExist = await Movie.findById(movie)
+        if (!MovieExist) return res.status(400).json({
+            success: false,
+            message: 'Movie not exist'
+        });
+
         const exists = await Watchlist.findOne({ user, movie });
         if (exists)
-            return res.status(400).json({
+            return res.status(200).json({
                 success: false,
                 message: 'Already in watchlist'
             });
