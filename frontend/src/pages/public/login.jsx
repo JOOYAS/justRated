@@ -22,16 +22,9 @@ const Login = () => {
         // console.log(loginData);
         axiosInstance.post(`/auth/login`, loginData)
             .then(res => res.data)
-            .then(data => {
-                if (data.user) {
-                    dispatch(setUser(data.user));
-                    if (data.user.role === "admin") navigate("/");
-                    else navigate("/", { replace: true });
-                }
-            })
+            .then(data => dispatch(setUser(data.user)))
             .catch(err => {
                 console.log(err);
-
             })
     }
 

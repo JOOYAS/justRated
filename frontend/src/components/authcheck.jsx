@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { clearUser, setLoading, setUser } from "../store/user_slice";
 import axiosInstance from "../../utils/axios_instance";
 
 const AuthInitializer = () => {
     const dispatch = useDispatch();
+    const { isLoggedIn, info } = useSelector(s => s.user);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(setLoading(true));
@@ -15,7 +17,6 @@ const AuthInitializer = () => {
                 if (data?.tokenData)
                     dispatch(setUser(data.tokenData));
                 else dispatch(clearUser());
-
             })
             .catch(error => {
                 dispatch(clearUser());
@@ -23,9 +24,14 @@ const AuthInitializer = () => {
             });
     }, [dispatch]);
 
-    const userData = useSelector(s => s.user);
+    useEffect(() => {
+        if (isLoggedIn) {
+            if (info.role === "admin") navigate("/su", { replace: true });
+            else navigate("/", { replace: true });
+        }
+    }, [isLoggedIn, info, navigate]);
 
     return <Outlet />;
-}
+};
 
 export default AuthInitializer

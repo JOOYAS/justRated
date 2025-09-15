@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import axiosInstance from '../../../utils/axios_instance';
 import CurrentUser from '../../components/current_user';
 
 const Signup = () => {
     const { isLoggedIn } = useSelector((s) => s.user);
-
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [error, setError] = useState("")
     const [signupData, setSignupData] = useState({
@@ -20,8 +20,7 @@ const Signup = () => {
         axiosInstance.post(`/auth/signup`, signupData)
             .then(res => res.data)
             .then(data => {
-                console.log(data?.user)
-
+                // console.log(data?.user)
                 if (data?.user)
                     dispatch(setUser(data.user));
                 navigate("/", { replace: true })
