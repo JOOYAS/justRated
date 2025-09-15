@@ -19,10 +19,11 @@ const AuthInitializer = () => {
                 else dispatch(clearUser());
             })
             .catch(error => {
-                dispatch(clearUser());
+                if (!isLoggedIn)
+                    dispatch(clearUser());
                 console.error("Error fetching user data:", error);
             });
-    }, [dispatch]);
+    }, [dispatch, isLoggedIn]);
 
     useEffect(() => {
         if (isLoggedIn) {
