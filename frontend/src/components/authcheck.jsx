@@ -18,7 +18,7 @@ const AuthInitializer = () => {
                 else dispatch(clearUser());
             })
             .catch(error => {
-                dispatch(clearUser());
+                setTimeout(() => dispatch(clearUser()), 300);
                 console.error("Error fetching user data:", error);
             })
             .finally(() => {

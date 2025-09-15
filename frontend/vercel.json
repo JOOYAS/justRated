@@ -1,5 +1,12 @@
 {
 	"rewrites": [
-		{ "source": "/(.*)", "destination": "/" }
+		{
+			"source": "/api/(.*)",
+			"destination": "https://justrated.onrender.com/$1"
+		},
+		{
+			"source": "/(.*)",
+			"destination": "/"
+		}
 	]
 }
