@@ -43,7 +43,7 @@ const Login = () => {
         setLoginData(tempData)
     }
     return (
-        <div className="relative min-h-screen flex justify-center-safe w-screen px-[1rem] md:px-12 md:py-12 md:ps-0 bg-gradient-to-br from-indigo-800 to-pink-600 overflow-hidden">
+        <div className="relative min-h-dvh flex justify-center-safe w-screen px-[1rem] md:px-12 md:py-12 md:ps-0 bg-gradient-to-br from-indigo-800 to-pink-600 overflow-hidden">
             {isLoggedIn && (
                 <div className="absolute w-full inset-0 bg-black/50 flex items-center justify-center z-50">
                     <CurrentUser />

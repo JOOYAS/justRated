@@ -9,7 +9,7 @@ const AdminMovieCard = ({ movie }) => {
         >
             <LazyImage publicId={movie?.poster?.public_id} alt={`${movie.name} movie poster`} className={"w-full h-40 md:h-64 object-cover rounded-lg bg-amber-800/35"} />
             {/* <img
-                src={movie.poster?.url || "/328-300x300.jpg"}
+                src={movie.poster?.url || "/sample_placeholder.png"}
                 alt={`${movie.name} movie poster`}
                 className="w-full h-40 md:h-64 object-cover rounded-lg bg-amber-800/35"
             /> */}

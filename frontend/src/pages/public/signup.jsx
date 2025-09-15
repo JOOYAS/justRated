@@ -42,7 +42,7 @@ const Signup = () => {
 
 
     return (
-        <div className="relative min-h-screen flex flex-row-reverse justify-center-safe w-screen px-[1rem] md:px-12 md:py-12 md:pe-0 bg-gradient-to-tr from-indigo-800 to-pink-600 overflow-hidden">
+        <div className="relative min-h-dvh flex flex-row-reverse justify-center-safe w-screen px-[1rem] md:px-12 md:py-12 md:pe-0 bg-gradient-to-tr from-indigo-800 to-pink-600 overflow-hidden">
             {isLoggedIn && (
                 <div className="absolute w-full inset-0 bg-black/50 flex items-center justify-center z-50">
                     <CurrentUser />

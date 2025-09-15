@@ -81,6 +81,8 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                         <button
                             className="size-12 p-2 text-2xl rounded-full border-2 border-amber-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
                             onClick={() => setEditMode(true)}
+                            title="edit movie details"
+                            aria-label="edit movie details"
                         >
                             🖊
                         </button>

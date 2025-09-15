@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ScrollableCarousel from '../../components/scroll_carousel'
 import MovieCard from '../../components/movie_card';
+import axiosInstance from '../../../utils/axios_instance';
+import LazyImage from '../../components/lazy_image';
 
 const Home = () => {
+    const [movies, setMovies] = useState([])
+
     const mockMovies = [
         {
             _id: "68bfbecaf26ddf203f1682d8",
@@ -67,6 +71,15 @@ const Home = () => {
         },
     ];
 
+    useEffect(() => {
+        axiosInstance.get('/movies')
+            .then(res => setMovies(res.data?.movies))
+            .catch(err => {
+                console.error(err)
+                setMovies(mockMovies)
+            })
+    }, [])
+
     return (
         <>
             <div className="fixed inset-0 -z-10 bg-emerald-200 dark:bg-indigo-950 bg-[url('/bbblurry2.svg')]  bg-top bg-cover bg-no-repeat"></div>
@@ -82,11 +95,23 @@ const Home = () => {
                         </Link>
                     </div>
 
+                    {/* just_rated/xpmjzzzl1h1wpawtna7d
+                    just_rated/qmsfy4h3h5ntznc6l4xl
+                    iu_a9cjfv
+                    iu_iqclwv
+                    iu_vbchlf*/}
                     <div className="group hidden relative w-screen flex-1 h-52 md:flex justify-center transition-all duration-300 mb-48">
-                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-2xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-40 group-hover:rotate-0 group-hover:scale-105 hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100" />
-                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-2xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-20 group-hover:rotate-0 group-hover:scale-105 rotate-[24deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100" />
-                        <img src="https://picsum.photos/300" className="absolute w-52 h-80 rounded-2xl shadow-lg bg-indigo-950/25 transition-transform duration-200 group-hover:left-0 group-hover:rotate-0 group-hover:scale-105 transform rotate-[12deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100"
-                        />
+
+                        <div className="absolute w-52 h-80 rounded-2xl shadow-lg overflow-hidden bg-indigo-950/25 transition-transform duration-200 group-hover:left-40 group-hover:rotate-0 group-hover:scale-105 hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100">
+                            <LazyImage publicId={"iu_a9cjfv"} alt={`random movie poster`} className={"w-full h-full object-cover"} />
+                        </div>
+                        <div className="absolute w-52 h-80 rounded-2xl shadow-lg overflow-hidden bg-indigo-950/25 transition-transform duration-200 group-hover:left-20 group-hover:rotate-0 group-hover:scale-105 rotate-[24deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100">
+                            <LazyImage publicId={"iu_iqclwv"} alt={`random movie poster`} className={"w-full h-full object-cover"} />
+                        </div>
+                        <div className="absolute w-52 h-80 rounded-2xl shadow-lg overflow-hidden bg-indigo-950/25 transition-transform duration-200 group-hover:left-0 group-hover:rotate-0 group-hover:scale-105 transform rotate-[12deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100"
+                        >
+                            <LazyImage publicId={"iu_vbchlf"} alt={`random movie poster`} className={"w-full h-full object-cover"} />
+                        </div>
                     </div>
 
                 </section>
@@ -115,23 +140,23 @@ const Home = () => {
                 <section className='bg-amber-50 dark:bg-neutral-800 md:px-20  min-h-96 pt-10 flex-col gap-4 overflow-hidden'>
                     <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6 z-20'>Featured today</h2>
                     <ScrollableCarousel>
-                        {mockMovies.map((movie) => (
-                            <MovieCard key={movie._id} movie={movie} />
+                        {movies?.map((movie) => (
+                            <MovieCard key={movie?._id} movie={movie} />
                         ))}
                     </ScrollableCarousel>
 
 
                     <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6'>Top 10</h2>
                     <ScrollableCarousel>
-                        {mockMovies.map((movie) => (
-                            <MovieCard key={movie._id} movie={movie} />
+                        {movies?.map((movie) => (
+                            <MovieCard key={movie?._id} movie={movie} />
                         ))}
                     </ScrollableCarousel>
 
                     <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6'>Currently on Theaters</h2>
                     <ScrollableCarousel>
-                        {mockMovies.map((movie) => (
-                            <MovieCard key={movie._id} movie={movie} />
+                        {movies?.map((movie) => (
+                            <MovieCard key={movie?._id} movie={movie} />
                         ))}
                     </ScrollableCarousel>
                 </section>

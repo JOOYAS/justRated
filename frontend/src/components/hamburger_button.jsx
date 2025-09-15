@@ -6,7 +6,7 @@ const Hamburger = ({ open, setOpen }) => {
             onClick={(e) => {
                 setOpen(!open)
             }}
-            className="md:hidden size-12 text-4xl rounded-lg hover:border-2 border-amber-800 text-amber-700
+            className="md:hidden size-12 text-4xl rounded-lg hover:border-2 border-amber-800 dark:border-amber-400 text-amber-700
                        dark:text-white"
         >
             ☰

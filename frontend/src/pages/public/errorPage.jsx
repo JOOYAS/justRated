@@ -8,7 +8,7 @@ const ErrorPage = () => {
     const errorImageUrl = `https://robohash.org/${statusCode}`; //just an robo image
 
     return (
-        <div className="min-h-screen flex">
+        <div className="min-h-dvh flex">
             <div className="z-10 w-screen md:w-[65%] flex flex-col justify-center items-center text-center p-8 bg-amber-50 dark:bg-neutral-800">
                 <h1 className="flex text-9xl font-bold text-red-500 items-center"><span className='text-6xl text-amber-900 dark:text-gray-300'>Error  </span>{statusCode}</h1>
                 <p className="mt-4 text-2xl font-semibold">

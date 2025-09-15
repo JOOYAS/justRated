@@ -59,7 +59,7 @@ export default function AdminLayout() {
                         className="ms-12 size-12 bg-indigo-900 text-amber-50 font-extrabold rounded-xl flex items-center justify-center overflow-hidden hover:border-4 border-amber-900 dark:border-amber-100">
                         {
                             userData?.profile
-                                ? <LazyImage publicId={userData?.profile?.public_id} alt={"profile picture"} className={""} />
+                                ? <LazyImage publicId={userData?.profile?.public_id} alt={"profile picture"} className={"w-full h-full object-cover"} />
                                 // <img className="object-cover h-full" src={userData?.profile?.url} alt='user profile picture' />
                                 : <span className="">{userData?.name.charAt(0).toUpperCase()}</span>
                         }

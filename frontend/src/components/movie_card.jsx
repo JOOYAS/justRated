@@ -26,14 +26,15 @@ const MovieCard = ({ movie }) => {
         <div
             className="group flex-none  w-32 md:w-44 relative bg-white dark:bg-amber-950 rounded-xl shadow hover:shadow-lg transition duration-300 border-4 border-transparent hover:border-amber-200"
         >
-            <LazyImage publicId={movie?.poster?.public_id} alt={`${movie.name} movie poster`} className={"w-full h-40 md:h-64 object-cover rounded-lg bg-amber-800/35"} />
+            <LazyImage publicId={movie?.poster?.public_id} alt={`${movie?.name} movie poster`} className={"w-full h-40 md:h-64 object-cover rounded-lg bg-amber-800/35"} />
             {/* <img
-                src={movie.poster?.url || "/328-300x300.jpg"}
+                src={movie.poster?.url || "/sample_placeholder.png"}
                 alt={`${movie.name} movie poster`}
                 className=""
             /> */}
             {!isWatchlistPage && (
                 <svg width="30" height="30" className="hidden group-hover:block absolute top-0 ms-2 cursor-pointer" onClick={() => addToWatchlist}>
+                    <title>Add to Watchlist</title>
                     <path d="M   0   0 L 30   0 L 30 30 L  15  20 L   0 30 Z" fill={fillColor} />
                     <text x="15"
                         y="15"
@@ -51,7 +52,8 @@ const MovieCard = ({ movie }) => {
                 </span>}
                 <Link
                     to={`/movies/${movie._id}`}
-                    className="block w-full truncate text-lg font-semibold group-hover:text-blue-500 hover:underline group-hover:whitespace-normal group-hover:overflow-visible"
+                    className="block w-full truncate text-base md:text-lg font-semibold group-hover:text-blue-500 hover:underline group-hover:whitespace-normal group-hover:overflow-visible"
+                    aria-label="view detailed" title="view detailed"
                 >
                     {movie.title}
                 </Link>
