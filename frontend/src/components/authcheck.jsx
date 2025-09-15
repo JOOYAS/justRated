@@ -12,22 +12,24 @@ const AuthInitializer = () => {
     useEffect(() => {
         dispatch(setLoading(true));
         axiosInstance.get(`/auth/me`)
-            .then(res => res.data)
-            .then(data => {
-                if (data?.tokenData)
-                    dispatch(setUser(data.tokenData));
+            .then(res => {
+                if (res.data?.tokenData)
+                    dispatch(setUser(res.data.tokenData));
                 else dispatch(clearUser());
             })
             .catch(error => {
-                if (!isLoggedIn)
-                    dispatch(clearUser());
+                dispatch(clearUser());
                 console.error("Error fetching user data:", error);
+            })
+            .finally(() => {
+                dispatch(setLoading(false));
             });
-    }, [dispatch, isLoggedIn]);
+    }, [dispatch]);
 
     useEffect(() => {
         if (isLoggedIn) {
-            if (info.role === "admin") navigate("/su", { replace: true });
+            if (info.role === "admin")
+                navigate("/su", { replace: true });
             else navigate("/", { replace: true });
         }
     }, [isLoggedIn, info, navigate]);

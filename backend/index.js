@@ -21,8 +21,6 @@ const allowedOrigins = {
     production: process.env.FRONTEND_URL
 };
 
-
-
 app.use(cors({
     origin: allowedOrigins[process.env.NODE_ENV],
     credentials: true
