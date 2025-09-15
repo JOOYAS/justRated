@@ -2,8 +2,8 @@ import React from 'react'
 
 const About = () => {
     return (
-        <section className="h-[90vh] flex justify-center items-center">
-            <div className="mx-auto md:px-96 text-center fixed inset-0 -z-10 bg-emerald-200 dark:bg-indigo-950 bg-[url('/bbblurry2.svg')]  bg-top bg-cover bg-no-repeat ">
+        <section className="h-dvh flex justify-center items-center">
+            <div className="mx-auto md:px-96 text-center fixed inset-0 -z-10 bg-emerald-200 dark:bg-emerald-900 bg-[url('/bbblurry2.svg')]  bg-top bg-cover bg-no-repeat ">
             </div>
             <div className='max-w-2xl px-6 z-10'>
                 <header className="mb-8">

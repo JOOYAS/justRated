@@ -24,11 +24,9 @@ const Login = () => {
             .then(res => res.data)
             .then(data => {
                 if (data.user) {
+                    dispatch(setUser(data.user));
                     if (data.user.role === "admin") navigate("/");
                     else navigate("/", { replace: true });
-                    dispatch(setUser(data.user));
-
-
                 }
             })
             .catch(err => {
