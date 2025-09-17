@@ -7,14 +7,12 @@ const upload = require('../middlewares/upload');
 const router = express.Router();
 
 router.route('/')
-    .all(authVerify, isAdmin)
-    .get(allPersons)
-    .post(upload.single('photo'), addPerson)
+    .get(authVerify, allPersons)
+    .post(authVerify, isAdmin, upload.single('photo'), addPerson)
 
 router.route('/:id')
-    .all(authVerify, isAdmin, validateObjectId)
-    .get(fetchPerson)
-    .patch(upload.single('photo'), updatePerson)
-    .delete(deletePerson)
+    .get(authVerify, fetchPerson)
+    .patch(isAdmin, validateObjectId, upload.single('photo'), updatePerson)
+    .delete(isAdmin, validateObjectId, deletePerson)
 
 module.exports = router;
