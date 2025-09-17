@@ -5,7 +5,7 @@ const AdminMovieCard = ({ movie }) => {
 
     return (
         <div
-            className="group flex-none w-32 md:w-44 relative dark:bg-gray-900 rounded-xl shadow hover:shadow-lg transition duration-300 border-4 border-transparent hover:border-amber-200"
+            className="group flex-none w-32 md:w-44 relative bg-gray-100 dark:bg-gray-900 rounded-xl shadow hover:shadow-lg transition duration-300 border-4 border-transparent hover:border-amber-600"
         >
             <LazyImage publicId={movie?.poster?.public_id} alt={`${movie.name} movie poster`} className={"w-full h-40 md:h-64 object-cover rounded-lg bg-amber-800/35"} />
             {/* <img
@@ -14,7 +14,6 @@ const AdminMovieCard = ({ movie }) => {
                 className="w-full h-40 md:h-64 object-cover rounded-lg bg-amber-800/35"
             /> */}
             <div className="p-3 space-y-0.5">
-                <p className="text-xs text-gray-500">ID: {movie._id}</p>
                 <Link
                     to={`/su/movies/${movie._id}`}
                     className="block w-full truncate text-lg font-semibold group-hover:text-blue-500 hover:underline group-hover:whitespace-normal group-hover:overflow-visible"

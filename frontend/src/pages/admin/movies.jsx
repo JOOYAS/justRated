@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import ScrollableCarousel from '../../components/scroll_carousel';
 import AdminMovieCard from '../../components/admin/adm_movie_card';
+import axiosInstance from '../../../utils/axios_instance';
+import LoaderOverlay from '../../components/loader_overlay';
 
 const AdminMovies = () => {
+    const navigate = useNavigate();
+    const [movies, setMovies] = useState([])
+
     const mockMovies = [
         {
             _id: "1",
@@ -67,60 +72,69 @@ const AdminMovies = () => {
         },
     ];
 
-    const navigate = useNavigate();
-
+    useEffect(() => {
+        axiosInstance.get('/movies')
+            .then(res => setMovies(res.data?.movies))
+            .catch(err => {
+                console.error(err)
+                setMovies(mockMovies)
+            })
+    }, [])
 
     return (
+        <>
+            {!movies?.length ? <LoaderOverlay overlay /> :
         <div className="">
             <section className='md:px-20 min-h-96 pt-10 flex-col gap-4 overflow-hidden'>
-                <div className="w-full mx-4 py-16 flex justify-center items-center bg-indigo-900/75 text-white rounded-xl">
-                    <Link to={'/su/movies/new'} className='py-2 px-4 border-2 border-white dark:border-neutral-900 rounded-2xl hover:bg-black/15'>＋ Add Movie</Link>
+                        <div className="md:w-full mx-4 py-16 flex justify-center items-center bg-indigo-900/75 text-white rounded-xl">
+                            <Link to={'/su/movies/new'} className='py-2 px-4 border-2 border-white rounded-2xl hover:bg-black/15'>＋ Add Movie</Link>
                 </div>
                 <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6 z-20'>Featured today</h2>
                 <ScrollableCarousel>
-                    {mockMovies.map((movie) => (
-                        <AdminMovieCard key={movie._id} movie={movie} />
+                            {movies?.map((movie) => (
+                                <AdminMovieCard key={movie?._id} movie={movie} />
                     ))}
                 </ScrollableCarousel>
 
 
                 <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6'>Top 10</h2>
                 <ScrollableCarousel>
-                    {mockMovies.map((movie) => (
-                        <AdminMovieCard key={movie._id} movie={movie} />
+                            {movies.map((movie) => (
+                                <AdminMovieCard key={movie?._id} movie={movie} />
                     ))}
                 </ScrollableCarousel>
 
                 <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6'>Currently on Theaters</h2>
                 <ScrollableCarousel>
-                    {mockMovies.map((movie) => (
-                        <AdminMovieCard key={movie._id} movie={movie} />
+                            {movies.map((movie) => (
+                                <AdminMovieCard key={movie?._id} movie={movie} />
                     ))}
                 </ScrollableCarousel>
 
                 <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6'>Indian specials</h2>
                 <ScrollableCarousel>
-                    {mockMovies.map((movie) => (
-                        <AdminMovieCard key={movie._id} movie={movie} />
+                            {movies.map((movie) => (
+                                <AdminMovieCard key={movie?._id} movie={movie} />
                     ))}
                 </ScrollableCarousel>
 
                 <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6'>Animations</h2>
                 <ScrollableCarousel>
-                    {mockMovies.map((movie) => (
-                        <AdminMovieCard key={movie._id} movie={movie} />
+                            {movies.map((movie) => (
+                                <AdminMovieCard key={movie?._id} movie={movie} />
                     ))}
                 </ScrollableCarousel>
 
                 <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6'>Musical movies</h2>
                 <ScrollableCarousel>
-                    {mockMovies.map((movie) => (
-                        <AdminMovieCard key={movie._id} movie={movie} />
+                            {movies.map((movie) => (
+                                <AdminMovieCard key={movie?._id} movie={movie} />
                     ))}
                 </ScrollableCarousel>
             </section>
         </div>
-
+            }
+        </>
     )
 }
 

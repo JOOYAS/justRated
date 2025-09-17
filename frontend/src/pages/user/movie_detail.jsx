@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 import CriticReviewCard from '../../components/critic_review_card';
 import LazyImage from '../../components/lazy_image';
 
-
 const MovieDetail = () => {
     const mockmovie = {
         "success": true,
@@ -113,7 +112,6 @@ const MovieDetail = () => {
         ],
     };
 
-
     const { id } = useParams();
     const [reviews, setReviews] = useState([]);
     const [CriticReviews, setCriticReviews] = useState([])
@@ -121,7 +119,6 @@ const MovieDetail = () => {
     const [rating, setRating] = useState(0);
     const [movie, setMovie] = useState({});
     const userData = useSelector(s => s.user);
-
 
     useEffect(() => {
         axiosInstance.get(`/movies/${id}`)
@@ -168,7 +165,6 @@ const MovieDetail = () => {
                 setText("");
             });
     };
-
 
     if (!movie) return <LoaderOverlay />;
     return (

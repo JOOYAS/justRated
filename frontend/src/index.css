@@ -65,7 +65,7 @@ html
                                 {
                                     display: inline-block;
                                     /* Ensure the element can be transformed */
-                                    animation: scaleAndRotate 2s infinite;
+                                    animation: scaleAndRotate 4s infinite;
 }
 @keyframes moveBackground
 {

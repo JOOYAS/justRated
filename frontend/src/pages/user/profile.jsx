@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axiosInstance from '../../../utils/axios_instance'
 import { setUser } from '../../store/user_slice'
+import LazyImage from '../../components/lazy_image'
 
 const Profile = () => {
     const [user, setUserDetails] = useState()
@@ -67,12 +68,11 @@ const Profile = () => {
 
 
     return (
-        <div className="max-w-xl mx-auto p-2">
-            <h2 className="text-3xl font-bold text-amber-500 dark:text-amber-300 mt-8 text-center">
+        <div className="max-w-xl mx-auto text-black">
+            <div className="flex flex-col m-4 px-4 pb-8 bg-gray-50/50 rounded-2xl">
+                <h2 className="text-3xl font-bold text-amber-500 dark:text-amber-300 mt-2 mb-8 text-center">
                 Profile
-            </h2>
-
-            <div className="flex flex-col">
+                </h2>
                 {isEditing ? (
                     <div className=''>
                         <label className="">
@@ -121,20 +121,23 @@ const Profile = () => {
                     </div>
                 ) : (
                         <div className='relative flex justify-center items-center gap-4 md:gap-12 my-6 md:m-6'>
-                            <div className='size-32 rounded-full overflow-hidden  ring-8 ring-amber-500 shadow-md hover:rotate-12 duration-300'>
+                            <div className='size-32 rounded-full bg-sky-600 overflow-hidden text-7xl font-extrabold ring-8 ring-amber-500 flex justify-center items-center hover:rotate-12 duration-300'>
                                 {
                                     user?.profile
-                                        ? <img
-                                            src={user?.profile?.url || "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.b2eHgoNfj9xct2Py0r5F0gHaHa%3Fpid%3DApi&f=1&ipt=086b3189562c28166f84ed1a7bd9f59ddff228ae0ccfe4fc0a86c54a1191efec&ipo=images"}
-                                            alt="profile"
-                                            className="object-cover h-full"
-                                        />
-                                        : <span className="">{user?.name.charAt(0).toUpperCase()}</span>
+                                        ? <LazyImage publicId={user?.profile?.public_id} className={"object-cover h-full"} />
+                                        : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='h-full object-cover' />
+                                    // user?.profile
+                                    //     ? <img
+                                    //         src={user?.profile?.url || "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.b2eHgoNfj9xct2Py0r5F0gHaHa%3Fpid%3DApi&f=1&ipt=086b3189562c28166f84ed1a7bd9f59ddff228ae0ccfe4fc0a86c54a1191efec&ipo=images"}
+                                    //         alt="profile"
+                                    //         className="object-cover h-full"
+                                    //     />
+                                    //     : <span className="">{user?.name.charAt(0).toUpperCase()}</span>
                                 }
                             </div>
                         <div>
-                            <h3 className="text-xl font-bold mb-1">{user?.name}</h3>
-                                <p className="text-gray-500 font-semibold dark:text-gray-300">{user?.email}</p>
+                                <h3 className="text-2xl font-bold mb-1">{user?.name}</h3>
+                                <p className="text-gray-800 font-normal">{user?.email}</p>
                             <button
                                 className="absolute top-0 right-0 px-2 py-1 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
                                 onClick={() => setIsEditing(true)}

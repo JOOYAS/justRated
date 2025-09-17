@@ -6,7 +6,7 @@ const AdmNavItem = ({ to, label, exact }) => {
             to={to}
             end={exact}
             className={({ isActive }) =>
-                `px-3 py-2 rounded-lg hover:bg-indigo-900/80 hover:text-white ${isActive ? "bg-indigo-700 text-white" : ""
+                `md:w-full px-3 py-2 rounded-lg hover:bg-indigo-900/80 hover:text-white ${isActive ? "bg-indigo-700 text-white" : ""
                 }`
             }
         >

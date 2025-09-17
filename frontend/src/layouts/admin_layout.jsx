@@ -33,7 +33,7 @@ export default function AdminLayout() {
     if (!userStoreData?.info?.role === "admin") return <ErrorPage />
 
     return (
-        <div className="h-screen bg-neutral-50 dark:bg-neutral-800 flex flex-col">
+        <div className="h-screen  bg-gray-100 dark:bg-gray-800 flex flex-col">
 
             {/* Header */}
             <header className="w-full px-4 py-2">
@@ -45,7 +45,6 @@ export default function AdminLayout() {
                         <SearchBar
                             onSearch={({ type, query }) => {
                                 console.log("Searching:", type, query);
-
                                 //axiosInstance(`${env.API}/admin/${type}?q=${query}`)
                             }}
                         />
@@ -60,8 +59,7 @@ export default function AdminLayout() {
                         {
                             userData?.profile
                                 ? <LazyImage publicId={userData?.profile?.public_id} alt={"profile picture"} className={"w-full h-full object-cover"} />
-                                // <img className="object-cover h-full" src={userData?.profile?.url} alt='user profile picture' />
-                                : <span className="">{userData?.name.charAt(0).toUpperCase()}</span>
+                                : <img src={`https://ui-avatars.com/api/?name=${userData?.name}`} className='roup-hover:rotate-12 duration-300 object-cover h-full' />
                         }
                     </button>
                 </div>
@@ -71,22 +69,24 @@ export default function AdminLayout() {
                 <AdminDropDownMenu user={userData} setOpen={setOpen} open={open} />
             </div>
 
-            <div className="flex flex-1 min-h-0">
-                {/* Sidebar */}
-                <aside className="w-64 shadow-md p-2 md:p-4 flex flex-col">
-                    <nav className="flex flex-col gap-2">
-                        <AdmNavItem to={'/su'} label={"Dashboard"} exact />
-                        <AdmNavItem to={'/su/movies'} label={"Movies"} />
-                        <AdmNavItem to={'/su/users'} label={"Users"} />
-                        <AdmNavItem to={'/su/reviews'} label={"Reviews"} />
+            <div className="flex flex-col md:flex-row flex-1 min-h-0">
+                {/* Navigation */}
+                <aside className="w-full md:w-64 shadow-md bg-gray-100 dark:bg-gray-900">
+                    <nav className="flex flex-row md:flex-col gap-2 p-2 md:p-4 justify-center md:justify-start items-center md:items-start">
+                        <AdmNavItem to="/su" label="Dashboard" exact />
+                        <AdmNavItem to="/su/movies" label="Movies" />
+                        <AdmNavItem to={"/su/persons"} label="Persons" />
+                        <AdmNavItem to="/su/users" label="Users" />
+                        <AdmNavItem to="/su/reviews" label="Reviews" />
                     </nav>
                 </aside>
 
                 {/* Main content */}
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white dark:bg-neutral-900/60">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white dark:bg-gray-950">
                     <Outlet />
                 </main>
             </div>
+
         </div>
     );
 }

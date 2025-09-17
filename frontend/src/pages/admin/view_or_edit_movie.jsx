@@ -79,7 +79,7 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                     </span>)}</h1>
                     {!editMode && (
                         <button
-                            className="size-12 p-2 text-2xl rounded-full border-2 border-amber-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
+                            className="size-12 p-2 text-2xl rounded-full border-2 bg-amber-200/50 border-amber-500 dark:text-white font-medium hover:bg-amber-600 transition-colors duration-200"
                             onClick={() => setEditMode(true)}
                             title="edit movie details"
                             aria-label="edit movie details"
@@ -154,7 +154,7 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                     <div className="space-y-6">
                         {/* Poster */}
                         <div className="flex items-end gap-4">
-                            {posterPreview && <img src={posterPreview} alt={movie?.title} className="h-52 rounded-lg shadow" />}
+                                {posterPreview && <img src={posterPreview} alt={movie?.title} className="h-96 rounded-lg shadow" />}
                             <div><p className="">Release Date: {movie?.releaseDate?.slice(0, 10)}</p>
                                 {movie?.genres && <p className="italic">{movie?.genres}</p>}
 
@@ -192,7 +192,7 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                         {imagesPreview?.length > 0 && (
                             <ScrollableCarousel>
                                 {imagesPreview.map((img, i) => (
-                                    <img key={i} src={img.url} alt="extra" className="rounded-lg object-cover" />
+                                    <img key={i} src={img.url} alt="extra" className="rounded-lg object-cover h-64" loading="lazy" />
                                 ))}
                             </ScrollableCarousel>
                         )}

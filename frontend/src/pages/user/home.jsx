@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ScrollableCarousel from '../../components/scroll_carousel'
 import MovieCard from '../../components/movie_card';
 import axiosInstance from '../../../utils/axios_instance';
-import LazyImage from '../../components/lazy_image';
+import PosterDeck from '../../components/poster_deck';
 
 const Home = () => {
     const [movies, setMovies] = useState([])
@@ -82,14 +82,14 @@ const Home = () => {
 
     return (
         <>
-            <div className="fixed inset-0 -z-10 bg-emerald-200 dark:bg-indigo-950 bg-[url('/bbblurry2.svg')]  bg-top bg-cover bg-no-repeat"></div>
+            <div className="fixed inset-0 -z-10 bg-emerald-200 dark:bg-indigo-950 bg-[url('/film.png')]  bg-bottom bg-cover bg-no-repeat"></div>
             <div>
                 <section className='w-screen md:flex md:pb-10 md:h-[84vh] items-center justify-between overflow-hidden'>
                     <div className='px-4 py-40 pb-56 md:py-60 md:w-2/3 text-center wrap-anywhere'>
-                        <h1 className='font-extrabold sansation-bold italic text-3xl md:text-4xl mb-6 text-white dark:text-amber-300'>
+                        <h1 className='font-extrabold sansation-bold italic text-3xl md:text-4xl mb-6 text-amber-300'>
                             One place for precise movie details<br />
                         </h1>
-                        <p className='font-light text-xl md:text-2xl mb-8 md:mb-16'>Accurate, updated, and trusted by movie lovers everywhere.</p>
+                        <p className='font-normal text-amber-100 text-xl md:text-2xl mb-8 md:mb-16'>Accurate, updated, and trusted by movie lovers everywhere.</p>
                         <Link to={'/movies'} className="inline-block px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl transition-transform hover:scale-105 duration-200">
                             Explore Movies 🍿
                         </Link>
@@ -101,18 +101,9 @@ const Home = () => {
                     iu_iqclwv
                     iu_vbchlf*/}
                     <div className="group hidden relative w-screen flex-1 h-52 md:flex justify-center transition-all duration-300 mb-48">
-
-                        <div className="absolute w-52 h-80 rounded-2xl shadow-lg overflow-hidden bg-indigo-950/25 transition-transform duration-200 group-hover:left-40 group-hover:rotate-0 group-hover:scale-105 hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100">
-                            <LazyImage publicId={"iu_a9cjfv"} alt={`random movie poster`} className={"w-full h-full object-cover"} />
-                        </div>
-                        <div className="absolute w-52 h-80 rounded-2xl shadow-lg overflow-hidden bg-indigo-950/25 transition-transform duration-200 group-hover:left-20 group-hover:rotate-0 group-hover:scale-105 rotate-[24deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100">
-                            <LazyImage publicId={"iu_iqclwv"} alt={`random movie poster`} className={"w-full h-full object-cover"} />
-                        </div>
-                        <div className="absolute w-52 h-80 rounded-2xl shadow-lg overflow-hidden bg-indigo-950/25 transition-transform duration-200 group-hover:left-0 group-hover:rotate-0 group-hover:scale-105 transform rotate-[12deg] hover:z-30 hover:scale-125 hover:shadow-xl hover:border-4 border-amber-100"
-                        >
-                            <LazyImage publicId={"iu_vbchlf"} alt={`random movie poster`} className={"w-full h-full object-cover"} />
-                        </div>
+                        <PosterDeck />
                     </div>
+
 
                 </section>
 

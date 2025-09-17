@@ -11,6 +11,7 @@ import UserLayout from "./layouts/user_layout";
 import Login from "./pages/public/login";
 import AuthInitializer from "./components/authcheck";
 import PrivateRoute from "./components/private_route";
+import Persons from "./pages/admin/persons";
 
 const AdminLayout = lazy(() => import("./layouts/admin_layout"));
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -41,7 +42,6 @@ let router = createBrowserRouter([
                     <PrivateRoute allowedRoles={["user", "admin"]} >
                         <UserLayout />
                     </PrivateRoute>,
-                // loader: loadRootData,
 
                 children: [
                     {
@@ -108,10 +108,6 @@ let router = createBrowserRouter([
                         path: "/su",
                         element: <AdminDashboard />
                     },
-                    // {
-                    //     path: "search", // find movies,persons,users, review  and links to see
-                    //     element: <SuSearch />
-                    // },
                     {
                         path: "movies",
                         element: <AdminMovies />
@@ -128,14 +124,18 @@ let router = createBrowserRouter([
                         path: "reviews",
                         element: <AdminReviews />
                     },
-                    // {
-                    //     path: "person/new", //person is not user. its like cast oor director
-                    //     // element: <NewPerson />
-                    // },
-                    // {
-                    //     path: "person/:id",// view and edit person details
-                    //     // element: </AdminViewPerson />
-                    // },
+                    {
+                        path: "persons", //person is not user. its like cast oor director
+                        element: <Persons />
+                    },
+                    {
+                        path: "persons/new", //person is not user. its like cast oor director
+                        // element: <NewPerson />
+                    },
+                    {
+                        path: "person/:id",// view and edit person details
+                        // element: </AdminViewPerson />
+                    },
                     {
                         path: "users",
                         element: <AdminUsers />

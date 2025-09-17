@@ -29,7 +29,7 @@ const ScrollableCarousel = ({ children }) => {
 
             <div
                 ref={scrollRef}
-                className="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth px-10"
+                className="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4"
             >
                 {children}
             </div>

@@ -34,7 +34,8 @@ const AdminDropDownMenu = ({ user, setOpen, open }) => {
                     {
                         user
                             ? <img className="object-cover h-full" src={user?.profile?.url} alt='user avatar' />
-                            : <span className="">{user?.name}</span>
+                            : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='o' />
+                        // : <span className="object-cover h-full">{user?.name}</span>
                     }
                 </div>
                 <h3 className="text-xl font-bold mb-1">{user?.name}</h3>

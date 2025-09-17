@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { clearUser, setLoading, setUser } from "../store/user_slice";
 import axiosInstance from "../../utils/axios_instance";
 
@@ -8,6 +8,7 @@ const AuthInitializer = () => {
     const dispatch = useDispatch();
     const { isLoggedIn, info } = useSelector(s => s.user);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         dispatch(setLoading(true));
@@ -28,9 +29,16 @@ const AuthInitializer = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            if (info.role === "admin")
-                navigate("/su", { replace: true });
-            else navigate("/", { replace: true });
+            const currentPath = location.pathname;
+
+            // Redirect only if on root or unauthorized path
+            if (currentPath === "/" || currentPath === "/login") {
+                if (info.role === "admin") {
+                    navigate("/su", { replace: true });
+                } else {
+                    navigate("/", { replace: true });
+                }
+            }
         }
     }, [isLoggedIn, info, navigate]);
 

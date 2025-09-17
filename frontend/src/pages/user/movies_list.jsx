@@ -4,6 +4,7 @@ import ScrollableCarousel from '../../components/scroll_carousel';
 import MovieCard from '../../components/movie_card';
 import GenreBar from '../../components/genre_bar';
 import axiosInstance from '../../../utils/axios_instance';
+import LoaderOverlay from '../../components/loader_overlay';
 
 const Movies = () => {
     const [selectedGenre, setSelectedGenre] = useState(null);
@@ -74,7 +75,7 @@ const Movies = () => {
     const navigate = useNavigate();
     useEffect(() => {
         axiosInstance.get('/movies')
-            .then(res => setMovies(res.data?.movies))
+            .then(res => setMovies(res.data?.movies.reverse()))
             .catch(err => {
                 console.error(err)
                 setMovies(mockMovies)
@@ -84,11 +85,11 @@ const Movies = () => {
 
     return (
         <>
-            {!movies ? <LoaderOverlay /> :
+            {!movies.length ? <LoaderOverlay /> :
 
         <div className="">
             <GenreBar selectedGenre={selectedGenre} onSelect={setSelectedGenre} />
-                    <section className='md:px-20  min-h-96 pt-10 flex-col gap-4 overflow-hidden scroll-smooth'>
+                    <section className='md:px-20  min-h-96 pt-10 flex-col gap-4 overflow-hidden'>
                         <div id='featured'>
                             <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6 z-20'>Featured today</h2>
                 <ScrollableCarousel>
