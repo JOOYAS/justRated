@@ -175,9 +175,9 @@ const MovieDetail = () => {
                     <section className="relative h-[40vh] md:h-[70vh] overflow-hidden">
                         <div className="absolute inset-0 z-0">
                             <img
-                                src={movie?.images?.[index]?.url || '/sample_placeholder.png'}
+                                src={movie?.images?.[index]?.url || '/ooorganize9.svg'}
                                 alt="Background"
-                                className="absolute w-full h-full object-cover animate-bg-move"
+                                className="absolute w-full h-full bg-indigo-50 dark:bg-indigo-950 object-cover animate-bg-move"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         </div>
@@ -205,7 +205,7 @@ const MovieDetail = () => {
                                 )}
                                 <div className='flex gap-4'>
                                     <button className='px-3 py-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl'>Add to Watchlist</button>
-                                    <button className='px-3 py-2 rounded-2xl bg-amber-600/30 text-black dark:text-white font-semibold shadow-lg border-4 border-amber-600  hover:border-amber-100 hover:shadow-xl'>Mark as Watched</button>
+                                    <button className='px-3 py-2 rounded-2xl bg-amber-600/30 text-white dark:text-white font-semibold shadow-lg border-4 border-amber-600  hover:border-amber-100 hover:shadow-xl'>Mark as Watched</button>
                                 </div>
                             </div>
                         </div>

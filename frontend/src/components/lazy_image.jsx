@@ -13,15 +13,16 @@ const LazyImage = ({ publicId, alt, className = "bg-indigo-950/50" }) => {
         <div className={`relative object-cover overflow-hidden ${className}`}>
             <img
                 src={placeholder}
-                alt="placeholder"
-                className={`absolute inset-0 w-full h-full object-cover  transition-all duration-1000 ${loaded ? 'opacity-0 blur-none' : 'opacity-100 blur-sm'}`}
+                alt=""
+                aria-label='placeholder'
+                className={`absolute inset-0 w-full h-full object-cover  transition-all duration-[2s] ${loaded ? 'opacity-0 blur-none' : 'opacity-100 blur-sm'}`}
                 loading='eager'
             />
             <img
                 src={highQualitySrc}
-                alt={alt}
+                alt='' aria-label={alt}
                 onLoad={() => setLoaded(true)}
-                className={`w-full h-full object-cover transition-all duration-1000 ${loaded ? 'opacity-100 blur-none' : 'opacity-0 blur-xs'}`}
+                className={`w-full h-full object-cover transition-all duration-[2s] ${loaded ? 'opacity-100 blur-none' : 'opacity-0 blur-xs'}`}
                 loading='lazy'
             />
         </div>

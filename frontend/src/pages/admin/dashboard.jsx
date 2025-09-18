@@ -73,7 +73,7 @@ const AdminDashboard = () => {
 
             } catch (err) {
                 setStats(mockStats)
-                setError("Failed to load stats");
+                setError("Failed to load stats: showing mock statistics");
                 setLoading(false)
                 console.error(err);
             } finally {

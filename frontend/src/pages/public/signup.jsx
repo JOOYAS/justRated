@@ -47,7 +47,7 @@ const Signup = () => {
                     <CurrentUser />
                 </div>
             )}
-            <div className="relative flex md:w-[65%] items-center justify-center p-8 bg-amber-50 dark:bg-neutral-700 md:rounded-s-3xl shadow-2xl z-10">
+            <div className="relative flex md:w-[65%] items-center justify-center p-8 bg-amber-50 dark:bg-neutral-700 bg-[url('/ooorganize9.svg')] bg-center bg-cover bg-no-repeat  md:rounded-s-3xl shadow-2xl z-10">
                 <form className="w-full max-w-sm space-y-6" onSubmit={submitHandler}>
                     <fieldset className="space-y-2">
                         <legend className="w-full text-center text-4xl font-bold mb-6">Si<span className='text-indigo-500'>g</span>nUp</legend>

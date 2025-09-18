@@ -30,12 +30,17 @@ const DropDownMenu = ({ user, setOpen, open }) => {
     }, [location.pathname]);
 
     return (
-        <div ref={menuRef} className={`z-50 w-52 md:w-64 
-        backdrop-blur-xl bg-white/25 dark:bg-gray-800/25 
-        text-black dark:text-amber-50 
-        rounded-xl shadow-2xl overflow-hidden 
-        transition-[max-height] duration-300 ease-out
-        ${open ? 'max-h-96' : 'max-h-0'}`}>
+
+        <div
+            ref={menuRef}
+            className={`z-50 w-52 md:w-64 
+    backdrop-blur-xl bg-white/25 dark:bg-gray-800/25 
+    text-black dark:text-amber-50 
+    rounded-xl shadow-2xl overflow-hidden 
+    transition-[max-height] duration-300 ease-out
+    ${open ? 'max-h-96' : 'max-h-0'}`}
+        >
+
             <Link to="/profile" className="group p-4 flex items-center gap-3 border-b dark:border-gray-700">
                 <div className="size-20 bg-white text-black border-2 text-5xl font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden">
                     {

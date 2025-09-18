@@ -55,7 +55,7 @@ export default function AdminLayout() {
                         onClick={(e) => {
                             setOpen(!open)
                         }}
-                        className="ms-12 size-12 bg-indigo-900 text-amber-50 font-extrabold rounded-xl flex items-center justify-center overflow-hidden hover:border-4 border-amber-900 dark:border-amber-100">
+                        className="ms-12 size-12 rounded-xl flex items-center justify-center overflow-hidden hover:border-4 border-amber-900 dark:border-amber-100">
                         {
                             userData?.profile
                                 ? <LazyImage publicId={userData?.profile?.public_id} alt={"profile picture"} className={"w-full h-full object-cover"} />
@@ -65,14 +65,14 @@ export default function AdminLayout() {
                 </div>
 
             </header>
-            <div className="absolute right-2 mt-3 z-50">
+            <div className="absolute right-2 mt-3 z-50 bg-white/10 dark:bg-black/10">
                 <AdminDropDownMenu user={userData} setOpen={setOpen} open={open} />
             </div>
 
             <div className="flex flex-col md:flex-row flex-1 min-h-0">
                 {/* Navigation */}
                 <aside className="w-full md:w-64 shadow-md bg-gray-100 dark:bg-gray-900">
-                    <nav className="flex flex-row md:flex-col gap-2 p-2 md:p-4 justify-center md:justify-start items-center md:items-start">
+                    <nav className="flex flex-row md:flex-col gap-2 md:p-4 justify-center md:justify-start items-center md:items-start">
                         <AdmNavItem to="/su" label="Dashboard" exact />
                         <AdmNavItem to="/su/movies" label="Movies" />
                         <AdmNavItem to={"/su/persons"} label="Persons" />

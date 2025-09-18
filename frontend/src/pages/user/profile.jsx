@@ -121,7 +121,7 @@ const Profile = () => {
                     </div>
                 ) : (
                         <div className='relative flex justify-center items-center gap-4 md:gap-12 my-6 md:m-6'>
-                            <div className='size-32 rounded-full bg-sky-600 overflow-hidden text-7xl font-extrabold ring-8 ring-amber-500 flex justify-center items-center hover:rotate-12 duration-300'>
+                            <div className='size-32 rounded-full bg-gray-600 overflow-hidden text-7xl font-extrabold ring-8 ring-amber-500 flex justify-center items-center hover:rotate-12 duration-300'>
                                 {
                                     user?.profile
                                         ? <LazyImage publicId={user?.profile?.public_id} className={"object-cover h-full"} />
@@ -142,7 +142,7 @@ const Profile = () => {
                                 className="absolute top-0 right-0 px-2 py-1 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
                                 onClick={() => setIsEditing(true)}
                             >
-                                🖊
+                                    edit
                             </button>
                         </div>
 

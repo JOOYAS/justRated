@@ -80,12 +80,12 @@ const Home = () => {
             })
     }, [])
 
-    return (
-        <>
-            <div className="fixed inset-0 -z-10 bg-emerald-200 dark:bg-indigo-950 bg-[url('/film.png')]  bg-bottom bg-cover bg-no-repeat"></div>
+    return (//bg-[url('/bbblurry2.svg')]
+        <> 
+            <div className="fixed inset-0 -z-10 bg-emerald-400 dark:bg-indigo-950 blur-xs md:blur-none bg-[url('/film.jpg')] bg-right bg-cover bg-no-repeat"></div>
             <div>
-                <section className='w-screen md:flex md:pb-10 md:h-[84vh] items-center justify-between overflow-hidden'>
-                    <div className='px-4 py-40 pb-56 md:py-60 md:w-2/3 text-center wrap-anywhere'>
+                <section className='w-screen md:flex md:pb-10 h-[75vh] md:h-[84vh] items-center justify-between overflow-hidden'>
+                    <div className='px-4 py-30 pb-56 md:py-60 md:w-2/3 text-center wrap-anywhere shadow-2xl'>
                         <h1 className='font-extrabold sansation-bold italic text-3xl md:text-4xl mb-6 text-amber-300'>
                             One place for precise movie details<br />
                         </h1>
@@ -100,7 +100,7 @@ const Home = () => {
                     iu_a9cjfv
                     iu_iqclwv
                     iu_vbchlf*/}
-                    <div className="group hidden relative w-screen flex-1 h-52 md:flex justify-center transition-all duration-300 mb-48">
+                    <div className="group hidden relative w-screen flex-1 h-52 md:flex justify-center ms-28 transition-all duration-300 mb-48">
                         <PosterDeck />
                     </div>
 

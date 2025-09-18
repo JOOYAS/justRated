@@ -8,11 +8,12 @@ const MovieCard = ({ movie }) => {
     const isWatchlistPage = location.pathname === '/watchlist';
     const [fillColor, setFillColor] = useState('#ffff66');
 
-    const addToWatchlist = () => {
-        axiosInstance.post(`/watchlist/${movie._id}`, {})
+    const addToWatchlist = (m) => {
+        // console.log('adding to watchlist');
+        axiosInstance.post(`/watchlist/${m._id}`, {})
             .then(res => {
                 if (res?.data?.success) {
-                    console.log('toggle success')
+                    // console.log('toggle success')
                     setFillColor('#ffd230'); // update fill color on success
                 }
             })
@@ -28,12 +29,12 @@ const MovieCard = ({ movie }) => {
         >
             <LazyImage publicId={movie?.poster?.public_id} alt={`${movie?.name} movie poster`} className={"w-full h-40 md:h-64 object-cover rounded-lg bg-amber-800/35"} />
             {/* <img
-                src={movie.poster?.url || "/sample_placeholder.png"}
+                src={movie.poster?.url || "/ooorganize.svg"}
                 alt={`${movie.name} movie poster`}
                 className=""
             /> */}
             {!isWatchlistPage && (
-                <svg width="30" height="30" className="hidden group-hover:block absolute top-0 ms-2 cursor-pointer" onClick={() => addToWatchlist}>
+                <svg key={movie.id} width="30" height="30" className="hidden group-hover:block absolute top-0 ms-2 cursor-pointer" onClick={() => addToWatchlist(movie)} aria-label="Add to Watchlist">
                     <title>Add to Watchlist</title>
                     <path d="M   0   0 L 30   0 L 30 30 L  15  20 L   0 30 Z" fill={fillColor} />
                     <text x="15"
