@@ -26,7 +26,7 @@ const AdminReviews = () => {
         <div className="max-w-3xl mx-auto p-6">
             <h2 className="text-3xl font-bold text-amber-500 mb-6">Manage Reviews</h2>
             {reviews.map(r => (
-                <div key={r._id} className="flex flex-col md:flex-row gap-4 p-4 mb-4 rounded-xl shadow-lg bg-white dark:bg-gray-900">
+                <div key={r._id} className="flex gap-4 p-4 mb-4 rounded-xl shadow-lg bg-gray-100 dark:bg-gray-900">
 
                     {/* Movie Poster */}
                     <LazyImage publicId={r.movie.poster.public_id} className="w-32 h-48 object-cover rounded-lg shadow-md" alt={`${r.movie.title} poster`} />

@@ -40,7 +40,7 @@ const Login = () => {
                     <CurrentUser />
                 </div>
             )}
-            <div className="relative flex p-6 md:w-[65%] items-center justify-center bg-amber-50 dark:bg-neutral-700 bg-[url('/ooorganize9.svg')] bg-center bg-cover bg-no-repeat  md:rounded-e-4xl  md:shadow-2xl">
+            <div className="relative flex p-6 md:w-[65%] items-center justify-center bg-amber-50 dark:bg-neutral-700 md:rounded-e-4xl md:shadow-2xl">
                 <form className="w-full max-w-sm space-y-6" onSubmit={submitHandler}>
                     <fieldset className="space-y-2">
                         <legend className="w-full text-center text-4xl font-bold mb-6">L<span className='text-indigo-500'>o</span>gin</legend>

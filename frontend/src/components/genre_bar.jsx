@@ -24,7 +24,7 @@ const GenreBar = ({ selectedGenre, onSelect }) => {
     }, [])
 
     return (
-        <div className={`fixed w-full z-40 overflow-x-auto py-2 px-4 backdrop-blur-xs bg-neutral-900/5 dark:bg-white/25 transition-all duration-500 ${showHeader ? "" : "top-0"}`}>
+        <div className={`fixed w-full z-40 overflow-x-auto py-2 px-4 backdrop-blur-lg bg-neutral-900/5 dark:bg-white/25 transition-all duration-500 ${showHeader ? "" : "top-0"}`}>
             <div className="flex whitespace-nowrap justify-center min-w-max">
             {genres.map((genre) => (
                 <a

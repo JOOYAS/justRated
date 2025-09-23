@@ -7,6 +7,7 @@ const SearchModal = ({ show, onClose }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [movies, setMovies] = useState([])
     const [persons, setPersons] = useState([])
+    const [externalMovies, setExternalMovies] = useState([])
 
     useEffect(() => {
         axiosInstance.get('/movies')
@@ -23,6 +24,19 @@ const SearchModal = ({ show, onClose }) => {
             })
     }, [])
 
+    useEffect(() => {
+        if (!searchTerm) return;
+
+        const delayDebounce = setTimeout(() => {
+            axiosInstance
+                .post('/ai/movies', { partialTitle: searchTerm })
+                .then(res => setExternalMovies(res.data?.movies))
+                .catch(err => console.error(err));
+        }, 1000); // wait 500ms after user stops typing
+
+        return () => clearTimeout(delayDebounce); // cleanup on next keystroke
+    }, [searchTerm])
+
     const filteredMovies = movies.filter(m =>
         m.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -36,10 +50,10 @@ const SearchModal = ({ show, onClose }) => {
 
         const parts = text.split(new RegExp(`(${query})`, "gi"));
         return (
-            <span>
+            <span className="hover:text-blue-900 dark:hover:text-blue-500 hover:underline inline">
                 {parts.map((part, i) =>
                     part.toLowerCase() === query.toLowerCase() ? (
-                        <span key={i} className="bg-yellow-300">
+                        <span key={i} className="bg-yellow-400 dark:bg-yellow-800 inline">
                             {part}
                         </span>
                     ) : (
@@ -80,9 +94,10 @@ const SearchModal = ({ show, onClose }) => {
                 {filteredMovies.length > 0 && searchTerm !== "" ? (
                     <div className="mb-6">
                         <h3 className="text-lg font-semibold mb-3">Movies</h3>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {filteredMovies.map((m) => (
-                                <Link key={m?._id} to={`/movies/${m?._id}`} className="p-2 rounded-md bg-amber-50 dark:bg-neutral-700/40 hover:text-blue-900 hover:underline">
+                                <Link key={m?._id} to={`/movies/${m?._id}`} className="p-2 rounded-md bg-amber-50 dark:bg-neutral-700/40 border border-transparent hover:border-blue-500 flex items-center gap-1">
+                                    <img src={m.poster.url} className="h-20" alt="movie poster" />
                                     <HighlightText text={m?.title} query={searchTerm} />
                                 </Link>
                             ))}
@@ -97,7 +112,8 @@ const SearchModal = ({ show, onClose }) => {
                         <h3 className="text-lg font-semibold mb-3">persons</h3>
                         <div className="flex flex-wrap gap-4">
                             {filteredPersons.map((p) => (
-                                <Link key={p?._id} to={`/person/${p?._id}`} className="p-2 rounded-md bg-amber-50/40 dark:bg-neutral-700/40">
+                                <Link key={p?._id} to={`/person/${p?._id}`} className="p-2 rounded-md bg-amber-50/40 dark:bg-neutral-700/40 flex items-center hover">
+                                    <img src={p.photo.url} alt="person photo" />
                                     <HighlightText text={p?.name} query={searchTerm} />
                                 </Link>
                             ))}
@@ -110,6 +126,28 @@ const SearchModal = ({ show, onClose }) => {
                 {filteredMovies.length === 0 && filteredPersons.length === 0 && (
                     <p className="text-center text-gray-500">Couldn't find anything.</p>
                 )}
+
+                {externalMovies.length > 0 && searchTerm !== "" ? (
+                    <div className="mb-6">
+                        <div className="flex items-center mb-3">
+                            <h3 className="text-lg font-semibold mr-2">Suggested Movies from External Sources</h3>
+                            <span
+                                className="text-yellow-500 cursor-help"
+                                title="These movie details are sourced from the internet and may not exist in our official database."
+                            >
+                                ⚠️
+                            </span>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {externalMovies.map((m, i) => (
+                                <Link key={m?.i} to={`/movies/external/${m?.title}`} className="p-2 rounded-md bg-amber-50 dark:bg-neutral-700/40 border border-transparent hover:border-blue-500 flex items-center gap-1">
+                                    <HighlightText text={m?.title + ", " + (new Date(m.releaseDate).getFullYear())} query={searchTerm} />
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                )
+                    : ""}
             </div>
         </div>
     );

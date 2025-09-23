@@ -79,8 +79,8 @@ const MovieDetail = () => {
                 _id: "r1",
                 movie: "688f295321d9a1af990e6c9c",
                 user: { _id: "u1", name: "Alice" },
-                rating: 7,
-                review: "6rdytfyu giuo y9uouiyoiyiu 00lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                rating: 4,
+                comment: "6rdytfyu giuo y9uouiyoiyiu 00lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 createdAt: "2025-08-20T09:10:36.065Z",
             },
             {
@@ -88,7 +88,7 @@ const MovieDetail = () => {
                 movie: "688f295321d9a1af990e6c9c",
                 user: { _id: "688b3d3ef419409a97cb9067", name: "Me (chacha2)" },
                 rating: 4,
-                review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 createdAt: "2025-08-21T11:45:12.065Z",
             },
         ],
@@ -97,7 +97,7 @@ const MovieDetail = () => {
                 _id: "r3",
                 movie: "688f295321d9a1af990e6c9c",
                 critic: "times",
-                rating: 7,
+                rating: 8,
                 review: "incididunt ut labore et dolore magna aliqua.",
                 createdAt: "2025-08-20T09:10:36.065Z",
         },
@@ -105,7 +105,7 @@ const MovieDetail = () => {
                 _id: "r4",
                 movie: "688f295321d9a1af990e6c9c",
                 critic: "indian express",
-                rating: 9,
+                rating: 7,
                 review: ";Lorem ipsum dolor sit amet, consectetur",
                 createdAt: "2025-08-21T11:45:12.065Z",
             },
@@ -137,11 +137,16 @@ const MovieDetail = () => {
                 .then(res => {
                     setReviews(res.data?.reviews)
                     setCriticReviews(res.data?.critics)
+                    if (!res.data.reviews.length && !res.data.critics.length) {
+                        console.log("empty");
+
+                        setReviews(mockReviewsRes.reviews)
+                        setCriticReviews(mockReviewsRes.critics)
+                    }
                 })
                 .catch(err => {
                     console.log(err);
-                    setReviews(mockReviewsRes.reviews)
-                    setCriticReviews(mockReviewsRes.critics)
+
                 });
         };
 
@@ -175,22 +180,21 @@ const MovieDetail = () => {
                     <section className="relative h-[40vh] md:h-[70vh] overflow-hidden">
                         <div className="absolute inset-0 z-0">
                             <img
-                                src={movie?.images?.[index]?.url || '/ooorganize9.svg'}
+                                src={movie?.images?.[index]?.url || '/ooorganize4.svg'}
                                 alt="Background"
-                                className="absolute w-full h-full bg-indigo-50 dark:bg-indigo-950 object-cover animate-bg-move"
+                                className="absolute w-full h-full bg-indigo-100 dark:bg-neutral-300 object-cover animate-bg-move"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         </div>
-
                         <div className='relative z-10 h-[40vh] md:h-[70vh] flex flex-row items-end gap-4 max-w-4xl mx-auto px-4 pb-6'>
-                            <LazyImage publicId={movie?.poster?.public_id} alt={`${movie?.title} poster`} className={"w-32 md:w-64 object-cover rounded-lg shadow h-2/3 md:h-3/4 bg-indigo-700/15"} />
+                            <LazyImage publicId={movie?.poster?.public_id} alt={`${movie?.title} poster`} className={"w-32 md:w-64 h-auto object-cover rounded-lg shadow bg-indigo-700/15"} />
                             {/* <img
                         src={movie?.poster?.url}
                         alt={`${movie?.title} poster`}
                         className="w-32 md:w-64 object-cover rounded-lg shadow h-2/3 md:h-3/4 bg-indigo-700/15"
                     /> */}
                             <div className="text-white">
-                                <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold">
+                                <h1 className="text-lg sm:text-xl md:text-3xl lg:text-5xl font-bold overflow-clip">
                                     {movie.title}
                                     {movie.releaseDate && (
                                         <span className="text-lg ml-2">
@@ -199,13 +203,13 @@ const MovieDetail = () => {
                                     )}
                                 </h1>
                                 {movie.rating && (
-                                    <p className="mt-2 text-yellow-400 text-2xl font-semibold">
+                                    <p className="mt-2 text-yellow-400 text-lg md:text-2xl font-semibold">
                                         ⭐ {movie.rating}/10
                                     </p>
                                 )}
-                                <div className='flex gap-4'>
-                                    <button className='px-3 py-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl'>Add to Watchlist</button>
-                                    <button className='px-3 py-2 rounded-2xl bg-amber-600/30 text-white dark:text-white font-semibold shadow-lg border-4 border-amber-600  hover:border-amber-100 hover:shadow-xl'>Mark as Watched</button>
+                                <div className='flex gap-2 md:gap-4'>
+                                    <button className='px-3 py-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs md:text-base font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl'>Add to Watchlist</button>
+                                    <button className='px-1 md:px-3 py-0.5 md:py-2 rounded-2xl bg-amber-600/30  text-xs md:text-base text-white dark:text-white font-semibold shadow-lg border-4 border-amber-600  hover:border-amber-100 hover:shadow-xl'>Mark as Watched</button>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +223,7 @@ const MovieDetail = () => {
                                     {movie.genres?.map((g) => (
                                         <span
                                             key={g}
-                                            className="px-2 py-1 text-xl bg-gray-200 dark:bg-gray-600 rounded-full"
+                                            className="px-2 py-1 text-sm md:text-xl bg-gray-200 dark:bg-gray-600 rounded-full"
                                         >
                                             {g}
                                         </span>

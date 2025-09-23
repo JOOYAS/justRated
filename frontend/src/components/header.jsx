@@ -35,7 +35,6 @@ const Header = () => {
         }
     }, [userStoreData])
 
-
     useEffect(() => {
         const handleScroll = () => {
             const current = window.scrollY;
@@ -59,7 +58,7 @@ const Header = () => {
                         {/* Search Trigger */}
                         <button
                             onClick={() => setShowSearch(true)}
-                            className="hover:text-amber-500 text-4xl font-extrabold flex items-center justify-center"
+                            className="hover:text-amber-500 text-4xl font-extrabold flex items-center justify-center cursor-pointer"
                         >
                             ⌕
                         </button>
@@ -88,7 +87,7 @@ const Header = () => {
                 </nav>
                 <Hamburger open={open} setOpen={setOpen} />
             </div>
-            <div className="absolute right-2 mt-3">
+            <div className="absolute right-2 mt-3 z-50 bg-white/10 dark:bg-black/10">
                 <DropDownMenu user={userData} setOpen={setOpen} open={open} />
             </div>
             <SearchModal

@@ -24,8 +24,7 @@ const AdminDropDownMenu = ({ user, setOpen, open }) => {
     }, [setOpen]);
     return (
         <div ref={menuRef} className={`w-52 md:w-64 
-        backdrop-blur-3xl bg-white/25 dark:bg-gray-800/25 
-        text-black dark:text-amber-50 
+        backdrop-blur-3xl text-black dark:text-amber-50 
         rounded-lg shadow-2xl overflow-hidden 
         transition-[max-height] duration-300 ease-out z-50
         ${open ? 'max-h-96' : 'max-h-0'}`}>

@@ -5,7 +5,7 @@ const Header = lazy(() => import('../components/header'));
 const Footer = lazy(() => import('../components/footer'));
 
 const UserLayout = () => {
-    return (//bg-[url('/ooorganize9.svg')]  bg-top bg-cover bg-no-repeat
+    return (//bg-[url('/ooorganize4.svg')]  bg-top bg-cover bg-no-repeat
         <>
             <Header />
             <main className='w-full min-h-[90vh] overflow-hidden mt-[72px]'>

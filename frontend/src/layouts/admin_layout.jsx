@@ -63,11 +63,11 @@ export default function AdminLayout() {
                         }
                     </button>
                 </div>
-
+                <div className="absolute right-2 mt-3 z-50 bg-white/10 dark:bg-black/10">
+                    <AdminDropDownMenu user={userData} setOpen={setOpen} open={open} />
+                </div>
             </header>
-            <div className="absolute right-2 mt-3 z-50 bg-white/10 dark:bg-black/10">
-                <AdminDropDownMenu user={userData} setOpen={setOpen} open={open} />
-            </div>
+
 
             <div className="flex flex-col md:flex-row flex-1 min-h-0">
                 {/* Navigation */}

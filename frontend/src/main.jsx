@@ -12,6 +12,7 @@ import Login from "./pages/public/login";
 import AuthInitializer from "./components/authcheck";
 import PrivateRoute from "./components/private_route";
 import Persons from "./pages/admin/persons";
+import ExternalMovieDetailsPage from "./pages/user/external_movie_detail";
 
 const AdminLayout = lazy(() => import("./layouts/admin_layout"));
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -61,6 +62,10 @@ let router = createBrowserRouter([
                             <Suspense fallback={<LoaderOverlay />}>
                                 <MovieDetail />
                             </Suspense>
+                    },
+                    {
+                        path: "movies/external/:title",
+                        element: <ExternalMovieDetailsPage />
                     },
                     {
                         path: "/person/:id",

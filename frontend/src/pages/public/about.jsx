@@ -3,7 +3,7 @@ import React from 'react'
 const About = () => {
     return (
         <div className="relative min-h-dvh flex justify-center-safe w-screen px-[1rem] md:px-12 md:py-12 md:ps-0 bg-gradient-to-br from-indigo-800 to-pink-600 overflow-hidden">
-            <div className="relative flex flex-col justify-center items-center p-6 md:w-[65%] bg-amber-50 dark:bg-neutral-700  bg-[url('/ooorganize9.svg')] bg-center bg-cover bg-no-repeat md:rounded-e-4xl  md:shadow-2xl">
+            <div className="relative flex flex-col justify-center items-center p-6 md:w-[65%] bg-amber-50 dark:bg-neutral-700 md:rounded-e-4xl  md:shadow-2xl">
                 <div>
                     <header className="mb-8  text-center md:text-start">
                         <h1 className="text-7xl font-extrabold tracking-tight">About Us</h1>
