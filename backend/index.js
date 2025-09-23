@@ -11,6 +11,7 @@ const personRoutes = require('./routes/person_router');
 // const favouritesRoutes = require('./routes/favourites_router');
 const watchlistRoutes = require('./routes/watchlist_router');
 const authRoutes = require('./routes/auth_router');
+const aiRoutes = require('./routes/ai_router')
 const dbConnect = require('./config/db_connection');
 
 app.set("trust proxy", 1);
@@ -35,6 +36,7 @@ app.all('{*splat}', (req, res, next) => {
 
 //----------------------routes-------------------
 
+app.use('/ai', aiRoutes)
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/movies', movieRoutes);

@@ -1,6 +1,6 @@
 const Person = require("../models/person_model");
-const cleanObject = require("../utils/cleanObject");
-const cloudinaryUpload = require("../utils/imgUpload");
+const cleanObject = require("../utils/clean_object");
+const cloudinaryUpload = require("../utils/img_upload");
 
 const allPersons = async (req, res) => {
     try {

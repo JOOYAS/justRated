@@ -1,7 +1,7 @@
 const CriticReview = require("../models/critic_review_model");
 const Movie = require("../models/movie_model");
 const Review = require("../models/review_model");
-const cleanObject = require("../utils/cleanObject");
+const cleanObject = require("../utils/clean_object");
 
 const allReviews = async (req, res) => {
     try {

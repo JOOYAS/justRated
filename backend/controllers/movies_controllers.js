@@ -2,8 +2,8 @@ const CriticReview = require("../models/critic_review_model");
 const MovieDetail = require("../models/movie_detail_model");
 const Movie = require("../models/movie_model");
 const Review = require("../models/review_model");
-const cleanObject = require("../utils/cleanObject");
-const cloudinaryUpload = require("../utils/imgUpload");
+const cleanObject = require("../utils/clean_object");
+const cloudinaryUpload = require("../utils/img_upload");
 
 const newMovie = async (req, res) => {
     try {

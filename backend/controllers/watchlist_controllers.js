@@ -1,6 +1,6 @@
 const Movie = require("../models/movie_model");
 const Watchlist = require("../models/watchlist_model");
-const cleanObject = require("../utils/cleanObject");
+const cleanObject = require("../utils/clean_object");
 
 const allWatchlist = async (req, res) => {
     try {

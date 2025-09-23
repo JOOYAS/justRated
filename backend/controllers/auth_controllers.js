@@ -2,8 +2,8 @@ const User = require("../models/user_model");
 const bcrypt = require("bcrypt")
 const generateJWT = require("../utils/gen_token");
 const cookieOptions = require("../utils/cookie_options");
-const cloudinaryUpload = require("../utils/imgUpload");
-const cleanObject = require("../utils/cleanObject");
+const cloudinaryUpload = require("../utils/img_upload");
+const cleanObject = require("../utils/clean_object");
 const saltRounds = 10;
 
 const signupController = async (req, res) => {
