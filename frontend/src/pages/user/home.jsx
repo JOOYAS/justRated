@@ -84,7 +84,7 @@ const Home = () => {
     return (
         <>
             <section className='relative w-screen md:flex md:pb-10 md:h-[84vh] items-center justify-between overflow-hidden'>
-                <div className="absolute inset-0 -z-10 bg-emerald-400 dark:bg-indigo-950 blur-xs md:blur-none bg-[url('/film.jpg')] bg-right bg-cover bg-no-repeat"></div>
+                <div className="absolute inset-0 -z-10 bg-emerald-400/25 dark:bg-black blur-xs md:blur-none bg-[url('/film.jpg')] bg-right bg-cover bg-no-repeat"></div>
                 <div className='px-4 py-40 pb-56 md:py-60 md:w-2/3 text-center wrap-anywhere'>
                     <h1 className='font-extrabold sansation-bold italic text-3xl md:text-4xl mb-6 text-amber-300'>
                         One place for precise movie details<br />

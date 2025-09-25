@@ -33,24 +33,23 @@ const DropDownMenu = ({ user, setOpen, open }) => {
 
         <div
             ref={menuRef}
-            className={`z-50 w-52 md:w-64 
-    backdrop-blur-3xl
-    text-black dark:text-amber-50 
-    rounded-xl shadow-2xl overflow-hidden 
-    transition-[max-height] duration-300 ease-out cursor-pointer
-    ${open ? 'max-h-96' : 'max-h-0'}`}
+            className={`w-52 md:w-64 
+        text-black dark:text-amber-50 
+        rounded-lg shadow-2xl overflow-hidden
+        transition-[max-height] duration-300 ease-out z-50
+        ${open ? 'max-h-96' : 'max-h-0'}`}
         >
-            <div to="/profile" className="group p-4 flex items-center gap-3 border-b bg-transparent dark:border-gray-700">
+            <Link to="/profile" className="group p-4 flex items-center gap-3 border-b bg-transparent dark:border-gray-700">
                 <div className="size-20 bg-amber-90 font-extrabold rounded-full flex items-center justify-center overflow-hidden hover:border-2 border-amber-900 dark:border-amber-100">
                     {
-                        user
-                            ? <img className="object-cover h-full" src={user?.profile?.url} alt='user avatar' />
-                            : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='o' />
+                        user?.profile
+                            ? <img className="" src={user?.profile?.url} alt='user avatar' />
+                            : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='object-cover h-full' />
                         // : <span className="object-cover h-full">{user?.name}</span>
                     }
                 </div>
-                <Link className="text-xl font-bold mb-1 dark:group-hover:text-blue-600 group-hover:text-blue-800 group-hover:underline">{user?.name}</Link>
-            </div>
+                <p className="text-xl font-bold mb-1 dark:group-hover:text-blue-600 group-hover:text-blue-800 group-hover:underline">{user?.name}</p>
+            </Link>
             <ThemeToggle />
 
             {/* Navlinks (only on mobile) */}

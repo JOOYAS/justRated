@@ -74,11 +74,12 @@ const Header = () => {
                                 onClick={(e) => {
                                     setOpen(!open)
                                 }}
-                                className="ms-12 size-12 border-2 text-amber-50 text-3xl font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden hover:rotate-12 duration-300">
+                                className="ms-12 size-12 border-2 bg-amber-900 text-amber-50 text-3xl font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden hover:rotate-12 duration-300">
                                 {
                                     userData?.profile
-                                        ? <p>kk</p>
-                                        : <p>ll</p>
+                                        ? < LazyImage publicId={userData?.profile?.public_id} className={"object-cover h-full"} />
+                                        // ? <img className="hover:rotate-12 duration-300 object-cover h-full" src={} alt='user profile picture' />
+                                        : <img src={`https://ui-avatars.com/api/?name=${userData?.name}`} className='h-full object-cover' />
                                 }
                             </button>
                             : null
@@ -97,7 +98,7 @@ const Header = () => {
                     <Hamburger open={open} setOpen={setOpen} /> 
                 </div>
             </div>
-            <div className="absolute right-2 mt-3 z-50 bg-white/10 dark:bg-indigo-950/10">
+            <div className="absolute right-2 mt-3 z-50 bg-white/30 dark:bg-black/30 rounded-lg backdrop-blur-3xl">
                 <DropDownMenu user={userData} setOpen={setOpen} open={open} />
             </div>
             <SearchModal

@@ -28,16 +28,15 @@ const AdminDropDownMenu = ({ user, setOpen, open }) => {
         rounded-lg shadow-2xl overflow-hidden 
         transition-[max-height] duration-300 ease-out z-50
         ${open ? 'max-h-96' : 'max-h-0'}`}>
-            <Link to="/profile" className="p-4 flex items-center gap-3 border-b dark:border-gray-700">
+            <Link to="/profile" className="group p-4 flex items-center gap-3 border-b dark:border-gray-700">
                 <div className="size-20 bg-amber-90 font-extrabold rounded-xl flex items-center justify-center overflow-hidden hover:border-2 border-amber-900 dark:border-amber-100">
                     {
-                        user
+                        user?.profile
                             ? <img className="object-cover h-full" src={user?.profile?.url} alt='user avatar' />
-                            : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='o' />
-                        // : <span className="object-cover h-full">{user?.name}</span>
+                            : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='h-full object-cover' />
                     }
                 </div>
-                <h3 className="text-xl font-bold mb-1">{user?.name}</h3>
+                <h3 className="text-xl font-bold mb-1 group-hover:text-blue-600 group-hover:underline">{user?.name}</h3>
             </Link>
             <ThemeToggle />
 
