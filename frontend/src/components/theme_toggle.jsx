@@ -28,7 +28,7 @@ const ThemeToggle = () => {
         >
             <span>Theme</span>
             <span
-                className={`rounded-full size-fit leading-5 p-1 transition-colors duration-300 ${theme === "dark" ? "bg-neutral-800 text-white" : "bg-white text-black"
+                className={`rounded-full size-fit leading-5 p-1 transition-colors duration-300 ${theme === "dark" ? "bg-indigo-950 text-white" : "bg-white text-black"
                     }`}
             >
                 {theme === "dark" ? "🌙" : "☀️"}

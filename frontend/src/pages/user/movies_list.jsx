@@ -89,10 +89,29 @@ const Movies = () => {
 
         <div className="">
             <GenreBar selectedGenre={selectedGenre} onSelect={setSelectedGenre} />
-                    <section className='md:px-20  min-h-96 pt-10 flex-col gap-4 overflow-hidden'>
+                    <section className='md:px-20  min-h-96  flex-col gap-4 overflow-hidden'>
+                        <section className="md:mt-20 px-4 py-10 pt-36 md:pt-20 text-center bg-gradient-to-b from-amber-600/70 md:rounded-t-2xl to-transparent dark:from-amber-600/40">
+                            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+                                Explore from Collection of Movies
+                            </h1>
+                            <p className="text-lg text-gray-600 dark:text-gray-400">
+                                Curating cinematic gems, one frame at a time.
+                            </p>
+
+                            <div className="mt-6 flex justify-center gap-4 flex-wrap">
+                                <span className="px-4 py-2 bg-white/10 dark:bg-black/10 backdrop-blur-3xl text-sm rounded-full text-black dark:text-amber-50 shadow-md">
+                                    🎬 {movies?.length} Movies Featured
+                                </span>
+                                <span className="px-4 py-2 bg-white/10 dark:bg-black/10 backdrop-blur-3xl text-sm rounded-full text-black dark:text-amber-50 shadow-md">
+                                    updated on 📅 Sep 2025
+                                </span>
+                            </div>
+                        </section>
+
+
                         <div id='featured'>
                             <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6 z-20'>Featured today</h2>
-                <ScrollableCarousel>
+                            <ScrollableCarousel>
                                 {movies?.map((movie) => (
                                     <MovieCard key={movie?._id} movie={movie} />
                                 ))}

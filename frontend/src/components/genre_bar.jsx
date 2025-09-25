@@ -24,7 +24,7 @@ const GenreBar = ({ selectedGenre, onSelect }) => {
     }, [])
 
     return (
-        <div className={`fixed w-full z-40 overflow-x-auto py-2 px-4 backdrop-blur-lg bg-neutral-900/5 dark:bg-white/25 transition-all duration-500 ${showHeader ? "" : "top-0"}`}>
+        <div className={`fixed w-full z-40 overflow-x-auto py-2 px-4 backdrop-blur-lg bg-indigo-950/5 dark:bg-white/25 transition-all duration-500 ${showHeader ? "" : "top-0"}`}>
             <div className="flex whitespace-nowrap justify-center min-w-max">
             {genres.map((genre) => (
                 <a
@@ -33,7 +33,7 @@ const GenreBar = ({ selectedGenre, onSelect }) => {
                     // onClick={}
                     className={`inline-block px-4 py-2 mx-2 rounded-full text-sm font-medium transition-colors duration-300 ${selectedGenre === genre
                         ? 'bg-yellow-400 text-black'
-                        : 'bg-neutral-200 dark:bg-gray-700 text-black dark:text-white hover:bg-yellow-500'
+                        : 'bg-neutral-100 dark:bg-gray-700 text-black dark:text-white hover:bg-yellow-500'
                         }`}
                 >
                     {genre}

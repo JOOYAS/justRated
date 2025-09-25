@@ -25,7 +25,7 @@ const Header = () => {
                 .then(res => res.data)
                 .then(data => {
                     if (data?.userData)
-                        // console.log("userData :", data?.userData);
+                        console.log("userData :", data?.userData);
                         setUserData(data?.userData)
                 })
                 .catch(error => {
@@ -47,7 +47,7 @@ const Header = () => {
     }, [])
 
     return (
-        <header className={`backdrop-blur-xl bg-amber-50/35 dark:bg-neutral-500/35 border-t-8 border-t-amber-700 top-0 fixed w-screen z-[9999] transition-transform duration-300 ${showHeader ? "translate-y-0" : " -translate-y-full"}`}>
+        <header className={`backdrop-blur-xl bg-emerald-50/35 dark:bg-neutral-500/35 border-t-8 border-t-amber-700 top-0 fixed w-screen z-[9999] transition-transform duration-300 ${showHeader ? "translate-y-0" : " -translate-y-full"}`}>
             <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
                 <Link to={"/about"}>
                     <img className="h-12 bg-amber-950 dark:bg-transparent rounded-md" src="/just_rated_logo_new3.svg" alt="logo" />
@@ -74,20 +74,30 @@ const Header = () => {
                                 onClick={(e) => {
                                     setOpen(!open)
                                 }}
-                                className="ms-12 size-12 border-2 bg-amber-900 text-amber-50 text-3xl font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden hover:rotate-12 duration-300">
+                                className="ms-12 size-12 border-2 text-amber-50 text-3xl font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden hover:rotate-12 duration-300">
                                 {
                                     userData?.profile
-                                        ? < LazyImage publicId={userData?.profile?.public_id} className={"object-cover h-full"} />
-                                        // ? <img className="hover:rotate-12 duration-300 object-cover h-full" src={} alt='user profile picture' />
-                                        : <img src={`https://ui-avatars.com/api/?name=${userData?.name}`} className='h-full object-cover' />
+                                        ? <p>kk</p>
+                                        : <p>ll</p>
                                 }
                             </button>
                             : null
                     }
                 </nav>
-                <Hamburger open={open} setOpen={setOpen} />
+                <div className="flex md:hidden gap-4">
+                    <nav className="flex items-center gap-6 text-lg font-normal text-amber-500 dark:text-amber-300">
+                        {/* Search Trigger */}
+                        <button
+                            onClick={() => setShowSearch(true)}
+                            className="hover:text-amber-500 text-4xl font-extrabold flex items-center justify-center cursor-pointer"
+                        >
+                            ⌕
+                        </button>
+                    </nav>
+                    <Hamburger open={open} setOpen={setOpen} /> 
+                </div>
             </div>
-            <div className="absolute right-2 mt-3 z-50 bg-white/10 dark:bg-black/10">
+            <div className="absolute right-2 mt-3 z-50 bg-white/10 dark:bg-indigo-950/10">
                 <DropDownMenu user={userData} setOpen={setOpen} open={open} />
             </div>
             <SearchModal

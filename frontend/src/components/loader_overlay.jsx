@@ -1,6 +1,6 @@
 const LoaderOverlay = ({ children, overlay = false }) => {
     return (
-        <div className={`relative ${overlay ? 'w-full h-full' : 'h-screen'} z-40`}>
+        <div className={`relative ${overlay ? 'w-full h-full' : 'h-dvh'} z-40`}>
             {overlay && children}
 
             <div className={`

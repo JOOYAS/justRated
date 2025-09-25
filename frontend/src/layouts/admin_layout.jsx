@@ -33,7 +33,7 @@ export default function AdminLayout() {
     if (!userStoreData?.info?.role === "admin") return <ErrorPage />
 
     return (
-        <div className="h-screen  bg-gray-100 dark:bg-gray-800 flex flex-col">
+        <div className="h-dvh w-screen bg-gray-100 dark:bg-gray-800 flex flex-col fixed">
 
             {/* Header */}
             <header className="w-full px-4 py-2">

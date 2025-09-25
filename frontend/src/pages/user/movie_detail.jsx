@@ -182,7 +182,7 @@ const MovieDetail = () => {
                             <img
                                 src={movie?.images?.[index]?.url || '/ooorganize4.svg'}
                                 alt="Background"
-                                className="absolute w-full h-full bg-indigo-100 dark:bg-neutral-300 object-cover animate-bg-move"
+                                className="absolute w-full h-full dark:bg-indigo-950 object-cover animate-bg-move"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         </div>
@@ -194,10 +194,10 @@ const MovieDetail = () => {
                         className="w-32 md:w-64 object-cover rounded-lg shadow h-2/3 md:h-3/4 bg-indigo-700/15"
                     /> */}
                             <div className="text-white">
-                                <h1 className="text-lg sm:text-xl md:text-3xl lg:text-5xl font-bold overflow-clip">
+                                <h1 className="text-xl md:text-3xl lg:text-4xl font-bold overflow-clip">
                                     {movie.title}
                                     {movie.releaseDate && (
-                                        <span className="text-lg ml-2">
+                                        <span className="text-lg ml-2 text-gray-200">
                                             {new Date(movie.releaseDate).getFullYear()}
                                         </span>
                                     )}
@@ -207,7 +207,7 @@ const MovieDetail = () => {
                                         ⭐ {movie.rating}/10
                                     </p>
                                 )}
-                                <div className='flex gap-2 md:gap-4'>
+                                <div className='mt-3 flex gap-2 md:gap-4'>
                                     <button className='px-3 py-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs md:text-base font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl'>Add to Watchlist</button>
                                     <button className='px-1 md:px-3 py-0.5 md:py-2 rounded-2xl bg-amber-600/30  text-xs md:text-base text-white dark:text-white font-semibold shadow-lg border-4 border-amber-600  hover:border-amber-100 hover:shadow-xl'>Mark as Watched</button>
                                 </div>
@@ -216,7 +216,7 @@ const MovieDetail = () => {
                     </section>
 
 
-                    <section className='z-20 p-4 pt-2 bg-amber-50 dark:bg-neutral-800'>
+                    <section className='z-20 p-4 pt-2 bg-emerald-50 dark:bg-indigo-950'>
                         <div className="max-w-4xl mx-auto space-y-6">
                             {movie.genres && (
                                 <div className="flex flex-wrap gap-2">
@@ -230,7 +230,7 @@ const MovieDetail = () => {
                                     ))}
                                 </div>
                             )}
-                            <p className="text-lg leading-relaxed">{movie.description}</p>
+                            <p className="text-base md:text-lg leading-relaxed">{movie.description}</p>
                             <div className='max-w-4xl mx-auto flex justify-around items-center'>
                                 <h2 className="font-semibold text-xl mb-0">Director :</h2>
                                 {movie?.director ? <PersonCard person={movie.director} /> : <span className='text-red-600'>no info</span>}
@@ -238,7 +238,7 @@ const MovieDetail = () => {
                         </div>
                     </section>
 
-                    <section className="p-4 pt-2 bg-amber-50 dark:bg-neutral-800">
+                    <section className="p-4 pt-2 bg-emerald-50 dark:bg-indigo-950">
                         <div className='max-w-4xl mx-auto space-y-6'>
 
                             {CriticReviews.length !== 0 ?
@@ -268,7 +268,7 @@ const MovieDetail = () => {
                                     <textarea
                                         value={text}
                                         onChange={(e) => setText(e.target.value)}
-                                        className="w-full p-2 border bg-white dark:bg-amber-50/15 border-gray-300 dark:border-gray-600 rounded-xl"
+                                        className="w-full p-2 border bg-white dark:bg-emerald-50/15 border-gray-300 dark:border-gray-600 rounded-xl"
                                         placeholder="Write your review..."
                                     />
                                     <button type="submit" className="inline-block px-4 md:px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl active:from-orange-700 transition-transform duration-200">
@@ -305,7 +305,7 @@ const MovieDetail = () => {
                     </section>
 
 
-                    <section className="p-8 pt-2 bg-amber-50 dark:bg-neutral-800">
+                    <section className="p-8 pt-2 bg-emerald-50 dark:bg-indigo-950">
                         <div className='max-w-4xl mx-auto space-y-6'>
                             <h2 className="font-semibold text-2xl mb-2 text-center">Cast</h2>
 
@@ -326,7 +326,7 @@ const MovieDetail = () => {
                         </div>
 
                     </section>
-                    <section className='flex justify-center bg-amber-50 dark:bg-neutral-800 py-6'>
+                    <section className='flex justify-center bg-emerald-50 dark:bg-indigo-950 py-6'>
                         {movie?.images?.length > 0 ? (
                             <div className='max-w-4xl  space-y-6'>
                                 <h2 className="font-semibold text-2xl text-center  mb-2 ">Images</h2>

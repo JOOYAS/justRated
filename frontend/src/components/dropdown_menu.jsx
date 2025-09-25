@@ -34,35 +34,31 @@ const DropDownMenu = ({ user, setOpen, open }) => {
         <div
             ref={menuRef}
             className={`z-50 w-52 md:w-64 
-    backdrop-blur-xl bg-white/25 dark:bg-gray-800/25 
+    backdrop-blur-3xl
     text-black dark:text-amber-50 
     rounded-xl shadow-2xl overflow-hidden 
-    transition-[max-height] duration-300 ease-out
+    transition-[max-height] duration-300 ease-out cursor-pointer
     ${open ? 'max-h-96' : 'max-h-0'}`}
         >
-
-            <Link to="/profile" className="group p-4 flex items-center gap-3 border-b dark:border-gray-700">
-                <div className="size-20 bg-white text-black border-2 text-5xl font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden">
+            <div to="/profile" className="group p-4 flex items-center gap-3 border-b bg-transparent dark:border-gray-700">
+                <div className="size-20 bg-amber-90 font-extrabold rounded-full flex items-center justify-center overflow-hidden hover:border-2 border-amber-900 dark:border-amber-100">
                     {
-                        user?.profile
-                            ? <LazyImage publicId={user?.profile?.public_id} className={"group-hover:rotate-12 duration-300 object-cover h-full"} />
-                            : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='group-hover:rotate-12 duration-300 object-cover h-full' />
-                        // ? <img className="group-hover:rotate-12 duration-300 object-cover h-full" src={user?.profile?.url} alt='user avatar' />
-                        // : <span className="group-hover:rotate-12 duration-300">{user?.name.charAt(0).toUpperCase()}</span>
+                        user
+                            ? <img className="object-cover h-full" src={user?.profile?.url} alt='user avatar' />
+                            : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='o' />
+                        // : <span className="object-cover h-full">{user?.name}</span>
                     }
                 </div>
-                <h3 className="text-xl font-bold mb-1 group-hover:text-blue-500 group-hover:underline">{user?.name}</h3>
-            </Link>
+                <Link className="text-xl font-bold mb-1 dark:group-hover:text-blue-600 group-hover:text-blue-800 group-hover:underline">{user?.name}</Link>
+            </div>
             <ThemeToggle />
-
 
             {/* Navlinks (only on mobile) */}
             <nav className="flex flex-col md:hidden">
-
-                <Link to="/" className="px-4 py-2 text-sm hover:underline hover:bg-gray-300 dark:hover:bg-gray-700">Home</Link>
-                <Link to="/movies" className="px-4 py-2 text-sm hover:underline hover:bg-gray-300 dark:hover:bg-gray-700">Movies</Link>
-                <Link to="/watchlist" className="px-4 py-2 text-sm hover:underline hover:bg-gray-300 dark:hover:bg-gray-700">Watchlist</Link>
-                <Link to="/about" className="px-4 py-2 text-sm hover:underline hover:bg-gray-300 dark:hover:bg-gray-700">About</Link>
+                <Link to="/" className="cursor-pointer px-4 py-2 text-sm hover:underline hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200">Home</Link>
+                <Link to="/movies" className="cursor-pointer px-4 py-2 text-sm hover:underline hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200">Movies</Link>
+                <Link to="/watchlist" className="cursor-pointer px-4 py-2 text-sm hover:underline hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200">Watchlist</Link>
+                <Link to="/about" className="cursor-pointer px-4 py-2 text-sm hover:underline hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200">About</Link>
             </nav>
 
             <button

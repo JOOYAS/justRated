@@ -20,12 +20,12 @@
 
 html.dark
 {
-    @apply bg-neutral-900;
+    @apply bg-indigo-950;
 }
 
 html
 {
-    @apply bg-amber-50;
+    @apply bg-emerald-50;
 }
 
 @layer utilities
@@ -39,7 +39,7 @@ html
 
     .custom-top-fade
     {
-        @apply shadow-[0_-15px_60px_60px_#fffbeb] dark:shadow-[0_-15px_60px_60px_#242424];
+        @apply shadow-[0_-15px_60px_60px_#ECFDF5] dark:shadow-[0_-15px_60px_60px_#1E1A4D];
     }
 }
 

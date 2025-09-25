@@ -25,9 +25,12 @@ const MovieCard = ({ movie }) => {
 
     return (
         <div
-            className="group flex-none  w-32 md:w-44 relative bg-white dark:bg-amber-950 rounded-xl shadow hover:shadow-lg transition duration-300 border-4 border-transparent hover:border-amber-200"
-        >
-            <LazyImage publicId={movie?.poster?.public_id} alt={`${movie?.name} movie poster`} className={"w-full h-40 md:h-64 object-cover rounded-lg bg-amber-800/35"} />
+            className="group flex-none  w-32 md:w-44 relative bg-white dark:bg-neutral-700 rounded-xl shadow hover:shadow-lg transition duration-300 border-4 border-transparent hover:border-amber-200"
+        >   
+            <div className="w-full h-40 md:h-64 object-cover rounded-lg overflow-hidden">
+                <LazyImage publicId={movie?.poster?.public_id} alt={`${movie?.name} movie poster`} className={"w-full h-full"} />
+            </div>
+
             {/* <img
                 src={movie.poster?.url || "/ooorganize.svg"}
                 alt={`${movie.name} movie poster`}
@@ -53,7 +56,7 @@ const MovieCard = ({ movie }) => {
                 </span>}
                 <Link
                     to={`/movies/${movie._id}`}
-                    className="block w-full truncate text-base md:text-lg font-semibold group-hover:text-blue-500 hover:underline group-hover:whitespace-normal group-hover:overflow-visible"
+                    className="block w-full truncate text-base md:text-lg font-semibold group-hover:text-blue-500 group-hover:underline  group-hover:whitespace-normal group-hover:overflow-visible"
                     aria-label="view detailed" title="view detailed"
                 >
                     {movie.title}

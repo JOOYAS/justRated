@@ -88,7 +88,7 @@ const AdminDashboard = () => {
             {Object.entries(stats).map(([key, value]) => (
                 <div key={key} className="flex-1 text-center">
                     <div
-                        className={`w-full rounded ${key === 'movies' ? 'bg-amber-500' : key === 'users' ? 'bg-blue-500' : 'bg-green-500'}`}
+                        className={`w-full rounded ${key === 'movies' ? 'bg-emerald-500' : key === 'users' ? 'bg-blue-500' : 'bg-green-500'}`}
                         style={{ height: `${value * (key === 'users' ? 10 : key === 'movies' ? 5 : 4) || 10}px` }}
                     ></div>
                     <p className="mt-1 text-sm">{key.charAt(0).toUpperCase() + key.slice(1)}</p>
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
     );
 
     const HighlightCard = ({ title, movie, badge }) => (
-        <div className="p-4 rounded-2xl border-4 border-transparent shadow bg-gray-100 dark:bg-gray-800 flex gap-4 hover:border-blue-700 cursor-pointer" onClick={() => navigate(`/su/movies/${movie._id}`)}>
+        <div className="p-2 rounded-2xl border-4 border-transparent shadow bg-gray-100 dark:bg-gray-800 flex gap-4 hover:border-blue-700 cursor-pointer" onClick={() => navigate(`/su/movies/${movie._id}`)}>
             <LazyImage alt={movie.title} publicId={movie.poster.public_id} className="w-20 h-28 object-cover rounded-lg" />
             {/* <img
                 src={ || "https://via.placeholder.com/80x120"}
@@ -219,7 +219,7 @@ const ContentOverviewChart = ({ stats }) => (
         {Object.entries(stats).map(([key, value]) => (
             <div key={key} className="flex-1 text-center">
                 <div
-                    className={`w-full rounded ${key === 'movies' ? 'bg-amber-500' : key === 'users' ? 'bg-blue-500' : 'bg-green-500'}`}
+                    className={`w-full rounded ${key === 'movies' ? 'bg-emerald-500' : key === 'users' ? 'bg-blue-500' : 'bg-green-500'}`}
                     style={{ height: `${value * (key === 'users' ? 10 : key === 'movies' ? 5 : 4) || 10}px` }}
                 ></div>
                 <p className="mt-1 text-sm">{key.charAt(0).toUpperCase() + key.slice(1)}</p>

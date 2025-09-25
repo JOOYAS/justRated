@@ -13,6 +13,7 @@ import AuthInitializer from "./components/authcheck";
 import PrivateRoute from "./components/private_route";
 import Persons from "./pages/admin/persons";
 import ExternalMovieDetailsPage from "./pages/user/external_movie_detail";
+import { Toaster } from "react-hot-toast";
 
 const AdminLayout = lazy(() => import("./layouts/admin_layout"));
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard"));
@@ -115,23 +116,38 @@ let router = createBrowserRouter([
                     },
                     {
                         path: "movies",
-                        element: <AdminMovies />
+                        element:
+                            <Suspense fallback={<LoaderOverlay />}>
+                                <AdminMovies />
+                            </Suspense>
                     },
                     {
                         path: "movies/new",
-                        element: <NewMovie />
+                        element:
+                            <Suspense fallback={<LoaderOverlay />}>
+                                <NewMovie />
+                            </Suspense>
                     },
                     {
                         path: "movies/:id",// view movie , update movie
-                        element: <ViewOrEditMovie />
+                        element:
+                            <Suspense fallback={<LoaderOverlay />}>
+                                <ViewOrEditMovie />
+                            </Suspense>
                     },
                     {
                         path: "reviews",
-                        element: <AdminReviews />
+                        element:
+                            <Suspense fallback={<LoaderOverlay />}>
+                                <AdminReviews />
+                            </Suspense>
                     },
                     {
                         path: "persons", //person is not user. its like cast oor director
-                        element: <Persons />
+                        element:
+                            <Suspense fallback={<LoaderOverlay />}>
+                                <Persons />
+                            </Suspense>
                     },
                     {
                         path: "persons/new", //person is not user. its like cast oor director
@@ -143,7 +159,10 @@ let router = createBrowserRouter([
                     },
                     {
                         path: "users",
-                        element: <AdminUsers />
+                        element:
+                            <Suspense fallback={<LoaderOverlay />}>
+                                <AdminUsers />
+                            </Suspense>
                     },
                     {
                         path: "users/:id",
@@ -157,7 +176,11 @@ let router = createBrowserRouter([
 
 ReactDOM.createRoot(root).render(
     <Provider store={store}>
-        <div className="text-gray-950 dark:text-neutral-100">
+        <div className="relative text-gray-950 dark:text-neutral-100">
+            <Toaster
+                position="bottom-right"
+                reverseOrder={false}
+            />
             <RouterProvider
             router={router}
             fallbackElement={<LoaderOverlay />}

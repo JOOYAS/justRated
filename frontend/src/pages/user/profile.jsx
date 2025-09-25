@@ -111,7 +111,7 @@ const Profile = () => {
                                 </button>
                                 <button
                                     onClick={handleSave}
-                                    className="flex-1 px-5 py-2.5 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 border-4 border-transparent  hover:border-amber-100 hover:shadow-xl transition-colors duration-200"
+                                    className="flex-1 px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-medium hover:bg-amber-600 border-4 border-transparent  hover:border-amber-100 hover:shadow-xl transition-colors duration-200"
                                 >
                                     Save
                                 </button>
@@ -139,7 +139,7 @@ const Profile = () => {
                                 <h3 className="text-2xl font-bold mb-1">{user?.name}</h3>
                                 <p className="text-gray-800 font-normal">{user?.email}</p>
                             <button
-                                className="absolute top-0 right-0 px-2 py-1 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
+                                    className="absolute top-0 right-0 px-2 py-1 rounded-xl bg-emerald-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
                                 onClick={() => setIsEditing(true)}
                             >
                                     edit

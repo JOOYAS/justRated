@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { setUser } from '../../store/user_slice'
 import axiosInstance from '../../../utils/axios_instance'
 import CurrentUser from '../../components/current_user'
+import toast from 'react-hot-toast'
 
 const Login = () => {
     const { isLoggedIn } = useSelector((s) => s.user);
@@ -16,13 +17,15 @@ const Login = () => {
         password: ""
     })
 
-
     const submitHandler = (event) => {
         event.preventDefault()
         // console.log(loginData);
         axiosInstance.post(`/auth/login`, loginData)
-            .then(res => res.data)
-            .then(data => dispatch(setUser(data.user)))
+            .then(res => {
+                toast.success(res.data.message);
+                dispatch(setUser(res.data.user))
+
+            })
             .catch(err => {
                 console.log(err);
             })
@@ -40,7 +43,7 @@ const Login = () => {
                     <CurrentUser />
                 </div>
             )}
-            <div className="relative flex p-6 md:w-[65%] items-center justify-center bg-amber-50 dark:bg-neutral-700 md:rounded-e-4xl md:shadow-2xl">
+            <div className="relative flex p-6 md:w-[65%] items-center justify-center bg-emerald-50 dark:bg-indigo-950 md:rounded-e-4xl md:shadow-2xl">
                 <form className="w-full max-w-sm space-y-6" onSubmit={submitHandler}>
                     <fieldset className="space-y-2">
                         <legend className="w-full text-center text-4xl font-bold mb-6">L<span className='text-indigo-500'>o</span>gin</legend>
