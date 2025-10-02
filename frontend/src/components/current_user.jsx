@@ -9,10 +9,10 @@ const CurrentUser = () => {
     const dispatch = useDispatch();
 
     return (
-        <div className="h-screen w-full flex items-center backdrop-blur-sm bg-black/5">
-            <div className="p-8 rounded-4xl bg-emerald-50/80 dark:bg-indigo-950/50 max-w-md m-auto text-center border-4 border-amber-100 text-neutral-900 dark:text-neutral-50">
-                <h1 className="text-3xl font-extralight">logged in as</h1>
-                <h2 className="text-2xl font-semibold mt-2 mb-4">{user?.name}</h2>
+        <div className="h-screen w-full flex items-center backdrop-blur-xs bg-black/5 transition-all duration-150">
+            <div className="px-12 py-6 rounded-4xl bg-emerald-50/80 dark:bg-indigo-950/50 max-w-md m-auto text-center border-4 border-amber-100 text-neutral-900 dark:text-neutral-50">
+                <p className="text-lg font-extralight">You are already Loggedin</p>
+                <p className="text-lg font-extralight mt-2 mb-4">As <span className="text-3xl font-medium text-amber-600">{user?.name.charAt(0).toUpperCase() + user?.name.slice(1)}</span></p>
                 <div className="flex gap-4 justify-center">
                     <button
                         onClick={() => logoutHandler(dispatch)}

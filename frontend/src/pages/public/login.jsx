@@ -66,14 +66,14 @@ const Login = () => {
                     <p className='text-center'>Not a user? <Link to={'/signup'} className='text-indigo-500 hover:text-indigo-400 underline underline-offset-4'>signup</Link></p>
 
                 </form>
-                <img className="absolute h-16 bottom-0 mb-4" src="/just_rated_logo_new3.svg" alt="logo" />
+                <img className="absolute h-16 bottom-0 mb-4" src="/images/just_rated_logo_new3.svg" alt="logo" />
             </div>
 
 
             <div className="relative hidden md:flex flex-1 flex-col justify-center items-center">
-                <img className='absolute h-screen right-[-50%] opacity-50' src='/star_logo_2_blur.svg' alt='logo' />
-                <img className='absolute h-screen bottom-[-50%] opacity-50' src='/star_logo_2_blur.svg' alt='logo' />
-                <img className='absolute h-screen top-[-50%] opacity-50' src='/star_logo_2_blur.svg' alt='logo' />
+                <img className='absolute h-screen right-[-50%] opacity-50' src='/images/star_logo_2_blur.svg' alt='logo' />
+                <img className='absolute h-screen bottom-[-50%] opacity-50' src='/images/star_logo_2_blur.svg' alt='logo' />
+                <img className='absolute h-screen top-[-50%] opacity-50' src='/images/star_logo_2_blur.svg' alt='logo' />
 
 
                 <p className='px-10 text-3xl font-bold text-center text-amber-50 z-10'>"Welcome back — your next movie awaits."</p>

@@ -117,9 +117,9 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
 
                         {/* People */}
                         <div className="grid md:grid-cols-3 gap-4">
-                            <Input label="Director" name="director" value={form.director || ""} onChange={handleChange} />
-                            <Input label="Writers (comma separated)" name="writers" value={form.writers || ""} onChange={handleChange} />
-                            <Input label="Cast (comma separated)" name="cast" value={form.cast || ""} onChange={handleChange} />
+                            <Input label="Director" name="director" value={form.director?.map(c => c._id).join(", ") || ""} onChange={handleChange} />
+                            <Input label="Writers (comma separated)" name="writers" value={form.writers?.map(c => c._id).join(", ") || ""} onChange={handleChange} />
+                            <Input label="Cast (comma separated)" name="cast" value={form.cast?.map(c => c._id).join(", ") || ""} onChange={handleChange} />
                         </div>
 
                         {/* Meta */}
@@ -175,9 +175,9 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                         {movie?.trailerUrl && <a className="text-blue-500 underline" href={movie?.trailerUrl}>Watch Trailer</a>}
 
                         <div>
-                            {movie?.director && <p><b>Director:</b> {movie?.director}</p>}
-                            {movie?.writers && <p><b>Writers:</b> {movie?.writers}</p>}
-                            {movie?.cast && <p><b>Cast:</b> {movie?.cast}</p>}
+                                {movie?.director?.length && <p><b>Director:</b> {movie?.director?.map(c => c.name).join(", ")}</p>}
+                                {movie?.writers?.length && <p><b>Writers:</b> {movie?.writers?.map(c => c.name).join(", ")}</p>}
+                                {movie?.cast?.length && <p><b>Cast:</b> {form.cast?.map(c => c.name).join(", ")}</p>}
                         </div>
 
                         <div>

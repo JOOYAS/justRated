@@ -4,7 +4,7 @@ import LoaderOverlay from "../../components/loader_overlay";
 import { Link, useNavigate } from "react-router-dom";
 import LazyImage from "../../components/lazy_image";
 
-const mockStats = { movies: 42, users: 7, reviews: 18 }
+const mockStats = { Movies: "1,245", Users: "3,210", Reviews: "8,392", Average_Rating: "4.3 ⭐" }
 
 const mockMovies = [
     {
@@ -127,7 +127,10 @@ const AdminDashboard = () => {
             {loading ? <LoaderOverlay overlay />
                 : <div className="p-4 mx-auto md:p-8 space-y-4  max-w-3xl">
                     {/* Header */}
-                    <h2 className="text-3xl font-bold text-amber-500">Admin Dashboard</h2>
+                    <header className="mb-6">
+                        <h2 className="text-3xl font-bold text-amber-500">Admin Dashboard</h2>
+                        <p className="text-gray-600">Overview of site activity and performance</p>
+                    </header>
             {error && <p className="text-red-500">{error}</p>}
 
                     {/* Stats Cards */}
@@ -209,6 +212,13 @@ const AdminDashboard = () => {
                     <div className="p-6 py-2 rounded-2xl shadow bg-white dark:bg-gray-800">
                 <ContentOverviewChart stats={stats} />
                     </div>
+
+                    <header className="mb-6">
+                        <h1 className="text-3xl font-bold text-gray-800">🎬 Admin Dashboard</h1>
+                        <p className="text-gray-600">Overview of site activity and performance</p>
+                    </header>
+
+
                 </div>
             }</>
     );

@@ -8,7 +8,7 @@ const LoaderOverlay = ({ children, overlay = false }) => {
 				bg-black/10 backdrop-blur-sm 
 				${overlay ? '' : 'relative'}
 			`}>
-                <img src="/star_logo_2_blur.svg"
+                <img src="/images/star_logo_2_blur.svg"
                     className="size-24 animate-spin text-yellow-400"
                     viewBox="0 0 24 24"
                 />

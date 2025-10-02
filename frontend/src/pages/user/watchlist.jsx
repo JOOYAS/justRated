@@ -1,47 +1,110 @@
 import { useEffect, useState } from "react"
 import MovieCard from "../../components/movie_card"
 import axiosInstance from "../../../utils/axios_instance"
+import LoaderOverlay from "../../components/loader_overlay";
+import toast from "react-hot-toast";
 
-const mockWatchlist = [
-    { _id: "w1", title: "Mock Movie 1", poster: "https://picsum.photos/200/300" },
-    { _id: "w2", title: "Mock Movie 2", poster: "https://picsum.photos/200/301" },
-]
 
 const Watchlist = () => {
-    const [watchList, setWatchList] = useState([]);
-    const [watched, setWatched] = useState([]);
+    const [watchListData, setWatchListData] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchWatchlist = () => {
         setIsLoading(true);
         axiosInstance.get('user/watchlist')
             .then(res => {
                 // console.log(res.data);
-                const moviesRes = res.data.watchlist.map(item => item.movie);
-                setWatchList(moviesRes);
+                const moviesRes = {
+                    watchlist: [],
+                    watched: []
+                };
+
+                res.data.watchlist.forEach(item => {
+                    if (item.watched) {
+                        moviesRes.watched.push(item.movie);
+                    } else {
+                        moviesRes.watchlist.push(item.movie);
+                    }
+                });
+
+                setWatchListData(moviesRes);
                 setIsLoading(false);
             })
             .catch((error) => {
                 console.log(error);
-                setWatchList(mockWatchlist);
                 setIsLoading(false);
             });
+    }
+
+    useEffect(() => {
+        fetchWatchlist();
     }, []);
 
+    const removeFromWatchlist = (movie) => {
+        axiosInstance.delete(`/watchlist/${movie._id}`, {})
+            .then(res => {
+                if (res?.data?.success) {
+                    // setIsInwatchlist(true)
+                    toast.success(res.data.message || "movie removed from watchlist");
+                    // refetching
+                    fetchWatchlist();
+                }
+            })
+            .catch(err => {
+                console.error('Error adding to watchlist:', err);
+            });
+    };
+
+    const toggleWatched = (movie) => {
+        axiosInstance.patch(`/watchlist/${movie._id}/toggle`, {})
+            .then(res => {
+                if (res?.data?.success) {
+                    // setIsWatched(true)
+                    toast.success(res.data?.message || "movie added/removed from watched");
+                    // refetching
+                    fetchWatchlist();
+                }
+            })
+            .catch(err => {
+                console.error('Error adding to watchlist:', err);
+            });
+    };
+
+    if (isLoading) return <LoaderOverlay />;
     return (
         <section className="p-4 pt-2">
-            <div className="max-w-4xl mx-auto space-y-10">
+            <div className="max-w-6xl mx-auto space-y-10">
                 {/* Watchlist Section */}
                 <div>
                     <h2 className="text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-4">
                         My Watchlist
                     </h2>
 
-                    {watchList?.length ? (
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {watchList.map((m) => (
+                    {watchListData?.watchlist?.length ? (
+                        <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                            {watchListData.watchlist.map((m) => (
+                                <div className="group relative w-fit">
                                 <MovieCard key={m._id} movie={m} />
+
+                                    {/* Hover Actions */}
+                                    <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                                        <button
+                                            onClick={() => removeFromWatchlist(m)}
+                                            title="Remove from Watchlist"
+                                            className="px-2 py-1 rounded-2xl bg-red-600 text-black text-xs shadow hover:bg-yellow-600"
+                                        >
+                                            Unlist
+                                        </button>
+                                        <button
+                                            onClick={() => toggleWatched(m)}
+                                            title="Mark Movie as Watched"
+                                            className="px-2 py-1 rounded-2xl bg-green-600 text-white text-xs shadow hover:bg-green-700"
+                                        >
+                                            Watched
+                                        </button>
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     ) : (
@@ -58,10 +121,23 @@ const Watchlist = () => {
                         Watched Movies
                     </h2>
 
-                    {watched?.length ? (
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {watched.map((m) => (
-                                <MovieCard key={m._id} movie={m} watched />
+                    {watchListData?.watched?.length ? (
+                        <div className="flex flex-wrap justify-center-safe md:justify-start gap-4">
+                            {watchListData.watched.map((m) => (
+                                <div className="group relative w-fit">
+                                    <MovieCard key={m._id} movie={m} />
+
+                                    {/* Hover Action */}
+                                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                                        <button
+                                            onClick={() => toggleWatched(m)}
+                                            title="Remove from Watched List"
+                                            className="px-2 py-1 rounded-2xl bg-yellow-500 text-white text-xs shadow hover:bg-red-700"
+                                        >
+                                            Unwatch
+                                        </button>
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     ) : (

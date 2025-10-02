@@ -3,18 +3,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import { Provider } from "react-redux";
 import store from './store';
-
+import { Toaster } from "react-hot-toast";
 
 import ErrorPage from "./pages/public/errorPage";
 import LoaderOverlay from "./components/loader_overlay";
-import UserLayout from "./layouts/user_layout";
-import Login from "./pages/public/login";
 import AuthInitializer from "./components/authcheck";
 import PrivateRoute from "./components/private_route";
-import Persons from "./pages/admin/persons";
-import ExternalMovieDetailsPage from "./pages/user/external_movie_detail";
-import { Toaster } from "react-hot-toast";
+import AddPerson from "./pages/admin/new_person";
+import ViewOrEditPerson from "./pages/admin/view_or_edit_person";
 
+const UserLayout = lazy(() => import("./layouts/user_layout"));
+const Login = lazy(() => import("./pages/public/login"));
+const Persons = lazy(() => import("./pages/admin/persons"));
+const ExternalMovieDetailsPage = lazy(() => import("./pages/user/external_movie_detail"));
 const AdminLayout = lazy(() => import("./layouts/admin_layout"));
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard"));
 const AdminMovies = lazy(() => import("./pages/admin/movies"));
@@ -22,7 +23,6 @@ const AdminUsers = lazy(() => import("./pages/admin/users"));
 const AdminReviews = lazy(() => import("./pages/admin/reviews"));
 const NewMovie = lazy(() => import("./pages/admin/new_movie"));
 const ViewOrEditMovie = lazy(() => import("./pages/admin/view_or_edit_movie"));
-
 const Home = lazy(() => import('./pages/user/home'));
 const PersonDetail = lazy(() => import("./pages/user/person"));
 const Profile = lazy(() => import("./pages/user/profile"));
@@ -151,11 +151,11 @@ let router = createBrowserRouter([
                     },
                     {
                         path: "persons/new", //person is not user. its like cast oor director
-                        // element: <NewPerson />
+                        element: <AddPerson />
                     },
                     {
                         path: "person/:id",// view and edit person details
-                        // element: </AdminViewPerson />
+                        element: <ViewOrEditPerson />
                     },
                     {
                         path: "users",

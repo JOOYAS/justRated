@@ -31,22 +31,20 @@ export default function PersonDetail() {
             axiosInstance.get(`/person/${id}`)
                 .then(res => res.data)
                 .then(data => {
-                    // setPerson(data?.person);
+                    setPerson(data?.person);
                     // setMovies(data?.movies);
-
                     setLoading(false);
 
+                })
+            axiosInstance.get(`/person/${id}/movies`)
+                .then(res => res.data)
+                .then(data => {
+                    setMovies(data?.movies);
                 })
         } catch (err) {
             console.log("person fetch :", err.message)
         }
     }, [id]);
-
-    useEffect(() => {
-        setPerson(mockPerson);
-        setMovies(mockMovies);
-        setLoading(false)
-    }, [])
 
     if (loading) return <LoaderOverlay />;
 
@@ -56,11 +54,11 @@ export default function PersonDetail() {
             <div className="flex flex-col md:flex-row gap-6 md:items-end p-6">
                 <img
                     src={person?.photo.url}
-                    alt={person.name}
+                    alt={person?.name}
                     className="w-52 h-64 object-cover rounded-xl shadow bg-amber-600/15 hover:border-2 border-amber-200"
                 />
                 <div>
-                    <h1 className="text-3xl font-bold">{person.name}</h1>
+                    <h1 className="text-3xl font-bold">{person?.name}</h1>
                     <div className="flex gap-2 mt-3">
                         {person?.roles.map((role) => (
                             <span
@@ -73,12 +71,12 @@ export default function PersonDetail() {
                     </div>
                 </div>
             </div>
-            <p className="text-xl p-6">{person.bio}</p>
+            <p className="text-xl p-6">{person?.bio}</p>
 
-            <h2 className='font-bold text-2xl text-amber-950 dark:text-amber-50 py-6'>{`Movies of ${person.name}`}</h2>
+            <h2 className='font-bold text-2xl text-amber-950 dark:text-amber-50 py-6'>{`Movies of ${person?.name}`}</h2>
             <ScrollableCarousel>
                 {movies.map((movie) => (
-                    <MovieCard key={movie._id} movie={movie} />
+                    <MovieCard key={movie?._id} movie={movie} />
                 ))}
             </ScrollableCarousel>
         </div>

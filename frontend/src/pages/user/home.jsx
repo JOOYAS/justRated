@@ -84,12 +84,13 @@ const Home = () => {
     return (
         <>
             <section className='relative w-screen md:flex md:pb-10 md:h-[84vh] items-center justify-between overflow-hidden'>
-                <div className="absolute inset-0 -z-10 bg-emerald-400/25 dark:bg-black blur-xs md:blur-none bg-[url('/film.jpg')] bg-right bg-cover bg-no-repeat"></div>
-                <div className='px-4 py-40 pb-56 md:py-60 md:w-2/3 text-center wrap-anywhere'>
-                    <h1 className='font-extrabold sansation-bold italic text-3xl md:text-4xl mb-6 text-amber-300'>
+                <div className="absolute inset-0 -z-10 bg-emerald-400/25 dark:bg-black blur-xs md:blur-none bg-[url('/images/film.jpg')] bg-right bg-cover bg-no-repeat"></div>
+                <div className="absolute inset-0 bg-black/70 -z-10" />
+                <div className='px-4 py-40 pb-56 md:py-60 md:w-2/3 text-center wrap-anywhere z-20'>
+                    <h1 className='font-extrabold sansation-bold italic text-3xl md:text-5xl mb-6 text-amber-300'>
                         One place for precise movie details<br />
                     </h1>
-                    <p className='font-normal text-amber-100 text-xl md:text-2xl mb-8 md:mb-16'>Accurate, updated, and trusted by movie lovers everywhere.</p>
+                    <p className='font-normal text-amber-100 text-xl md:text-2xl mb-8 md:mb-16'>Accurate, updated, and trusted by movie lovers all across.</p>
                     <Link to={'/movies'} className="inline-block px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl transition-transform hover:scale-105 duration-200">
                         Explore Movies 🍿
                     </Link>
@@ -121,7 +122,7 @@ const Home = () => {
             </section>
 
             <section className='bg-emerald-50 dark:bg-indigo-950 md:px-20  min-h-96 pt-10 flex-col gap-4 overflow-hidden'>
-                <div className='mt-4 py-2 text-center md:bg-gradient-to-b from-indigo-500/15 md:rounded-t-2xl to-transparent dark:from-gray-950'>
+                <div className='mt-4 py-2 pb-8 text-center md:bg-gradient-to-t from-indigo-500/15 md:rounded-b-4xl to-transparent dark:from-indigo-400/40'>
                     <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-2 z-20'>Featured today</h2>
                     <ScrollableCarousel>
                         {movies?.map((movie) => (
@@ -130,7 +131,7 @@ const Home = () => {
                     </ScrollableCarousel>
                 </div>
 
-                <div className='mt-4 py-2 text-center md:bg-gradient-to-b from-indigo-500/15 md:rounded-t-2xl to-transparent dark:from-gray-950'>
+                <div className='mt-4 py-2 pb-8 text-center md:bg-gradient-to-t from-indigo-500/15 md:rounded-b-4xl to-transparent dark:from-indigo-400/40'>
                     <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-2'>Top 10</h2>
                     <ScrollableCarousel>
                         {movies?.map((movie) => (
@@ -139,7 +140,7 @@ const Home = () => {
                     </ScrollableCarousel>
                 </div>
 
-                <div className='mt-4 py-2 text-center md:bg-gradient-to-b from-indigo-500/15 md:rounded-t-2xl to-transparent dark:from-gray-950'>
+                <div className='mt-4 py-2 pb-8 text-center md:bg-gradient-to-t from-indigo-500/15 md:rounded-b-4xl to-transparent dark:from-indigo-400/40'>
                     <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-2'>Currently on Theaters</h2>
                     <ScrollableCarousel>
                         {movies?.map((movie) => (

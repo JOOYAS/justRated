@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axios_instance";
 import LazyImage from "./lazy_image";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const MovieCard = ({ movie }) => {
     const location = useLocation();
@@ -9,12 +10,12 @@ const MovieCard = ({ movie }) => {
     const [fillColor, setFillColor] = useState('#ffff66');
 
     const addToWatchlist = (m) => {
-        // console.log('adding to watchlist');
         axiosInstance.post(`/watchlist/${m._id}`, {})
             .then(res => {
                 if (res?.data?.success) {
                     // console.log('toggle success')
                     setFillColor('#ffd230'); // update fill color on success
+                    toast.success(res.data.message || "movie added to watchlist");
                 }
             })
             .catch(err => {
@@ -25,7 +26,7 @@ const MovieCard = ({ movie }) => {
 
     return (
         <div
-            className="group flex-none  w-32 md:w-44 relative bg-white dark:bg-neutral-700 rounded-xl shadow hover:shadow-lg transition duration-300 border-4 border-transparent hover:border-amber-200"
+            className="group flex-none  w-32 md:w-44 relative bg-white dark:bg-indigo-900 rounded-xl shadow hover:shadow-lg transition duration-300 border-4 border-transparent hover:border-amber-200"
         >   
             <div className="w-full h-40 md:h-64 object-cover rounded-lg overflow-hidden">
                 <LazyImage publicId={movie?.poster?.public_id} alt={`${movie?.name} movie poster`} className={"w-full h-full"} />
@@ -36,19 +37,25 @@ const MovieCard = ({ movie }) => {
                 alt={`${movie.name} movie poster`}
                 className=""
             /> */}
-            {!isWatchlistPage && (
-                <svg key={movie.id} width="30" height="30" className="hidden group-hover:block absolute top-0 ms-2 cursor-pointer" onClick={() => addToWatchlist(movie)} aria-label="Add to Watchlist">
-                    <title>Add to Watchlist</title>
-                    <path d="M   0   0 L 30   0 L 30 30 L  15  20 L   0 30 Z" fill={fillColor} />
-                    <text x="15"
-                        y="15"
-                        fill="#000000"
-                        textAnchor="middle"
-                        alignmentBaseline="middle"
-                        className="text-3xl">
-                        +
-                    </text>
-                </svg>
+            {!isWatchlistPage && (            
+                <button
+                    onClick={() => addToWatchlist(movie)} title="Add to Watchlist"
+                    className="absolute hidden group-hover:block top-0 m-2 cursor-pointer px-2 py-1 rounded-2xl bg-yellow-500 text-white text-xs shadow hover:bg-yellow-700"
+                >
+                    watchlist
+                </button>
+                // <svg key={movie.id} width="30" height="30" className="hidden group-hover:block absolute top-0 ms-2 cursor-pointer" onClick={() => addToWatchlist(movie)} aria-label="Add to Watchlist">
+                //     <title>Add to Watchlist</title>
+                //     <path d="M   0   0 L 30   0 L 30 30 L  15  20 L   0 30 Z" fill={fillColor} />
+                //     <text x="15"
+                //         y="15"
+                //         fill="#000000"
+                //         textAnchor="middle"
+                //         alignmentBaseline="middle"
+                //         className="text-3xl">
+                //         +
+                //     </text>
+                // </svg>
             )}
             <div className="p-2">{movie?.rating &&
                 <span className="text-amber-400 font-semibold py-0.5 group-hover:text-3xl">

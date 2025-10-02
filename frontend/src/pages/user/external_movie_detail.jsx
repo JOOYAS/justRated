@@ -1,11 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import LoaderOverlay from '../../components/loader_overlay';
+import AISummaryCard from '../../components/ai_summary';
+import axiosInstance from '../../../utils/axios_instance';
 
 const ExternalMovieDetailsPage = () => {
     const { title } = useParams();
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [aiSummary, setAiSummary] = useState('');
+
 
     const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
@@ -28,6 +32,29 @@ const ExternalMovieDetailsPage = () => {
                 setLoading(false);
             });
     }, [title]);
+
+    useEffect(() => {
+        const fetchAISummary = async () => {
+            try {
+                const res = await axiosInstance.post(
+                    `/ai/review/${movie?.imdbID}`,
+                    {
+                        movieInDB: false,
+                        movieData: {
+                            title: movie?.Title,
+                            year: movie?.Year
+                        }
+                    });
+                if (res?.data?.success) {
+                    setAiSummary(res.data.summary);
+                }
+            } catch (err) {
+                console.error('Failed to fetch AI summary:', err);
+            }
+        };
+
+        if (movie?.Title) fetchAISummary();
+    }, [movie]);
 
     if (loading) return <LoaderOverlay />;
     if (!movie || movie.Response !== 'True') {
@@ -65,7 +92,7 @@ const ExternalMovieDetailsPage = () => {
                         {movie.Genre && (
                             <p className="text-sm text-gray-300 mt-2">Genres: {movie.Genre}</p>
                         )}
-                        <div className="text-center mt-6">
+                        <div className="mt-6">
                             <button
                                 onClick={() => handleSuggest(movie)}
                                 className="inline-block px-6 py-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl transition-transform hover:scale-105 duration-200"
@@ -76,23 +103,33 @@ const ExternalMovieDetailsPage = () => {
                     </div>
                 </div>
             </section>
-            <section className='px-4 py-6 max-w-3xl mx-auto space-y-4'>
+
+            <section className='py-6 max-w-3xl mx-auto space-y-4'>
+                <AISummaryCard aiSummary={aiSummary} />
+            </section>
+
+            <section className="px-4 py-6 max-w-3xl mx-auto space-y-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
                 {movie.Plot && (
-                    <p className="">
-                        <p>{movie.Plot}</p>
+                    <p className="text-lg text-gray-800 dark:text-gray-200 leading-relaxed">
+                        {movie.Plot}
                     </p>
                 )}
                 {movie.Runtime && (
-                    <p className="">Runtime: {movie.Runtime}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <span className="font-semibold text-gray-800 dark:text-gray-300">Runtime:</span> {movie.Runtime}
+                    </p>
                 )}
                 {movie.Director && (
-                    <p className="">Director: {movie.Director}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <span className="font-semibold text-gray-800 dark:text-gray-300">Director:</span> {movie.Director}
+                    </p>
                 )}
                 {movie.Actors && (
-                    <p className="">Cast: {movie.Actors}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <span className="font-semibold text-gray-800 dark:text-gray-300">Cast:</span> {movie.Actors}
+                    </p>
                 )}
             </section>
-
         </>
     );
 }

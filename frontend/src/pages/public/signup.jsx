@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import axiosInstance from '../../../utils/axios_instance';
 import CurrentUser from '../../components/current_user';
+import toast from 'react-hot-toast';
 
 const Signup = () => {
     const { isLoggedIn } = useSelector((s) => s.user);
@@ -21,8 +22,10 @@ const Signup = () => {
             .then(res => res.data)
             .then(data => {
                 // console.log(data?.user)
-                if (data?.user)
+                if (data?.user) {
                     dispatch(setUser(data.user));
+                    toast.success(res.data.message);
+                }
                 navigate("/", { replace: true })
             })
             .catch(err => {
@@ -32,8 +35,6 @@ const Signup = () => {
     }
 
     const changeHandler = (event) => {
-        console.log("works");
-
         const tempData = { ...signupData }
         tempData[event.target.name] = event.target.value.trim()
         setSignupData(tempData)
@@ -75,14 +76,14 @@ const Signup = () => {
 
                     <p className='text-center'>have an account? <Link to={'/login'} className='text-blue-500 hover:text-blue-600 underline underline-offset-4'>login</Link></p>
                 </form>
-                <img className="absolute h-16 bottom-0 mb-4" src="/just_rated_logo_new3.svg" alt="logo" />
+                <img className="absolute h-16 bottom-0 mb-4" src="/images/just_rated_logo_new3.svg" alt="logo" />
             </div>
 
 
             <div className="relative hidden md:flex flex-1 flex-col justify-center items-center">
-                <img className='absolute h-screen right-[-50%] opacity-50 z-0' src='/star_logo_2_blur.svg' alt='logo' />
-                <img className='absolute h-screen bottom-[-50%] opacity-50' src='/star_logo_2_blur.svg' alt='logo' />
-                <img className='absolute h-screen top-[-50%] opacity-50' src='/star_logo_2_blur.svg' alt='logo' />
+                <img className='absolute h-screen right-[-50%] opacity-50 z-0' src='/images/star_logo_2_blur.svg' alt='logo' />
+                <img className='absolute h-screen bottom-[-50%] opacity-50' src='/images/star_logo_2_blur.svg' alt='logo' />
+                <img className='absolute h-screen top-[-50%] opacity-50' src='/images/star_logo_2_blur.svg' alt='logo' />
 
                 <p className='px-10 text-3xl font-bold text-white text-center z-10'>"Signin to rate, review, and explore every movie in our collection"</p>
             </div>

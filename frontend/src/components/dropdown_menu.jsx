@@ -40,10 +40,10 @@ const DropDownMenu = ({ user, setOpen, open }) => {
         ${open ? 'max-h-96' : 'max-h-0'}`}
         >
             <Link to="/profile" className="group p-4 flex items-center gap-3 border-b bg-transparent dark:border-gray-700">
-                <div className="size-20 bg-amber-90 font-extrabold rounded-full flex items-center justify-center overflow-hidden hover:border-2 border-amber-900 dark:border-amber-100">
+                <div className="size-20 bg-amber-90 font-extrabold rounded-full flex items-center justify-center overflow-hidden hover:border-2 hover:rotate-12 duration-300 border-amber-900 dark:border-amber-100">
                     {
                         user?.profile
-                            ? <img className="" src={user?.profile?.url} alt='user avatar' />
+                            ? < LazyImage publicId={user.profile?.public_id} className={"object-cover h-full w-full"} />
                             : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='object-cover h-full' />
                         // : <span className="object-cover h-full">{user?.name}</span>
                     }

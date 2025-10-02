@@ -39,7 +39,7 @@ export default function AdminLayout() {
             <header className="w-full px-4 py-2">
                 <div className='flex justify-between items-center'>
                     <Link to={"/about"} className='flex items-center'>
-                        <img className="h-12 bg-amber-950 dark:bg-transparent rounded-md" src="/just_rated_logo_new3.svg" alt="logo" /><span className='text-xl md:text-3xl font-extrabold'>Admin</span>
+                        <img className="h-12 bg-amber-950 dark:bg-transparent rounded-md" src="/images/just_rated_logo_new3.svg" alt="logo" /><span className='text-xl md:text-3xl font-extrabold'>Admin</span>
                     </Link>
                     <div className='hidden md:block'>
                         <SearchBar

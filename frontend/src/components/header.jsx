@@ -22,11 +22,9 @@ const Header = () => {
     useEffect(() => {
         if (userStoreData.isLoggedIn) {
             axiosInstance.get(`/auth/me`)
-                .then(res => res.data)
-                .then(data => {
-                    if (data?.userData)
-                        console.log("userData :", data?.userData);
-                        setUserData(data?.userData)
+                .then(res => {
+                    if (res.data?.userData)
+                        setUserData(res.data?.userData)
                 })
                 .catch(error => {
                     dispatch(clearUser());
@@ -50,7 +48,7 @@ const Header = () => {
         <header className={`backdrop-blur-xl bg-emerald-50/35 dark:bg-neutral-500/35 border-t-8 border-t-amber-700 top-0 fixed w-screen z-[9999] transition-transform duration-300 ${showHeader ? "translate-y-0" : " -translate-y-full"}`}>
             <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
                 <Link to={"/about"}>
-                    <img className="h-12 bg-amber-950 dark:bg-transparent rounded-md" src="/just_rated_logo_new3.svg" alt="logo" />
+                    <img className="h-12 bg-amber-950 dark:bg-transparent rounded-md" src="/images/just_rated_logo_new3.svg" alt="logo" />
                 </Link>
 
                 <nav className="hidden md:flex items-center gap-6 text-lg font-normal text-amber-500 dark:text-amber-300">
@@ -66,7 +64,7 @@ const Header = () => {
                     <UserNavItem to="/" label="Home" exact />
                     <UserNavItem to="/movies" label="Movies" />
                     <UserNavItem to="/watchlist" label="Watchlist" />
-                    <UserNavItem to="/about" label="About" />                    
+                    <UserNavItem to="/about" label="About" />
                     {
                         userData
                             ? <button
@@ -74,11 +72,11 @@ const Header = () => {
                                 onClick={(e) => {
                                     setOpen(!open)
                                 }}
-                                className="ms-12 size-12 border-2 bg-amber-900 text-amber-50 text-3xl font-extrabold border-amber-800 rounded-full flex items-center justify-center overflow-hidden hover:rotate-12 duration-300">
+                                className="ms-12 size-12 text-amber-50 text-3xl font-extrabold rounded-full flex items-center justify-center overflow-hidden hover:rotate-12 duration-300">
                                 {
                                     userData?.profile
-                                        ? < LazyImage publicId={userData?.profile?.public_id} className={"object-cover h-full"} />
-                                        // ? <img className="hover:rotate-12 duration-300 object-cover h-full" src={} alt='user profile picture' />
+                                        ? < LazyImage publicId={userData?.profile?.public_id} className={"object-cover h-full w-full"} />
+                                        // ? <img className="hover:rotate-12 duration-300 object-cover h-full" src={userData.profile.url} alt='user profile picture' />
                                         : <img src={`https://ui-avatars.com/api/?name=${userData?.name}`} className='h-full object-cover' />
                                 }
                             </button>
@@ -95,12 +93,17 @@ const Header = () => {
                             ⌕
                         </button>
                     </nav>
-                    <Hamburger open={open} setOpen={setOpen} /> 
+                    <Hamburger open={open} setOpen={setOpen} />
                 </div>
             </div>
-            <div className="absolute right-2 mt-3 z-50 bg-white/30 dark:bg-black/30 rounded-lg backdrop-blur-3xl">
+
+            {/* this is a bug fix for not showing blur , taked days */}
+            <div className="absolute right-2 mt-3 z-50 rounded-lg overflow-hidden">
+                <div className="absolute inset-0 bg-white/30 dark:bg-black/30 backdrop-blur-3xl -z-10" />
                 <DropDownMenu user={userData} setOpen={setOpen} open={open} />
             </div>
+
+
             <SearchModal
                 show={showSearch}
                 onClose={() => setShowSearch(false)}

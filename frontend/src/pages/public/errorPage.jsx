@@ -8,7 +8,7 @@ const ErrorPage = () => {
     const errorImageUrl = `https://robohash.org/${statusCode}`; //just an robo image
 
     return (
-        <div className="min-h-dvh flex">
+        <div className="h-dvh flex">
             <div className="z-10 w-screen md:w-[65%] flex flex-col justify-center items-center text-center p-8 bg-emerald-50 dark:bg-indigo-950">
                 <h1 className="flex text-9xl font-bold text-red-500 items-center"><span className='text-6xl text-amber-900 dark:text-gray-300'>Error  </span>{statusCode}</h1>
                 <p className="mt-4 text-2xl font-semibold">
@@ -25,9 +25,9 @@ const ErrorPage = () => {
                 </button>
             </div>
 
-            <div className="hidden flex-1 md:flex flex-col items-center justify-center bg-[url('/ooorganize4.svg')] bg-center bg-cover bg-no-repeat" >
+            <div className="hidden flex-1 md:flex flex-col items-center justify-center bg-blue-700  dark:bg-neutral-950 bg-[url('/images/ooorganize4.svg')] bg-center bg-cover bg-no-repeat" >
                 <span className='text-[10rem] font-extrabold text-red-500 custom-animate [writing-mode:vertical-lr] [text-orientation:upright]' >{statusCode}</span>
-                <img className='h-26 mb-20' src='/just_rated_logo_new3.svg' alt='logo' />
+                <img className='h-14 mb-20' src='/images/just_rated_logo_new3.svg' alt='logo' />
             </div>
         </div>
     )

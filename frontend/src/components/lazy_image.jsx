@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LazyImage = ({ publicId, alt, className = "bg-indigo-950/50 " }) => {
+const LazyImage = ({ publicId, alt, className }) => {
     const [loaded, setLoaded] = useState(false);
 
     // Construct the low-quality placeholder URL
@@ -15,18 +15,20 @@ const LazyImage = ({ publicId, alt, className = "bg-indigo-950/50 " }) => {
                 src={placeholder}
                 alt=""
                 aria-label='placeholder'
-                className={`absolute w-full h-full object-cover  transition-all duration-[2s] ${loaded ? 'opacity-0 blur-none' : 'opacity-100 blur-sm'}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-[2s] ${loaded ? "opacity-0 blur-none" : "opacity-100 blur-sm"
+                    }`}
                 loading='eager'
             />
             <img
                 src={highQualitySrc}
                 alt='' aria-label={alt}
                 onLoad={() => {
-                    console.log('High-quality image loaded');
+                    // console.log('High-quality image loaded');
                     setLoaded(true);
                 }}
 
-                className={`absolute w-full h-full object-cover transition-all duration-[2s] ${loaded ? 'opacity-100 blur-none' : 'opacity-0 blur-xs'}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-[2s] ${loaded ? "opacity-100 blur-none" : "opacity-0 blur-xs"
+                    }`}
                 loading='lazy'
             />
         </div>

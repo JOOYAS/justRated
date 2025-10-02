@@ -69,7 +69,7 @@ const Profile = () => {
 
     return (
         <div className="max-w-xl mx-auto text-black">
-            <div className="flex flex-col m-4 px-4 pb-8 bg-gray-50/50 rounded-2xl">
+            <div className="flex flex-col m-4 px-4 pb-8 bg-indigo-100 dark:bg-gray-50/50 rounded-2xl">
                 <h2 className="text-3xl font-bold text-amber-500 dark:text-amber-300 mt-2 mb-8 text-center">
                 Profile
                 </h2>
@@ -120,51 +120,44 @@ const Profile = () => {
 
                     </div>
                 ) : (
-                        <div className='relative flex justify-center items-center gap-4 md:gap-12 my-6 md:m-6'>
+                        <div className='relative flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-12 my-6 md:m-6'>
                             <div className='size-32 rounded-full bg-gray-600 overflow-hidden text-7xl font-extrabold ring-8 ring-amber-500 flex justify-center items-center hover:rotate-12 duration-300'>
                                 {
                                     user?.profile
-                                        ? <LazyImage publicId={user?.profile?.public_id} className={"object-cover h-full"} />
+                                        ? <LazyImage publicId={user?.profile?.public_id} className={"object-cover w-full h-full"} />
                                         : <img src={`https://ui-avatars.com/api/?name=${user?.name}`} className='h-full object-cover' />
-                                    // user?.profile
-                                    //     ? <img
-                                    //         src={user?.profile?.url || "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.b2eHgoNfj9xct2Py0r5F0gHaHa%3Fpid%3DApi&f=1&ipt=086b3189562c28166f84ed1a7bd9f59ddff228ae0ccfe4fc0a86c54a1191efec&ipo=images"}
-                                    //         alt="profile"
-                                    //         className="object-cover h-full"
-                                    //     />
-                                    //     : <span className="">{user?.name.charAt(0).toUpperCase()}</span>
                                 }
                             </div>
                         <div>
-                                <h3 className="text-2xl font-bold mb-1">{user?.name}</h3>
-                                <p className="text-gray-800 font-normal">{user?.email}</p>
+                                <h3 className="text-2xl text-center sm:text-start font-bold mb-1">{user?.name}</h3>
+                                <p className="text-gray-800 text-center sm:text-start font-normal">{user?.email}</p>
+
+                            </div>
                             <button
                                     className="absolute top-0 right-0 px-2 py-1 rounded-xl bg-emerald-500 text-white font-medium hover:bg-amber-600 transition-colors duration-200"
                                 onClick={() => setIsEditing(true)}
                             >
                                     edit
                             </button>
-                        </div>
-
                     </div>
                 )}
             </div>
             <section className="">
                 <h2 className="text-3xl font-bold text-amber-500 dark:text-amber-300 mt-8 text-center">Stats</h2>
                 <div className="grid grid-cols-2 gap-6 p-4 ">
-                    <div className="p-4 rounded-2xl bg-gray-50/15 shadow-sm text-center">
+                    <div className="p-4 rounded-2xl bg-indigo-100 dark:bg-gray-50/35 shadow-sm text-center">
                         <p className="text-3xl font-bold">12</p>
                         <span className="">Reviews</span>
                     </div>
-                    <div className="p-4 rounded-2xl bg-gray-50/15 shadow-sm text-center">
+                    <div className="p-4 rounded-2xl bg-indigo-100 dark:bg-gray-50/35 shadow-sm text-center">
                         <p className="text-3xl font-bold">34</p>
                         <span className="">Watchlist</span>
                     </div>
-                    <div className="p-4 rounded-2xl bg-gray-50/15 shadow-sm text-center">
+                    <div className="p-4 rounded-2xl bg-indigo-100 dark:bg-gray-50/35 shadow-sm text-center">
                         <p className="text-3xl font-bold">4.1</p>
                         <span className="">Avg Rating</span>
                     </div>
-                    <div className="p-4 rounded-2xl bg-gray-50/15 shadow-sm text-center">
+                    <div className="p-4 rounded-2xl bg-indigo-100 dark:bg-gray-50/35 shadow-sm text-center">
                         <p className="text-3xl font-bold">Drama</p>
                         <span className="">Fav Genre</span>
                     </div>
