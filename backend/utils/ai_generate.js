@@ -2,12 +2,16 @@ const ai = require("../config/gen_ai_connection");
 
 const aiGenerate = async (prompt) => {
     try {
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash", // or "gemini-1.5-pro"
-            contents: [{ role: "user", parts: [{ text: prompt }] }],
-        });
+        if (!prompt.includes("undefined")) {
+            const response = await ai.models.generateContent({
+                model: "gemini-2.5-flash",
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
+            });
 
-        return response
+            return response;
+        } else {
+            throw new Error("Prompt contains undefined values. Cannot send to AI.");
+        }
     } catch (error) {
         console.error('Gemini error:', error);
         throw new Error('AI generation failed');

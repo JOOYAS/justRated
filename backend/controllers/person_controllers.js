@@ -1,3 +1,4 @@
+const MovieDetail = require("../models/movie_detail_model");
 const Person = require("../models/person_model");
 const cleanObject = require("../utils/clean_object");
 const cloudinaryUpload = require("../utils/img_upload");
@@ -71,6 +72,40 @@ const fetchPerson = async (req, res) => {
     }
 }
 
+const moviesOfPerson = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const moviesDetailed = await MovieDetail.find({
+            $or: [
+                { cast: id },
+                { writers: id },
+                { director: id }
+            ]
+        }).populate("movie")
+
+        const movies = moviesDetailed.map(detail => detail.movie)
+
+
+        if (!movies) {
+            return res.status(404).json({
+                success: false,
+                message: "Person or their movies not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            movies
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: "Error fetching movies of this person"
+        });
+    }
+}
+
 const updatePerson = async (req, res) => {
     try {
         const { id } = req.params;
@@ -131,6 +166,7 @@ module.exports = {
     allPersons,
     addPerson,
     fetchPerson,
+    moviesOfPerson,
     updatePerson,
     deletePerson
 }

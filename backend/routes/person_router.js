@@ -1,5 +1,5 @@
 const express = require('express');
-const { allPersons, addPerson, fetchPerson, updatePerson, deletePerson } = require('../controllers/person_controllers');
+const { allPersons, addPerson, fetchPerson, updatePerson, deletePerson, moviesOfPerson } = require('../controllers/person_controllers');
 const authVerify = require('../middlewares/auth_verify');
 const validateObjectId = require('../middlewares/validate_params_id');
 const isAdmin = require('../middlewares/is_admin');
@@ -11,8 +11,11 @@ router.route('/')
     .post(authVerify, isAdmin, upload.single('photo'), addPerson)
 
 router.route('/:id')
-    .get(authVerify, fetchPerson)
+    .all(authVerify)
+    .get(fetchPerson)
     .patch(isAdmin, validateObjectId, upload.single('photo'), updatePerson)
     .delete(isAdmin, validateObjectId, deletePerson)
 
+router.route('/:id/movies')
+    .get(authVerify, validateObjectId, moviesOfPerson)
 module.exports = router;

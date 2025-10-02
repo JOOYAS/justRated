@@ -57,6 +57,31 @@ const addtoWatchlist = async (req, res) => {
     }
 }
 
+const checkIsMovieInWatchlist = async (req, res) => {
+    try {
+        const user = req.user._id;
+        const movie = req.params.movieId;
+
+        const item = await Watchlist.findOne({ user, movie });
+        if (!item)
+            return res.status(404).json({
+                success: false,
+                message: "Movie not in watchlist"
+            });
+
+        res.status(200).json({
+            success: true,
+            message: "Movie is in watchlist",
+            watchlistData: item
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "is in watchlist check failed"
+        });
+    }
+}
 const toggleWatched = async (req, res) => {
     try {
         const user = req.user._id;
@@ -77,7 +102,7 @@ const toggleWatched = async (req, res) => {
         item.watched = !item.watched;
         await item.save();
 
-        res.json({
+        res.status(200).json({
             success: true,
             message: `Marked as ${item.watched ? 'watched' : 'unwatched'}`
         });
@@ -124,6 +149,7 @@ const deletefromWatchlist = async (req, res) => {
 module.exports = {
     allWatchlist,
     addtoWatchlist,
+    checkIsMovieInWatchlist,
     toggleWatched,
     deletefromWatchlist,
 }
