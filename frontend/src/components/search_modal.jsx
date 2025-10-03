@@ -156,7 +156,7 @@ const SearchModal = ({ show, onClose }) => {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {externalMovies.map((m, i) => (
-                                <Link key={m?.i} to={`/movies/external/${m?.Title}`} className="p-2 rounded-md bg-emerald-50 dark:bg-indigo-950/40 border border-transparent hover:border-blue-500 flex items-center gap-1">
+                                <Link key={m?.i} to={`/movies/external/${m?.imdbID}`} className="p-2 rounded-md bg-emerald-50 dark:bg-indigo-950/40 border border-transparent hover:border-blue-500 flex items-center gap-1">
                                     <img src={m.Poster} className="h-20" alt="movie poster" />
                                     <HighlightText text={m?.Title + ", " + m?.Year} query={searchTerm} />
                                 </Link>

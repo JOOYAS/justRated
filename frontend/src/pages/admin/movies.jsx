@@ -8,6 +8,7 @@ import LoaderOverlay from '../../components/loader_overlay';
 const AdminMovies = () => {
     const navigate = useNavigate();
     const [movies, setMovies] = useState([])
+    const [suggestionCount, setSuggestionCount] = useState(0)
 
     const mockMovies = [
         {
@@ -81,14 +82,44 @@ const AdminMovies = () => {
             })
     }, [])
 
+    useEffect(() => {
+        const fetchSuggestions = async () => {
+            try {
+                const res = await axiosInstance.get('/suggest');
+                if (res.data.success) {
+                    setSuggestionCount(res.data?.suggestions?.length);
+                }
+            } catch (err) {
+                console.error('Failed to load suggestions:', err);
+                setSuggestionCount(0)
+            }
+        };
+
+        fetchSuggestions();
+    }, []);
+
     return (
         <>
             {!movies?.length ? <LoaderOverlay overlay /> :
         <div className="">
             <section className='md:px-20 min-h-96 pt-10 flex-col gap-4 overflow-hidden'>
-                        <div className="md:w-full mx-4 py-16 flex justify-center items-center bg-indigo-950/75 text-white rounded-xl">
-                            <Link to={'/su/movies/new'} className='py-2 px-4 border-2 border-white rounded-2xl hover:bg-black/15'>＋ Add Movie</Link>
-                </div>
+                        <div className=' mx-4 flex gap-4'>
+                            <Link
+                                to={'/su/movies/suggestions'}
+                                className="relative flex justify-center items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold rounded-xl shadow-md hover:scale-105 transition-transform"
+                            >
+                                Suggestions
+                                {suggestionCount > 0 && (
+                                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                                        {suggestionCount}
+                                    </span>
+                                )}
+                            </Link>
+                            <div className="flex-1 py-16 flex justify-center items-center bg-indigo-950/75 text-white rounded-xl">
+                                <Link to={'/su/movies/new'} className='py-2 px-4 border-2 border-white rounded-2xl hover:bg-black/15'>＋ Add Movie</Link>
+                            </div>
+                        </div>
+
                 <h2 className='text-center font-bold text-3xl text-amber-500 dark:text-amber-300 py-6 z-20'>Featured today</h2>
                 <ScrollableCarousel>
                             {movies?.map((movie) => (

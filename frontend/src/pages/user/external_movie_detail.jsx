@@ -5,18 +5,21 @@ import AISummaryCard from '../../components/ai_summary';
 import axiosInstance from '../../../utils/axios_instance';
 
 const ExternalMovieDetailsPage = () => {
-    const { title } = useParams();
+    const { imdbID } = useParams();
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(true);
     const [aiSummary, setAiSummary] = useState('');
+    const [suggested, setSuggested] = useState(false);
+    const [suggestLoading, setSuggestLoading] = useState(false);
 
 
     const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
     useEffect(() => {
-        if (!title) return;
+        if (!imdbID) return;
+        http://www.omdbapi.com/?i=tt0111161&apikey=YOUR_API_KEY
 
-        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&t=${encodeURIComponent(title)}`)
+        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${encodeURIComponent(imdbID)}`)
             .then(res => res.json())
             .then(data => {
                 if (data.Response === 'True') {
@@ -31,7 +34,7 @@ const ExternalMovieDetailsPage = () => {
                 console.error('OMDb fetch error:', err);
                 setLoading(false);
             });
-    }, [title]);
+    }, [imdbID]);
 
     useEffect(() => {
         const fetchAISummary = async () => {
@@ -55,6 +58,27 @@ const ExternalMovieDetailsPage = () => {
 
         if (movie?.Title) fetchAISummary();
     }, [movie]);
+
+    const handleSuggest = async () => {
+        setSuggestLoading(true);
+        try {
+            const res = await axiosInstance.post(
+                '/suggest',
+                {
+                    title: movie?.Title,
+                    year: movie?.Year,
+                    imdbID: movie?.imdbID
+                });
+            if (res.data.success) {
+                setSuggested(true);
+            }
+        } catch (err) {
+            console.error('Suggestion failed:', err);
+        } finally {
+            setSuggestLoading(false);
+        }
+    };
+
 
     if (loading) return <LoaderOverlay />;
     if (!movie || movie.Response !== 'True') {
@@ -81,7 +105,7 @@ const ExternalMovieDetailsPage = () => {
                     />
                     <div className="text-white">
                         {movie.Title && (
-                            <h1 className="text-3xl font-bold">{movie.Title} {movie.Year && (
+                            <h1 className="text-xl md:text-3xl font-bold">{movie.Title} {movie.Year && (
                                 <span className="text-gray-300 text-sm mt-1">{movie.Year}</span>
                             )}</h1>
                         )}
@@ -92,23 +116,35 @@ const ExternalMovieDetailsPage = () => {
                         {movie.Genre && (
                             <p className="text-sm text-gray-300 mt-2">Genres: {movie.Genre}</p>
                         )}
-                        <div className="mt-6">
+
+
+                        <div className="mt-2">
                             <button
-                                onClick={() => handleSuggest(movie)}
-                                className="inline-block px-6 py-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl transition-transform hover:scale-105 duration-200"
+                                onClick={handleSuggest}
+                                disabled={suggested || suggestLoading}
+                                className={`inline-block px-2 md:px-6 py-2 rounded-2xl  text-black text-sm md:text-base font-semibold shadow-lg border-transparent border-4   duration-200
+                                    ${suggested
+                                        ? 'bg-green-500 text-white cursor-default'
+                                        : 'bg-gradient-to-r from-yellow-400 to-orange-500 hover:border-amber-100 hover:shadow-xl transition-transform hover:scale-105'
+                                    }`}
                             >
-                                Suggest Adding to Database
+                                {suggested ? 'Suggested ✔️' : suggestLoading ? 'Suggesting...' : 'Suggest Adding to DataBase'}
                             </button>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <section className='py-6 max-w-3xl mx-auto space-y-4'>
+            <section className="mx-4 mt-4 p-4 bg-yellow-400/45 border-l-4 border-yellow-500 rounded-2xl">
+                <div className="flex items-center">
+                    <span className="font-semibold">⚠️Notice:</span>
+                    <span className="text-xs ml-1">This movie was retrieved from IMDb and is not part of our internal database. Some features may be unavailable.</span>
+                </div>
+            </section>
+            <section className='mx-4 py-6 max-w-3xl md:mx-auto space-y-4'>
                 <AISummaryCard aiSummary={aiSummary} />
             </section>
 
-            <section className="px-4 py-6 max-w-3xl mx-auto space-y-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+            <section className="mx-4 px-4 py-6 max-w-3xl md:mx-auto space-y-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
                 {movie.Plot && (
                     <p className="text-lg text-gray-800 dark:text-gray-200 leading-relaxed">
                         {movie.Plot}

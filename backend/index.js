@@ -12,6 +12,7 @@ const personRoutes = require('./routes/person_router');
 const watchlistRoutes = require('./routes/watchlist_router');
 const authRoutes = require('./routes/auth_router');
 const aiRoutes = require('./routes/ai_router')
+const suggestionRoutes = require('./routes/suggestion_router')
 const dbConnect = require('./config/db_connection');
 
 app.set("trust proxy", 1);
@@ -44,6 +45,7 @@ app.use('/reviews', reviewRoutes);
 //app.use('/favourites', favouritesRoutes);  // no need
 app.use('/watchlist', watchlistRoutes);
 app.use('/person', personRoutes);
+app.use('/suggest', suggestionRoutes)
 app.get('/', (req, res) => {
     res.send(`API is working, choose /user -or- /movies`)
 });
