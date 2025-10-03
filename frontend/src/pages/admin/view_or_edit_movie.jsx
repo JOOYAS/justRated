@@ -3,14 +3,17 @@ import { useParams } from "react-router-dom"
 import axiosInstance from "../../../utils/axios_instance"
 import LoaderOverlay from "../../components/loader_overlay"
 import ScrollableCarousel from "../../components/scroll_carousel"
+import CriticReviewCard from "../../components/critic_review_card"
 
 const ViewOrEditMovie = ({ editByDefault = false }) => {
     const { id } = useParams()
     const [movie, setMovie] = useState(null)
     const [editMode, setEditMode] = useState(editByDefault)
     const [form, setForm] = useState({})
-    const [posterPreview, setPosterPreview] = useState(null)
+    const [posterPreview, setPosterPreview] = useState([])
     const [imagesPreview, setImagesPreview] = useState([])
+    const [criticReviews, setCriticReviews] = useState([]);
+    const [showAddReview, setShowAddReview] = useState(false);
 
     useEffect(() => {
         axiosInstance.get(`/movies/${id}`)
@@ -25,6 +28,23 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
             setImagesPreview(movie.images || [])
         }
     }, [movie])
+
+    useEffect(() => {
+        const fetchCriticReviews = async () => {
+            try {
+                const res = await axiosInstance.get(`movies/${id}/reviews`);
+                if (res?.data?.success) {
+                    console.log(res.data?.critics);
+
+                    setCriticReviews(res.data?.critics);
+                }
+            } catch (err) {
+                console.error('Failed to load critic reviews:', err);
+            }
+        };
+
+        fetchCriticReviews();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked, files } = e.target
@@ -71,7 +91,7 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
     return (
         <div className="relative">
             {!movie ? <div className="absolute h-full w-full"><LoaderOverlay /></div> : null}
-            <div className=" p-4 md:p-8 max-w-3xl mx-auto">
+            <div className="p-4 md:p-8 max-w-3xl mx-auto">
 
                 <div className="flex justify-center items-center mb-6">
                     <h1 className="text-3xl md:text-5xl font-bold text-amber-500 mx-auto">{movie?.title}{movie?.releaseDate && (<span className="text-2xl text-amber-600">
@@ -123,6 +143,7 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                         </div>
 
                         {/* Meta */}
+                        {/* Meta */}
                         <div className="grid md:grid-cols-3 gap-4">
                             <Input label="Tags (comma separated)" name="tags" value={form.tags || ""} onChange={handleChange} />
                             <Input label="Global Collection" name="globalCollection" value={form.globalCollection || ""} onChange={handleChange} />
@@ -132,7 +153,7 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                             <Input label="Language" name="language" value={form.language || ""} onChange={handleChange} />
                         </div>
                         <div className="flex gap-2 mt-4">
-                            <button type="submit" className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500">
+                            <button type="submit" className="w-full px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-4xl">
                                 Save Changes
                             </button>
 
@@ -144,7 +165,7 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                                     setPosterPreview(movie.poster?.url || null)
                                     setImagesPreview(movie.images || [])
                                 }}
-                                className="px-4 py-2 bg-gray-500 text-gray-200 rounded-lg hover:bg-gray-600"
+                                className="px-4 py-2 bg-red-400 text-gray-200 rounded-4xl hover:bg-red-600"
                             >
                                 Cancel
                             </button>
@@ -195,6 +216,77 @@ const ViewOrEditMovie = ({ editByDefault = false }) => {
                                     <img key={i} src={img.url} alt="extra" className="rounded-lg object-cover h-64" loading="lazy" />
                                 ))}
                             </ScrollableCarousel>
+                        )}
+                    </div>
+                )}
+            </div>
+
+            <div className="p-4 md:p-8 max-w-3xl mx-auto mt-12">
+                <div className="relative mb-6">
+                    <h2 className="text-2xl font-bold text-center">Critic Reviews</h2>
+                    <div className="absolute right-0 top-0">
+                        <button
+                            onClick={() => setShowAddReview(!showAddReview)}
+                            className={`${showAddReview ? "hidden" : "flex"} px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition`}
+                        >
+                            Add Critic Review
+                        </button>
+                    </div>
+                </div>
+
+                {showAddReview ? (
+                    <form
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+                            const formData = {
+                                movie: movie._id,
+                                critic: e.target.critic.value,
+                                rating: Number(e.target.rating.value),
+                                comment: e.target.comment.value,
+                            };
+                            try {
+                                const res = await axiosInstance.post('/reviews/critic', formData);
+                                if (res.data.success) {
+                                    setCriticReviews([...criticReviews, res.data.review]);
+                                    setShowAddReview(false);
+                                }
+                            } catch (err) {
+                                console.error('Failed to submit review:', err);
+                            }
+                        }}
+                        className="space-y-4"
+                    >
+                        <Input name="critic" placeholder="Critic Name" required />
+                        <Input name="rating" type="number" min="1" max="10" placeholder="Rating (1–10)" required className="w-full px-4 py-2 border rounded-md" />
+                        <Textarea name="comment" placeholder="Review by Critic..." required rows={4} className="w-full px-4 py-2 border rounded-md" />
+                        <div className="flex gap-2 mt-4">
+                            <button
+                                type="submit"
+                                className="w-full px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-4xl"
+                            >
+                                Submit Review
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setForm({})
+                                    setShowAddReview(false)
+                                }}
+                                className="px-4 py-2 bg-red-400 text-gray-200 rounded-4xl hover:bg-red-600"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                ) : (
+                    <div className="space-y-4">
+                        {criticReviews?.length > 0 ? (
+                            criticReviews?.map((review) => (
+                                <CriticReviewCard critic={review} />
+                            ))
+                        ) : (
+                            <p className="text-gray-500 dark:text-gray-400 italic">No critic reviews available yet.</p>
                         )}
                     </div>
                 )}

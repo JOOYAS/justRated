@@ -22,7 +22,6 @@ const ViewOrEditPerson = ({ editByDefault = false }) => {
             setPhotoPreview(person.photo?.url || null)
         }
     }, [person])
-
     const handleChange = (e) => {
         const { name, value, type, files } = e.target
         if (type === "file") {

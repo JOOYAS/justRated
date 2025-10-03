@@ -96,9 +96,8 @@ const newCriticReview = async (req, res) => {
             });
         }
 
-        const review = await new CriticReview(reviewData).populate('movie')
-            .populate('movie')
-            .save();
+        const review = await new CriticReview(reviewData).save();
+        review.populate('movie')
         res.status(201).json({
             success: true,
             message: "Critic review added",

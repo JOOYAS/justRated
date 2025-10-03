@@ -1,8 +1,8 @@
 const CriticReviewCard = ({ critic }) => {
-    const { critic: name, rating, review } = critic;
+    const { critic: name, rating, comment } = critic;
 
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-300 dark:border-gray-600 p-2 transition-transform transform hover:scale-105 flex flex-col items-center text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-300 dark:border-gray-600 px-6 py-2 transition-transform transform hover:scale-105 flex flex-col items-center text-center">
             <div className="flex flex-col items-center">
                 <h3 className="text-xl font-extrabold font-sans text-amber-600 dark:text-amber-300">
                     {name.toUpperCase()}
@@ -12,7 +12,7 @@ const CriticReviewCard = ({ critic }) => {
                 </div>
             </div>
             <p className=" text-amber-600 dark:text-amber-200 leading-relaxed text-base italic text-center">
-                “{review}”
+                “{comment}”
             </p>
         </div>
 
