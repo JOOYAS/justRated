@@ -18,18 +18,36 @@ const Login = () => {
     })
 
     const submitHandler = (event) => {
-        event.preventDefault()
-        // console.log(loginData);
+        event.preventDefault();
+
+        if (!loginData.email || !loginData.password) {
+            setError("All fields are required");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(loginData.email)) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        if (loginData.password.length < 6) {
+            setError("Password must be at least 6 characters");
+            return;
+        }
+
+        setError("");
+
         axiosInstance.post(`/auth/login`, loginData)
             .then(res => {
                 toast.success(res.data.message);
-                dispatch(setUser(res.data.user))
-
+                dispatch(setUser(res.data.user));
+                navigate("/");
             })
             .catch(err => {
-                console.log(err);
-            })
-    }
+                setError(err.response?.data?.message || "Login failed");
+            });
+    };
 
     const changeHandler = (event) => {
         const tempData = { ...loginData }
@@ -57,7 +75,7 @@ const Login = () => {
                             className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             onChange={changeHandler} />
 
-                        <p className="text-red-500 text-sm mb-12">{null}</p>
+                        <p className="text-red-500 text-sm mt-6 text-center">{error}</p>
 
                         <button type="submit"
                             className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">Login</button>
@@ -69,12 +87,10 @@ const Login = () => {
                 <img className="absolute h-16 bottom-0 mb-4" src="/images/just_rated_logo_new3.svg" alt="logo" />
             </div>
 
-
             <div className="relative hidden md:flex flex-1 flex-col justify-center items-center">
                 <img className='absolute h-screen right-[-50%] opacity-50' src='/images/star_logo_2_blur.svg' alt='logo' />
                 <img className='absolute h-screen bottom-[-50%] opacity-50' src='/images/star_logo_2_blur.svg' alt='logo' />
                 <img className='absolute h-screen top-[-50%] opacity-50' src='/images/star_logo_2_blur.svg' alt='logo' />
-
 
                 <p className='px-10 text-3xl font-bold text-center text-amber-50 z-10'>"Welcome back — your next movie awaits."</p>
             </div>

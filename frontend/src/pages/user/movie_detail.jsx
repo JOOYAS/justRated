@@ -98,20 +98,37 @@ const MovieDetail = () => {
             {
                 _id: "r3",
                 movie: "688f295321d9a1af990e6c9c",
-                critic: "times",
+                critic: "The Times",
                 rating: 8,
-                review: "incididunt ut labore et dolore magna aliqua.",
+                comment: "A visually stunning film with a gripping narrative that keeps you invested until the very end.",
                 createdAt: "2025-08-20T09:10:36.065Z",
-        },
+            },
             {
                 _id: "r4",
                 movie: "688f295321d9a1af990e6c9c",
-                critic: "indian express",
+                critic: "Indian Express",
                 rating: 7,
-                review: ";Lorem ipsum dolor sit amet, consectetur",
+                comment: "Balances strong performances with an engaging storyline, though it occasionally lingers in pacing.",
                 createdAt: "2025-08-21T11:45:12.065Z",
             },
-        ],
+            {
+                _id: "r5",
+                movie: "688f295321d9a1af990e6c9c",
+                critic: "Film Companion",
+                rating: 9,
+                comment: "A masterclass in storytelling — emotionally resonant and technically brilliant.",
+                createdAt: "2025-08-22T14:20:45.065Z",
+            },
+            {
+                _id: "r6",
+                movie: "688f295321d9a1af990e6c9c",
+                critic: "Hollywood Reporter",
+                rating: 8,
+                comment: "An ambitious project that succeeds in delivering both spectacle and substance.",
+                createdAt: "2025-08-23T10:05:30.065Z",
+            },
+        ]
+
     };
 
     const [aiSummary, setAiSummary] = useState('');

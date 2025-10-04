@@ -88,9 +88,12 @@ const Home = () => {
                 <div className="absolute inset-0 bg-black/70 -z-10" />
                 <div className='px-4 py-40 pb-56 md:py-60 md:w-2/3 text-center wrap-anywhere z-20'>
                     <h1 className='font-extrabold sansation-bold italic text-3xl md:text-5xl mb-6 text-amber-300'>
-                        One place for precise movie details<br />
+                        One place for precise movie details
                     </h1>
-                    <p className='font-normal text-amber-100 text-xl md:text-2xl mb-8 md:mb-16'>Accurate, updated, and trusted by movie lovers all across.</p>
+                    <p className='font-normal text-amber-100 text-xl md:text-2xl mb-8 md:mb-16'>
+                        Accurate, updated, and trusted by movie lovers worldwide.
+                    </p>
+
                     <Link to={'/movies'} className="inline-block px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold shadow-lg border-transparent border-4  hover:border-amber-100 hover:shadow-xl transition-transform hover:scale-105 duration-200">
                         Explore Movies 🍿
                     </Link>

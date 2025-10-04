@@ -9,9 +9,6 @@ import ErrorPage from "./pages/public/errorPage";
 import LoaderOverlay from "./components/loader_overlay";
 import AuthInitializer from "./components/authcheck";
 import PrivateRoute from "./components/private_route";
-import AddPerson from "./pages/admin/new_person";
-import ViewOrEditPerson from "./pages/admin/view_or_edit_person";
-import Suggestions from "./pages/admin/suggestions";
 
 const UserLayout = lazy(() => import("./layouts/user_layout"));
 const Login = lazy(() => import("./pages/public/login"));
@@ -32,6 +29,9 @@ const Signup = lazy(() => import("./pages/public/signup"));
 const About = lazy(() => import("./pages/public/about"));
 const Movies = lazy(() => import("./pages/user/movies_list"));
 const Watchlist = lazy(() => import("./pages/user/watchlist"));
+const AddPerson = lazy(() => import("./pages/admin/new_person"));
+const ViewOrEditPerson = lazy(() => import("./pages/admin/view_or_edit_person"));
+const Suggestions = lazy(() => import("./pages/admin/suggestions"));
 
 let router = createBrowserRouter([
     {
